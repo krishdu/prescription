@@ -1,7 +1,6 @@
 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;C/F </div>
     <div class="inner">
-        <table>
-            <tr><td id="CF" width="100%">
+        <div id="CF">
 
                     <?php
                             $q15 = "select a.VALUE, b.NAME, a.ID from
@@ -16,37 +15,26 @@
                                     $value = $rs['VALUE'];
                                     $id = $rs['ID'];
                     ?>
-                    <table>      
-                        
-                        <tr>
-                            <td width="100%" ><?php echo $name; ?></td>
-                            <td width="100%" ><input type="text" id="CF_<?php echo $id ?>" style="width: 40px;" class="input_box_small" value="<?php echo $value; ?>" /></td>
-                            <td ><input type="button" class="update_row" onclick="updateDeleteCF('<?php echo $id ; ?>',
+                    <div class="row">
+                            <div class="col-md-6"><?php echo $name; ?></div> 
+                            <div class="col-md-4"><input type="text" id="CF_<?php echo $id ?>"  class="form-control" value="<?php echo $value; ?>" /></div> 
+                            <div class="col-md-2" ><input type="button" class="update_row" class="form-control" onclick="updateDeleteCF('<?php echo $id ; ?>',
                                             '<?php echo $visit_id ; ?>','UPDATE')"/>
-                            </td> 
-                        </tr> 
-                       
-                    </table> 
+                            </div> 
+                    </div>
             <?php    } ?>
-            </td>
-            </tr>
-            <tr><td width="100%">
-                    <table>
-                        <tr>
-                                <td >
-                                        <input style="width: 140px;"  type='text' id='txtCFName'/>
-                                </td>
-                                <td>
-                                        <input style="width: 40px;" type='text' id='txtCFValue'/>
-                                </td>	
-                                <td>
+            </div>
+            <div class="row">
+                                <div class="col-md-6">
+                                        <input type='text' class="form-control" id='txtCFName'/>
+                                </div>
+                                <div class="col-md-4">
+                                        <input type='text' class="form-control" id='txtCFValue'/>
+                                </div>	
+                                <div class="col-md-3">
                                     <input type='button' class="delete_row" onclick="addCF('<?php echo $visit_id ; ?>')"/>
-                                </td> 
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-    </table>
+                                </div>
+             </div>
 
 
 

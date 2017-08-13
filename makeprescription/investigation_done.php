@@ -1,8 +1,6 @@
 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Investigation Done</div>
-    <div class="inner">
-    <table>    
-
-        <tr><td id="INV" width="100%" colspan="3">
+<div class="inner">
+    <div id="INV">
 
             <?php
                 $result = mysql_query( "SELECT b.investigation_name, a.value, b.unit, investigation_id
@@ -15,29 +13,22 @@
                 while($rows = mysql_fetch_array($result) ){
                     
             ?>
-                <table>      
-                    <tr>
+                <div class="row">
                     
-					<td width='120'><?php echo $rows['investigation_name']; ?></td>
-                    <td width='60'><?php echo $rows['value']; ?>&nbsp;<?php echo $rows['unit']; ?></td>   
-                     <td><a  href='#' onclick="deletePatientInvestigation('<?php echo $visit_id ; ?>',
-                                '<?php echo $rows['investigation_id'] ; ?>')">[-]</a>
-                    </td>
-                    </tr> 
-                </table> 
+					<div class="col-md-7"><?php echo $rows['investigation_name']; ?></div>
+                    <div class="col-md-3"><?php echo $rows['value']; ?>&nbsp;<?php echo $rows['unit']; ?></div>
+                    <div class="col-md-2" ><a  href='#' onclick="deletePatientInvestigation('<?php echo $visit_id ; ?>',
+                                '<?php echo $rows['investigation_id'] ; ?>')">[-]</a></div>
+                </div> 
             <?php    } ?>
-            </td>
-        </tr> 
-      
-        <tr>
-            <td width="100%"><input style="width: 120px;" type='text' id='investigation'/>
-                <td ><input style="width: 60px;" type='text' id='txtPatientInvval'/>
-                
-                <td>
-                    <a id='plus7' href='#' onclick="addPatientInvestigation('<?php echo $patient_id ; ?>','<?php echo $visit_id ; ?>')">[+]</a>
-                </td> 
-       </tr>
+            
+      </div>
+        <div class="row">
+            <div class="col-md-7"><input type='text' class="form-control" id='investigation' placeholder="Investigation name"/></div>
+                <div class="col-md-3"><input type='text' class="form-control" id='txtPatientInvval' placeholder="Value"/></div>
+                <div class="col-md-2" ><a id='plus7' href='#' onclick="addPatientInvestigation('<?php echo $patient_id ; ?>','<?php echo $visit_id ; ?>')">[+]</a></div> 
 
-    </table>
+    	</div>   
+ </div>
 
-    </div>   
+   

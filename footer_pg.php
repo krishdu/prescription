@@ -17,7 +17,7 @@
 	
 <div class="row">
         <div class="col-md-8"> Date : <?php echo date("d/m/y") ?></div>
-        <div class="col-md-4"><b>(<?php echo $docname; ?>) </b><br>Reg. No. # <?php echo $reg_num; ?></div>
+        <div class="col-md-4"><div class="pull-right"><b>(<?php echo $docname; ?>) </b><br>Reg. No. # <?php echo $reg_num; ?></div></div>
 </div>	
 <footer class="footer">
       

@@ -93,39 +93,27 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
               <!--END of block FIVE-->
 
 			    <!--BEGIN block FOUR-->
-              <?php include("makeprescription/pre_prescriptions.php");?>
+              
                 
               <!--END of block FOUR -->
             
             </div>
             
-            <div class="row">
-		        
-		        <div class="col-xs-6 col-md-4"></div>
-		        <div class="col-xs-6 col-md-4"><?php include("makeprescription/c_f.php");?></div>
-		        <div class="col-xs-6 col-md-4"><?php include("makeprescription/addiction.php");?></div>
-		    </div>
+           
             <!--END of content-->
             <div class="row">
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-3"><?php include("makeprescription/clinical_impression.php");?></div>
+  
+  
+  <div class="col-md-3"><?php include("makeprescription/investigation_done.php");?></div>
+  <div class="col-md-3"><?php include("makeprescription/c_f.php");?></div>
+  <div class="col-md-3"><?php include("makeprescription/addiction.php");?></div>
 </div>
+            
             <!--BEGIN doctor comment/advice section-->
             <div class="diet" style="margin-top: 5px;">    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Comment / Advice</div>
-                <div class="diet_inner">        
-                <textarea name="other_comment" cols="" rows="" class="areabox" ></textarea>
-                </div>
+                <textarea class="form-control" rows="3"></textarea>
             
             </div>
             <!--END doctor comment/advice section-->
@@ -133,19 +121,16 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
             <!--BEGIN diet section-->
             <div class="diet" >    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Diet & Lifestyle Recommendation</div>
-                <div class="diet_inner">        
-                <textarea name="diet" cols="" rows="" class="areabox" >Diet 1600 Kcal/day, Cholesterol < 200 gm /day , Saturated Fat < 7%, Walking at recommended speed for atleast 30 mins/day, Alerted to hypoglycaemia (CBG < 70 y/dl)</textarea>
-                </div>
-            
+                <textarea class="form-control" rows="3">Diet 1600 Kcal/day, Cholesterol < 200 gm /day , Saturated Fat < 7%, Walking at recommended speed for atleast 30 mins/day, Alerted to hypoglycaemia (CBG < 70 y/dl)</textarea>       
+                
             </div>
             
             <!-- END diet section-->
             
-            <!--BEGIN rx section-->
-            
-            <div class="rx" >    
+           
+              
                 <div class="headings" ><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Rx (Prescription)</div>
-                <div class="rx_inner">        
+                      
                     
                     <?php
                         
@@ -160,7 +145,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
                    
                     <div  id="medicine" >
                        
-                        <table id="table-3"> 
+                        <table id="table-3" class="table"> 
                         <?php while($rs = mysql_fetch_array($result)) { ?>
 
                             <tr>
@@ -181,59 +166,47 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
                         <?php } ?>
                         </table>
                     </div>
-                    <div class="col-xs-12 .col-sm-6 .col-lg-8">
-	                    <table class="table table-striped">
-				            <thead>
-				              <tr>
-				                <th>Medicine Names</th>
-				                <th>Breakfast</th>
-				                <th>Lunch</th>
-				                <th>Dinner</th>
-				                <th>Bedtime</th>
-				                <th>Action</th>
-				              </tr>
-				            </thead>
-				            <tbody>
-				            <tr >
-			                    <td><input type="text" name="medicine_name" id="course"  /></td>
-			                    <td><input name="dose1" id="dose1" type="text" size="10" class="input_small"/><input type="radio" name="bfradio" value ="before"/> before <input type="radio" name="bfradio" value ="after"/> after</td>
-			                    <td><input name="dose2" id="dose2" type="text" size="10" class="input_small"/><input type="radio" name="lradio" value ="before"/> before <input type="radio" name="lradio" value ="after"/> after</td>
-			                    <td><input name="dose3" id="dose3" type="text" size="10" class="input_small"/><input type="radio" name="dradio" value ="before"/> before <input type="radio" name="dradio" value ="after"/> after</td>
-			                    <td><input name="dose3" id="dose3" type="text" size="10" class="input_small"/><input type="radio" name="dradio" value ="before"/> before <input type="radio" name="dradio" value ="after"/> after</td>
-			                    <td><input type="hidden" name="PRESCRIPTION_ID" value="<?php echo $_GET['PRESCRIPTION_ID']; ?>" id="PRESCRIPTION_ID" />
-			                            <input type="hidden" name="patient_id" value="<?php echo $_GET['patient_id']; ?>" id="patient_id" />
-			                            <input type="hidden" name="VISIT_ID" value="<?php echo $_GET['VISIT_ID']; ?>" id="VISIT_ID" /><a id="plus7" href="#" onclick="return saveResult()">[+]</a> </td>
-				            </tr>
-				            </tbody>
-			            </table>
-                    </div>               
-                </div>
+                    
+                    <div class="row">
+						<div class="col-md-3">Medicine Names</div>
+						<div class="col-md-2">Breakfast</div>
+						<div class="col-md-2">Lunch</div>
+						<div class="col-md-2">Dinner</div>
+						<div class="col-md-2">Bedtime</div>
+						<div class="col-md-1">Action</div>
+					</div>
+                    <div class="row">
+						<div class="col-md-3"><input type="text" name="medicine_name" id="course" class="form-control" placeholder="Enter Medicine name" /></div>
+						<div class="col-md-2"><input name="dose1" id="dose1" type="text"  class="form-control" placeholder="Breakfast"/><input type="radio" name="bfradio" value ="before"/> before <input type="radio" name="bfradio" value ="after"/> after</div>
+						<div class="col-md-2"><input name="dose2" id="dose2" type="text" class="form-control" placeholder="Lunch"/><input type="radio" name="lradio" value ="before"/> before <input type="radio" name="lradio" value ="after"/> after</div>
+						<div class="col-md-2"><input name="dose3" id="dose3" type="text" class="form-control" placeholder="Dinner"/><input type="radio" name="dradio" value ="before"/> before <input type="radio" name="dradio" value ="after"/> after</div>
+						<div class="col-md-2"><input name="dose4" id="dose4" type="text" class="form-control" placeholder="Bedtime"/><input type="radio" name="dradio" value ="before"/> before <input type="radio" name="dradio" value ="after"/> after</div>
+						<div class="col-md-1"><input type="hidden" name="PRESCRIPTION_ID" value="<?php echo $_GET['PRESCRIPTION_ID']; ?>" id="PRESCRIPTION_ID" />
+								<input type="hidden" name="patient_id" value="<?php echo $_GET['patient_id']; ?>" id="patient_id" />
+								<input type="hidden" name="VISIT_ID" value="<?php echo $_GET['VISIT_ID']; ?>" id="VISIT_ID" /><a id="plus7" href="#" onclick="return saveResult()">[+]</a> </div>
+					</div>
+                                 
+                
             
-            </div>
+            
             <!--END of rx section-->
             
             
              
             
             <!--BEGIN Prescribed Investigation section-->
+            
             <div class="invest" >    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Prescribed Investigation</div>
                 <div id="tabs" ><?php include("makeprescription/invest.php");?></div>
                 
 
             </div>
-           
             
-            
-            
-            <div class="diet" style="margin-top: 40px;">    
+            <div class="diet">    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Patient's Next Visit</div>
-                <div class="diet_inner">        
-                    <!--
-                    <input id="datepicker" name="nextvisit" type="text"   class="input_box_add" value="DD-MM-YYYY" onfocus="myFocus(this);" onblur="myBlur(this);"/>
-                    -->
-                    After : <input name="nextvisit" type="text"   
-                                   class="input_box_small" value="2" onfocus="myFocus(this);" onblur="myBlur(this);"/> Weeks
+                <div class="row">        
+                    <div class="col-md-1">After</div><div class="col-md-1"><input name="nextvisit" type="text" class="form-control" value="2" onfocus="myFocus(this);" onblur="myBlur(this);"/> </div><div class="col-md-8">Weeks</div>
                 
                 </div>
             
@@ -246,9 +219,9 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
             
                 <div class="btn_wrap">
                     <?php if ($user_type == 'DOCTOR') {  ?>
-                    <input type="submit" name="MAKE_PRESCIPTION" id="MAKE" value="MAKE PRESCIPTION"  class="btn2" />
+                    <input type="submit" class="btn btn-primary" name="MAKE_PRESCIPTION" id="MAKE" value="MAKE PRESCIPTION" />
                      <?php } ?>
-                    <input type="button" name="BACK" id="MAKE" value="Back"  class="btn" onclick="backtoVisit()"/>
+                    <input type="button" class="btn btn-default" name="BACK" id="MAKE" value="Back" onclick="backtoVisit()"/>
                 </div>
                 
             <!--END of submit button-->

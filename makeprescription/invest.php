@@ -23,15 +23,15 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>  
-     <div  class="addfileds">
-                    <input id="invest1" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE1')" value="" />
-
-                </div> 
+     <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE1')" value="ADD" /></div>
+				</div> 
   </div>
   <div id="tab2" class="tab-pane fade">
     <div id="tab112" class="check_fields" >
@@ -41,15 +41,16 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
 
-                <div  class="addfileds">
-                    <input id="invest2" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE2')" value="" />
-                </div>    
+               <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE2')" value="ADD" /></div>
+				</div> 
   </div>
   <div id="tab3" class="tab-pane fade">
     <div id="tab113" class="check_fields" >
@@ -59,16 +60,16 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
 
-                <div  class="addfileds">
-                    <input id="invest3" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE3')" value="" />
-
-                </div>  
+                <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE3')" value="ADD" /></div>
+				</div>
   </div>
   <div id="tab4" class="tab-pane fade">
     <div id="tab114" class="check_fields" >
@@ -78,16 +79,16 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
 
-                <div  class="addfileds">
-                    <input id="invest4" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE4')" value="" />
-
-                </div>
+               <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE4')" value="ADD" /></div>
+				</div>
   </div>
   <div id="tab5" class="tab-pane fade">
     <div id="tab115" class="check_fields" >
@@ -97,16 +98,16 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
 
-                <div  class="addfileds">
-                    <input id="invest5" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE5')" value="" />
-
-                </div>
+               <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE5')" value="ADD" /></div>
+				</div>
   </div>
   <div id="tab6" class="tab-pane fade">
     <div id="tab116" class="check_fields" >
@@ -116,16 +117,16 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
 
-                <div  class="addfileds">
-                    <input id="invest6" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE6')" value="" />
-
-                </div>
+                <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE6')" value="ADD" /></div>
+				</div>
   </div>
   <div id="tab7" class="tab-pane fade">
     <div id="tab117" class="check_fields" >
@@ -135,16 +136,16 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
 
-                <div  class="addfileds">
-                    <input id="invest7" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE7')" value="" />
-
-                </div>
+                <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE7')" value="ADD" /></div>
+				</div>
   </div>
   <div id="tab8" class="tab-pane fade">
     <div id="tab118" class="check_fields" >
@@ -154,16 +155,16 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
 
-                <div  class="addfileds">
-                    <input id="invest8" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE8')" value="" />
-
-                </div>
+                <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE8')" value="ADD" /></div>
+				</div>
   </div>
   <div id="tab9" class="tab-pane fade">
     <div id="tab119" class="check_fields" >
@@ -173,16 +174,16 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
 
-                <div  class="addfileds">
-                    <input id="invest9" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE9')" value="" />
-
-                </div>
+               <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE9')" value="ADD" /></div>
+				</div>
   </div>
   <div id="tab10" class="tab-pane fade">
     <div id="tab1110" class="check_fields" >
@@ -192,16 +193,16 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
 
-                <div  class="addfileds">
-                    <input id="invest10" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE10')" value="" />
-
-                </div>
+                <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE10')" value="ADD" /></div>
+				</div>
   </div>
   <div id="tab11" class="tab-pane fade">
      <div id="tab1111" class="check_fields" >
@@ -211,16 +212,16 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
 
-                <div  class="addfileds">
-                    <input id="invest11" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE11')" value="" />
-
-                </div>
+                <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE11')" value="ADD" /></div>
+				</div>
   </div>
   <div id="tab12" class="tab-pane fade">
     <div id="tab1112" class="check_fields" >
@@ -230,16 +231,16 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
 
-                <div  class="addfileds">
-                    <input id="invest12" type="text" value=""/>
-                    <input type="button" class="delete_row" name="" onclick="return addInvestigation('TYPE12')" value="" />
-
-                </div>
+                <div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE12')" value="ADD" /></div>
+				</div>
   </div>
   <div id="tab13" class="tab-pane fade">
     <div id="tab1113" class="check_fields" >
@@ -249,15 +250,15 @@
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
                                 $inv_id =$rs['ID'];
-                                echo "<input name='inv[]' type='checkbox' value='".$inv_id."' />&nbsp;".$cname."&nbsp;";
+                                echo "<label class='checkbox-inline'>
+                                <input type='checkbox' name='inv[]'  value='".$inv_id."'> ".$cname."</label>";
                         }
                     ?>
                 </div>      
-
-                <div  class="addfileds">
-                    <input id="invest13" type="text" value=""/>
-                    <input type="button" class="delete_row" name="ADD" onclick="return addInvestigation('TYPE13')" value="ADD" />
-
-                </div>
+				<div class="row">
+				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE13')" value="ADD" /></div>
+				</div>
+                
   </div>
 </div>

@@ -1,10 +1,7 @@
 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Clinical Impressions</div>
 <div class="inner" >
-<script type="text/javascript">
 
-</script>
-    <table>
-        <tr><td id="CI" >
+        <div id="CI">
 
             <?php
                 $q15 = "SELECT b.type, b.ID
@@ -17,25 +14,24 @@
                     $type = $rs['type'];
                     $cf_d = $rs['ID'];
             ?>
-                <table>      
-                    <tr>
-                        <td style="width: 254px;"><?php echo $type; ?><a id='minus7' href='#' ></a></td>
-                    <td ><a id='minus7' href='#' 
+                <div class="row">      
+                    
+                        <div class="col-md-10"><?php echo $type; ?><a id='minus7' href='#' ></a></div>
+                    <div class="col-md-2" ><a id='minus7' href='#' 
                             onclick="deleteClinicalImpression('<?php echo $cf_d ; ?>',
                                 '<?php echo $PRESCRIPTION_ID ; ?>')">[-]</a>
-                    </td> 
-                    </tr> 
-                </table> 
+                    </div> 
+                    
+                </div> 
             <?php    } ?>
-            </td>
-            </tr>
-            <tr>
-                <td width="100%"><input style="width: 180px;"  type='text' id='txtCI'/>
+            </div>
+            <div class="row">
+                <div class="col-md-10"><input type='text' class="form-control" id='txtCI' placeholder="Clinical Impression"/>
 
-                </td>
-                <td>
+                </div>
+                <div class="col-md-2" >
                     <a id='plus7' href='#' onclick="addClinicalImpression('<?php echo $PRESCRIPTION_ID ; ?>')">[+]</a>
-                </td> 
-            </tr>
-    </table>
+                </div> 
+            
+		</div>
     </div>     

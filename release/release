@@ -1,0 +1,44 @@
+CREATE TABLE `chamber_master` (
+`chamber_id` INT NOT NULL AUTO_INCREMENT ,
+`chamber_name` VARCHAR( 200 ) NOT NULL ,
+`chamber_address` VARCHAR( 200 ) NOT NULL ,
+`chamber_header` TEXT NOT NULL ,
+PRIMARY KEY ( `chamber_id` )
+) ;
+
+ALTER TABLE	clinical_impression	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	dose_details_master	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	dose_direction	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	dose_timing_master	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	investigation_master	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	medicine_master	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	patient	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	patient_health_details	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	patient_health_details_by_receptionist	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	patient_health_details_master	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	patient_investigation	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	precribed_medicine	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	prescribed_cf	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	prescribed_investigation	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	prescription	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	user	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+ALTER TABLE	visit	ADD `chamber_id` INT NOT NULL DEFAULT '1';
+
+ALTER TABLE `user` ADD `user_full_name` VARCHAR( 200 ) NOT NULL AFTER `user_name` 
+
+ALTER TABLE `chamber_master` ADD `chamber_footer` TEXT NOT NULL AFTER `chamber_header` 
+
+CREATE TABLE `doctor_master` (
+`doctor_id` INT NOT NULL AUTO_INCREMENT ,
+`doctor_full_name` VARCHAR( 100 ) NOT NULL ,
+`doctor_address` VARCHAR( 400 ) NOT NULL ,
+`doctor_degree` VARCHAR( 400 ) NOT NULL ,
+`doctor_affiliation` VARCHAR( 400 ) NOT NULL ,
+`doctor_email` VARCHAR( 100 ) NOT NULL ,
+`doctor_mobile` INT NOT NULL ,
+`doctor_secondery_contact` INT NOT NULL ,
+`doc_reg_num` VARCHAR( 100 ) NOT NULL ,
+PRIMARY KEY ( `doctor_id` )
+) ;
+
+
