@@ -5,8 +5,10 @@
    <!-- Bootstrap -->
     <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="bootstrap-3.3.7-dist/assets/js/docs.min.js"></script>
-
+	<!-- jquery UI -->
 	<script src="jquery/ui/jquery-ui.js"></script>
-	
+	<!-- jquery validator -->
+	<script src="media/js/jquery.validate.js"></script>
 	<script src ="js/makeprescription.js"></script>
+	
    <!-- Datatable -->

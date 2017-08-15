@@ -1,12 +1,11 @@
-<?php include "header.html"; ?> 
-<?php include "classes/admin_class.php"; ?>
+<?php include_once "./inc/datacon.php";
+include_once "./inc/header.php";
+include_once "classes/admin_class.php";
+?>
 
-    <?php include "datacon.php"; ?>
     
     <body>
-        <!--BEGIN wrapper-->
-        <div id="wrapper">
-            
+     
             <div class="container">
         
             <?php include "doc_header.php"; ?> 
@@ -298,11 +297,13 @@
             <!--END of submit button-->
                       
             <!--BEGIN footer-->
-           <?php include "footer_pg.html"; ?> 
+           <?php include "footer_pg.html"; 
+           ?> 
             <!--END of footer-->
             
-            </div>
-        </div>
-        <!--END of wrapper-->
+            </div><!-- End container -->
+        
+
+        <?php include_once './inc/footer.php';?>
     </body>
 </html>

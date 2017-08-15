@@ -1,6 +1,7 @@
-<?php ob_start() ?>
-<?php include "header.html"; ?>
-
+<?php include_once "./inc/datacon.php";
+include_once "./inc/header.php";
+include_once "classes/admin_class.php";
+?> 
 <script type="text/javascript">
    function myFocus(element) {
      if (element.value == element.defaultValue) {
@@ -63,7 +64,7 @@
 </script>
 <script>
 
-$(function() {
+$(document).ready(function(){
 		$( "#datepicker" ).datepicker({
 			changeMonth: true,
 			changeYear: true,
@@ -73,6 +74,7 @@ $(function() {
 			dateFormat: "dd-mm-yy",
 			yearRange: "c-100:c+1"
 		});
+		
 	});
 
 </script>
@@ -84,14 +86,12 @@ $(function() {
     
 <!--BEGIN wrapper-->
 <?php 
-include "datacon.php";
 if(isset($_SESSION['user_type'])) {
 /*if($_SESSION['user_type'] == 'DOCTOR'){
     header("location:visit_list.php");
 } else if($_SESSION['user_type'] == 'RECEPTIONIST'){*/
 ?>
 
-<div id="wrapper">
 	<div class="container">
     <!--BEGIN header-->
     <?php include("banner.php"); ?>
@@ -100,32 +100,43 @@ if(isset($_SESSION['user_type'])) {
     <!--BEGIN details-->
     <div class="invest">    
     	<div class="headings"><img src="images/Briefcase-Medical.png" />&nbsp;Patient Details</div>
-        <div class="invest_inner">        
+        <div class="div_visit_list">     
         
-            <div id="tabvanilla" class="widget">            
-                <ul class="tabnav">
+        	<div id="tabs" >
+        		 <ul class="tabnav">
                     <li><a href="#tab2">Search Patient</a></li>
 					<li><a href="#tab1">Add New Patient</a></li>
                 </ul>
-            
-                <!--BEGIN tab2-->
+        		 <!--BEGIN tab2-->
                 <div id="tab2" class="tabdiv">
                 	
                     
+                    <form class="form-horizontal">
+                      <div class="alert alert-danger" role="alert" id="search_alert" hidden="true">
+				        
+				      </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Patient ID</label>
+					    <div class="col-sm-2">
+					      <input type="number" class="form-control" id="s_p_id" name="patient_id" placeholder="Patient ID">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputPassword3" class="col-sm-2 control-label">Patient Name</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="s_p_name" name="patient_name" placeholder="Patient name">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					    	<input type="button" id="search" class="btn btn-default"  value="Search" name="search" >
+					    </div>
+					  </div>
+					</form>
                     
-                    <!--BEGIN search-->
-                    <div class="patientDetails">
-                                      
-                    	<span><p>Patient ID</p><input id="s_p_id" name="patient_id" type="text" class="input_box_add" value="" /></span>                
-                    	<span><p>Patient Name</p><input id="s_p_name" name="patient_name" type="text" class="input_box_big" value="" /></span>               
-                        <span><p>&nbsp;</p><input type="submit" value="Search" name="search" class="btn" onclick="search1();" /></span>
-                        
-                    
-                    </div>
-                    <!--END of search-->
                     
                     <!--BEGIN search results-->
-                    <div class="searchResults" id="searchDiv">
+                    <div id="searchDiv">
                     
                         <!--RESULT OF SEARCH -->
 
@@ -135,139 +146,161 @@ if(isset($_SESSION['user_type'])) {
                     
                 </div>
                 <!--END of tab2-->
-				
-				<!--BEGIN tab1-->
+                <!--BEGIN tab1-->
                 <div id="tab1" class="tabdiv">
                     
                    <!-- If Doctor-->
                    <?php if($_SESSION['user_type'] == 'DOCTOR'){ ?>
                    <!--BEGIN form-->
-                    <div class="patientDetails">
-                        <form action="./ajax/add_patient.php" method="get">
-                    	<span><p>Gender</p>
-                            <select type="text" name="sex" id="sex">
+                   <form id="doc_create_form" class="form-horizontal" >
+                      <div class="alert alert-danger" role="alert" id="search_alert_1" hidden="true">
+				        
+				      </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+					    <div class="col-sm-2">
+					      <select class="form-control" name="sex" id="sex">
                             <option value="0">--SELECT--</option>
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
                             
                         </select>
-                        </span>                    
-                    	<span><p>Name</p><input type="text" name="patient_name" id="patient_name" ></input></span>                
-                    	<!--<span><p>Last Name</p><input name="lname" type="text" class="input_box_big" value="" /></span>-->                
-                    	<!--<span><p>Date of Birth</p>
-                            <input id="datepicker" name="theDate" type="text" class="input_box_add" value="DD-MM-YYYY" onfocus="myFocus(this);" onblur="myBlur(this);" /></span> -->               
-                    	<span><p>Age</p><input type="text" name="age" id="age"></input></span>   
-                        <span><p>Mobile No</p><input type="text" name="cell" id="cell"></input></span>                
-                    	<!--<span><p>Landline No</p><input name="altcellnum" type="text" class="input_box_add" value="" /></span>-->                  
-                    	<!--<span><p>Address</p><textarea name="addr" id ="address" cols="" rows=""></textarea></span>-->
-                    	                        
-                    	<!--<span><p>City / Town</p><input name="city" type="text" class="input_box_big" value="" /></span>        -->        
-                    	<!--<span><p>Email Address</p><input name="email" type="text" class="input_box_big" value="" /></span>           -->
-                    	<span><p>&nbsp;</p>
-                            
-                        <input name="ADD" id="ADD_PATIENT" type="submit" class="btn" value="ADD" onclick="addPatient()"/></span>
-                    
-                        </form>
-                    </div>
-                    <!--END of form-->
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="patient_name" class="col-sm-2 control-label">Patient Name</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" id="patient_name" name="patient_name" placeholder="Enter Name">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="age" class="col-sm-2 control-label">Age</label>
+					    <div class="col-sm-2">
+					      <input type="number" class="form-control" name="age" id="age" placeholder="Age">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="cell" class="col-sm-2 control-label">Phone number</label>
+					    <div class="col-sm-6">
+					      <input type="tel" class="form-control" name="cell" id="cell" placeholder="Mobile number">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					    	<input type="button" id="add" class="btn btn-default"  value="ADD" name="ADD" >
+					    </div>
+					  </div>
+					</form>
+                   <!--END of form-->
+                   <div class="alert alert-info" role="alert" id="create_result" hidden="true">
+				        
+				   </div>
+                   
+                   
                     
                     <?php }  else if($_SESSION['user_type'] == 'RECEPTIONIST'){?>
                     
-                    <form id="form1" name="form1" method="post" action="<?php $_SERVER['PHP_SELF']; ?>" onsubmit="return check()">
-                    <?php
-					if(isset($_POST['CREATE_PATIENT_DATA'])){
-						include("inc/config.php");
-						$gender = $_POST['gender'];
-                                                $fname = $_POST['fname'];
-						$lname = $_POST['lname'];
-						$addr = $_POST['addr'];
-						$city = $_POST['city'];
-						//$dob =  $_POST['theDate'];
-                                                                                                
-						$cellnum = $_POST['cellnum'];
-						$altcellnum = $_POST['altcellnum'];
-						$email = $_POST['email'];
-						$dob = date("Y-m-d", strtotime($_POST['theDate']));
-                                                
-						$sql1 = "insert into patient (GENDER,patient_first_name, 	
-                                                        patient_last_name, patient_address, patient_city, patient_dob, patient_cell_num,
-							patient_alt_cell_num, patient_email, data_entry_date) 
-                                                        values('$gender','$fname', '$lname', '$addr', '$city', '$dob' ,'$cellnum', '$altcellnum', '$email', NOW())";
-						mysql_query($sql1) or die(mysql_error());
-						
-						$id = mysql_insert_id();
-						//$sql2 = "insert into visit (PATIENT_ID, VISIT_DATE, APPOINTMENT_TO_DOC_NAME) values('$id', NOW(), '')";
-						//mysql_query($sql2) or die(mysql_error());
-						//$visit_id = mysql_insert_id();
-						
-						/*$sql3 = "insert into patient_health_details_by_receptionist (patient_id) values('$id')";
-						mysql_query($sql3) or die(mysql_error());*/
-						
-						echo "<div class='b_success'>$fname $lname data saved successfully<br><h2><a href='processData.php?patient_id=$id'>OK</a></h2></div>";
-					}else{
-					?>    
-                    <!--BEGIN form-->
-                    <div class="patientDetails">
+                      
                     
-                    	<span><p>Gender</p>
-                            <select name="gender" class="drop_box_small" style="width:80px;">
-                                <option>Select</option>
-                                <option>Male</option>
-                                <option>Female</option>
-                            </select>
-                        </span>                    
-                    	<span><p>First Name</p><input name="fname" type="text" class="input_box_big" value="" /></span>                
-                    	<span><p>Last Name</p><input name="lname" type="text" class="input_box_big" value="" /></span>                
-                    	<span><p>Date of Birth</p>
-                            <input id="datepicker" name="theDate" type="text" class="input_box_add" value="DD-MM-YYYY" onfocus="myFocus(this);" onblur="myBlur(this);" /></span>                
-                    	<span><p>Mobile No</p><input name="cellnum" type="text" class="input_box_add" value="" /></span>                
-                    	<span><p>Landline No</p><input name="altcellnum" type="text" class="input_box_add" value="" /></span>                  
-                    	<span><p>Street Address</p><textarea name="addr" cols="" rows=""></textarea></span>            
-                    	                        
-                    	<span><p>City / Town</p><input name="city" type="text" class="input_box_big" value="" /></span>                
-                    	<span><p>Email Address</p><input name="email" type="text" class="input_box_big" value="" /></span>           
-                    	<span><p>&nbsp;</p><input name="CREATE_PATIENT_DATA" id="MAKE" type="submit" class="btn" value="Add" /></span>
                     
-                    </div>
-                    <!--END of form-->
-                    <?php }?>
-                 </form>
+                    <form id="create_rec_form" class="form-horizontal" >
+                      <div class="alert alert-danger" role="alert" id="search_alert_2" hidden="true">
+				        
+				      </div>
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label">Gender</label>
+					    <div class="col-sm-2">
+					      <select class="form-control" name="sex" id="gender">
+                            <option value="0">--SELECT--</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            
+                        </select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="fname" class="col-sm-2 control-label">First Name</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" name="fname" id="fname" placeholder="Enter First Name">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="lname" class="col-sm-2 control-label">Last Name</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" name="lname" id="lname" placeholder="Enter Last Name">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="theDate" class="col-sm-2 control-label">Date of Birth</label>
+					    <div class="col-sm-2">
+					      <input type="date" class="form-control" name="theDate" id="theDate" placeholder="Enter Date of Birth">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="cellnum" class="col-sm-2 control-label">Mobile number</label>
+					    <div class="col-sm-6">
+					      <input type="tel" class="form-control" name="cellnum" id="cellnum" placeholder="Enter Mobile number">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="altcellnum" class="col-sm-2 control-label">Landline number</label>
+					    <div class="col-sm-6">
+					      <input type="tel" class="form-control" name="altcellnum" placeholder="Enter Landline number">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="lname" class="col-sm-2 control-label">Street Address</label>
+					    <div class="col-sm-6">
+					    	
+					    	<textarea class="form-control" name="addr" placeholder="Enter Address"></textarea>
+					      
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="lname" class="col-sm-2 control-label">City/Town</label>
+					    <div class="col-sm-6">
+					      <input type="text" class="form-control" name="city" placeholder="Enter City/Town">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="lname" class="col-sm-2 control-label">E-Mail</label>
+					    <div class="col-sm-6">
+					      <input type="email" class="form-control" name="email" placeholder="Enter E-Mail">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					    	<input type="button" name="CREATE_PATIENT_DATA" id="add_by_recption" class="btn btn-default"  value="ADD" name="ADD" >
+					    </div>
+					  </div>
+					</form>
+                   <!--END of form-->
+                   <div class="alert alert-info" role="alert" id="create_r_result" hidden="true">
+				        
+				   </div>
+                    
+                   
                    <?php } ?>
                 </div>
                 <!--END of tab1-->
-            
+                <div class="clearfix">..</div>
                 <div align="center"><a href="visit_list.php">Click Here to go to VISIT LIST</a></div>
-            
-            </div>   
+        	</div>   
+        
+           
         </div>
     
     </div>
     <!--END of details-->
     
-    <!--BEGIN footer-->
-    <div class="footer">
-    	
-        <!--BEGIN footer left-->
-        <div class="f_left">
-        &copy; 2012 <b>Prescription</b>
-        </div>
-        <!--END of footer left-->
-    	
-        <!--BEGIN footer right-->
-        <div class="f_right">
-        Developed by : <b>P.G.Infoservices</b>
-        </div>
-        <!--END of footer right-->
-            
-    </div>
-    <!--END of footer-->
+   <?php include "footer_pg.php"; ?>
     
-	</div>
-</div>
-<!--END of wrapper-->
+	</div><!-- End container-->
+
 <?php } /*}*/ else {
      header("location:index_login.php");
 }
+include_once './inc/footer.php';
 ?>
 </body>
 </html>

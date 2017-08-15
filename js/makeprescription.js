@@ -612,7 +612,93 @@ $(document).ready(function(){
 	      }
 	  }); 
 	  $( "#tabs" ).tabs();
-        
+	  $("#search").click(function(){     
+		  if(!$("#s_p_id").val() && !$("#s_p_name")){
+			  
+			  $("#search_alert").html("Enter either Patient name or Patient ID");
+			  $("#search_alert").show();
+		  } else {
+          var url = "./ajax/searchPatient.php?mode=SEARCH_PATIENT&patient_id="+$("#s_p_id").val()+"&patient_name="+$("#s_p_name").val();
+		  $.ajax({url: url, success: function(result){
+		        $("#searchDiv").html(result);
+		        $("#search_alert").hide();
+		    }});
+		  }
+		  
+		});
+	  
+	  $("#search").click(function(){     
+		  if(!$("#s_p_id").val() && !$("#s_p_name").val() ){
+			  
+			  $("#search_alert").html("Enter either Patient name or Patient ID");
+			  $("#search_alert").show();
+		  } else {
+          var url = "./ajax/searchPatient.php?mode=SEARCH_PATIENT&patient_id="+$("#s_p_id").val()+"&patient_name="+$("#s_p_name").val();
+		  $.ajax({url: url, success: function(result){
+		        $("#searchDiv").html(result);
+		        $("#search_alert").hide();
+		    }});
+		  }
+		  
+		});
+	  $("#add").click(function(){     
+		  
+		    var patient_name = document.getElementById("patient_name").value;
+		    var sex = document.getElementById("sex").value;
+		    var age = document.getElementById("age").value;
+		    var cell = document.getElementById("cell").value;
+		    
+		    if(!$("#patient_name").val() || !$("#sex").val() || !$("#age").val() || !$("#cell").val() ){
+		    	$("#search_alert_1").html("All fields are mandatory");
+				  $("#search_alert_1").show();
+				  $("#create_result").hide()
+		    } else {
+		    	var url = "./ajax/add_patient.php?patient_name="+$("#patient_name").val()+"&sex="+$("#sex").val()+"&age="+$("#age").val()+"&cell="+$("#cell").val();
+		    	$.ajax({url: url, success: function(result){
+		    		$("#create_result").show();
+		    		
+		    		$("#create_result").html(result);
+			        $("#search_alert_1").hide();
+			        $('#doc_create_form').hide();
+			    }});
+		    	
+		    }  
+		});  
+	  
+	  	$("#add_by_recption").click(function(){
+		  
+		  var url = "./ajax/add_patient.php"; // the script where you handle the form input.
+
+		   
+		    	$("#create_rec_form").submit(function(e) {
+
+				    var url = "./ajax/add_patient.php"; // the script where you handle the form input.
+
+				    
+				    	alert("Submitting the form");
+					    $.ajax({
+				           type: "POST",
+				           url: url,
+				           data: $("#create_rec_form").serialize(), // serializes the form's elements.
+				           success: function(data)
+				           {
+				        	   $("#create_r_result").show();
+					    		
+					    		$("#create_r_result").html(result);
+						        $("#search_alert_2").hide();
+						        $('#doc_create_form').hide();
+				        	   
+				               alert(data); // show response from the php script.
+				           }
+				         });
+				    
+				    e.preventDefault(); // avoid to execute the actual submit of the form.
+				});
+		    //}
+		   
+	  });
+	  
+	  
 });
 
 function getCheckedRadio(elementName) {

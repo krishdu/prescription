@@ -20,7 +20,7 @@
                                 $lastPrescription = $d5['prescription_id'] ;
         ?>
    			
-            <a class="btn btn-info" href="archievedprescription.php?PRESCRIPTION_ID=<?php echo $d5['prescription_id'] ?>&visit_id=<?php echo $d5['visit_id']; ?>&patient_id=<?php echo $d5['PATIENT_ID']; ?>" role="button"><?php echo date("d-m-y", strtotime($d5['VISIT_DATE'])); ?></a>
+            <a target='_blank' class="btn btn-info" href="archievedprescription.php?PRESCRIPTION_ID=<?php echo $d5['prescription_id'] ?>&visit_id=<?php echo $d5['visit_id']; ?>&patient_id=<?php echo $d5['PATIENT_ID']; ?>" role="button"><?php echo date("d-m-y", strtotime($d5['VISIT_DATE'])); ?></a>
             
         
     <?php

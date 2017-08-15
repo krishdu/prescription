@@ -405,6 +405,18 @@ body{
 	padding-top:5px;
 }
 
+.div_visit_list{
+	float:left;
+	width:100%;
+	height:auto;
+	background:#fff;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#555;
+	font-size:14px;
+	font-weight:normal;
+	padding-top:5px;
+}
+
 /* add plus minus section */
 
 .check_fields{
@@ -645,8 +657,7 @@ body{
 	
 .tabdiv {
 	float:left;
-	width:928px;
-	margin-top: 0px;
+	width:100%;
 	background: #fff;
 	border: 1px solid #ddd;
 	padding: 5px;

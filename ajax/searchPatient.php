@@ -18,50 +18,45 @@ if($strPatientName != ""){
 $sql1 = "select * from patient where patient_id != ''".$where;
 $result1 = mysql_query($sql1)or die(mysql_error());
 $no = mysql_num_rows($result1);
-echo "<table width='888' border='0' cellspacing='0' cellpadding='0'>
-        <tr>
-        <td class='bg_tble'>                    
-            <table width='100%' border='0' cellspacing='1' cellpadding='0'>";    
+ 
 if($no > 0){
         
-        echo "<tr>
-        <td class='head_tbl'>Sex</td>
-        <td class='head_tbl'>Patient ID</td>
-        <td class='head_tbl'>First Name</td>
-        <td class='head_tbl'>Last Name</td>
-        <td class='head_tbl'>Date of Birth</td>
-        <td class='head_tbl'>Mobile No</td>
-        
-        <td class='head_tbl'>Street Address</td>
-        
-        <td class='head_tbl'>City / Town</td>
-        <td class='head_tbl'>Email Address</td>
-        <td class='head_tbl'>ACTION</td>
-        </tr>";
+	echo "<table class='table table-hover'>
+	<thead>
+	<tr>
+        <th>Sex</th>
+		<th>Patient ID</th>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<th>Date of Birth</th>
+		<th>Mobile No</th>
+		<th>Street Address</th>
+		<th>City / Town</th>
+		<th>Email Address</th>
+		<th>ACTION</th>
+     </tr></thead>
+	  <tbody>";
         
         
         while($d1 = mysql_fetch_array($result1)){
            echo "<tr>
-                <td class='odd'>".$d1['GENDER']."</td>
-                <td class='odd'><a href='processData.php?patient_id=".$d1['patient_id']."' class='vlink'>".$d1['patient_id']."</a></td>
-                <td class='odd'>".$d1['patient_first_name']."</td>
-                <td class='odd'>".$d1['patient_last_name']."</td>
-                <td class='odd'>".date('d / m / Y', strtotime($d1['patient_dob']))."</td>
-                <td class='odd'>".$d1['patient_cell_num']."</td>
-                <td class='odd'>".$d1['patient_address']."</td>
+                <td>".$d1['GENDER']."</td>
+                <td><a href='processData.php?patient_id=".$d1['patient_id']."' class='vlink'>".$d1['patient_id']."</a></td>
+                <td>".$d1['patient_first_name']."</td>
+                <td>".$d1['patient_last_name']."</td>
+                <td>".date('d / m / Y', strtotime($d1['patient_dob']))."</td>
+                <td>".$d1['patient_cell_num']."</td>
+                <td>".$d1['patient_address']."</td>
                 
-                <td class='odd'>".$d1['patient_city']."</td>
-                <td class='odd'>".$d1['patient_email']."</td>
-                <td class='odd'><a href='editPatient.php?patient_id=".$d1['patient_id']."' class='vlink'>EDIT</a></td>
+                <td>".$d1['patient_city']."</td>
+                <td>".$d1['patient_email']."</td>
+                <td><a href='editPatient.php?patient_id=".$d1['patient_id']."' class='vlink'>EDIT</a></td>
             </tr>";
             
         }
+        echo "</tbody></table>";
     }else{
-            echo "<tr><td colspan='10' align='center' style='color:red'> No Result found.</td></tr>";
+            echo "<div class='alert alert-warning' role='alert'> There is no record with specified query. !!</div>";
     }
-    echo "</table>
-       </td>
-    </tr>
-</table>";
 
 ?>

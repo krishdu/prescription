@@ -1,4 +1,8 @@
-<?php include "header.html"; ?> 
+<?php include_once "./inc/datacon.php";
+include_once "./inc/header.php";
+include_once "classes/admin_class.php";
+?>
+
 
 <script type="text/ecmascript">
     
@@ -22,24 +26,7 @@ function func_print()
 
 </script>    
     
-    
 
-
-  
-<?php
-include "datacon.php";
-include 'classes/admin_class.php';
-
-//$r2 = mysql_query("insert into prescription(VISIT_ID, REFERRED_TO, DIET, NEXT_VISIT, ANY_OTHER_DETAILS) values('', '','', '', '')") or die(mysql_error());
-//$PRESCRIPTION_ID = mysql_insert_id();
-
-
-/*if(!empty($_GET['m_id'])){
-	$id = $_GET['m_id'];
-	mysql_query("delete from precribed_medicine where MEDICINE_ID = '$id'") or die(mysql_error());
-	
-}*/
-?>
 
 <body >
 
@@ -133,7 +120,7 @@ include 'classes/admin_class.php';
 <!--BEGIN wrapper-->
 <div align="center"><a href="logout.php">Logoff</a></div>
 <div id="printArea">
-        <div id="wrapper"  >
+        
             
             <div class="container">
         
@@ -432,8 +419,8 @@ include 'classes/admin_class.php';
             
             </div>
              
-        </div>
-    </div>
+        </div><!-- END of container -->
+		<?php include_once './inc/footer.php';?>
         <!--END of wrapper-->
         <div class="btn_wrap2">
             <a href="visit_list.php" onclick="return func_print();">PRINT</a>    

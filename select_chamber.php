@@ -35,11 +35,14 @@ if(isset($_SESSION['user_type'])) {
 	  <ul class="dropdown-menu">
 	     <?php 
           if($user_type == 'DOCTOR'){
+          		
 	          while($rows = mysql_fetch_array($result)) {
 	          	echo "<li><a href='visit_list.php?chamber_name=".$rows['chamber_id']."'>". $rows['chamber_name']."</a></li>";  
 	          }
           } else if ($user_type == 'RECEPTIONIST'){
-          	echo "<li><a href='create_visit.php?chamber_name=".$rows['chamber_id']."'>". $rows['chamber_name']."</a></li>";  
+	          	while($rows = mysql_fetch_array($result)) {
+	          		echo "<li><a href='visit_list.php?chamber_name=".$rows['chamber_id']."'>". $rows['chamber_name']."</a></li>";
+	          	}
 		  }?>
 	  </ul>
 	</div>
