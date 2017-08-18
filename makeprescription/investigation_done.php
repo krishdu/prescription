@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-md-7"><input type='text' class="form-control" id='investigation' placeholder="Investigation name"/></div>
                 <div class="col-md-3"><input type='text' class="form-control" id='txtPatientInvval' placeholder="Value"/></div>
-                <div class="col-md-2" ><a id='plus7' href='#' onclick="addPatientInvestigation('<?php echo $patient_id ; ?>','<?php echo $visit_id ; ?>')">[+]</a></div> 
+                <div class="col-md-2" ><a href='#' onclick="addPatientInvestigation('<?php echo $patient_id ; ?>','<?php echo $visit_id ; ?>')">[+]</a></div> 
 
     	</div>   
  </div>

@@ -16,10 +16,6 @@ include_once "classes/admin_class.php";
    }
 </script>
 
-
-<script type="text/javascript">
-
-</script>
 </head>
 
 <?php
@@ -40,6 +36,8 @@ $visit_id = $_GET['VISIT_ID'];
 
 
 $PRESCRIPTION_ID = $_GET['PRESCRIPTION_ID'];
+$_SESSION['PRESCRIPTION_ID'] = $PRESCRIPTION_ID;
+$_SESSION['VISIT_ID'] = $visit_id;
 
 
 ?>
@@ -65,8 +63,8 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
             <?php include("banner.php") ?>
             
             <!--END of header-->
-                
-                    
+            <div class="row">
+            <!--START of patient details-->        
                     <div class="inner_name" >
                         
                         #  <?php echo $d1->patient_id; ?>, <?php if($d1->patient_name == null || $d1->patient_name == ""){
@@ -79,25 +77,13 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
                         } ?>
 					(<?php echo $d1->patient_address . ", " . $d1->patient_city; ?>, Ph: <?php echo $d1->patient_cell_num; ?>)
                     </div>
-                    
+             </div>       
            
             <!--END of patient details-->
             
             <form id="form1" name="form1" method="post" action="printprescription.php" onsubmit="return validate();" >
             <!--BEGIN content-->
-            <div class="content">
             
-               <!--BEGIN block FIVE-->
-              
-                
-              <!--END of block FIVE-->
-
-			    <!--BEGIN block FOUR-->
-              
-                
-              <!--END of block FOUR -->
-            
-            </div>
             
            
             <!--END of content-->
@@ -113,7 +99,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
             <!--BEGIN doctor comment/advice section-->
             <div class="diet" style="margin-top: 5px;">    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Comment / Advice</div>
-                <textarea class="form-control" rows="3"></textarea>
+                <textarea class="form-control"  name="other_comment" rows="3"></textarea>
             
             </div>
             <!--END doctor comment/advice section-->
@@ -121,7 +107,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
             <!--BEGIN diet section-->
             <div class="diet" >    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Diet & Lifestyle Recommendation</div>
-                <textarea class="form-control" rows="3">Diet 1600 Kcal/day, Cholesterol < 200 gm /day , Saturated Fat < 7%, Walking at recommended speed for atleast 30 mins/day, Alerted to hypoglycaemia (CBG < 70 y/dl)</textarea>       
+                <textarea class="form-control" name="diet" rows="3">Diet 1600 Kcal/day, Cholesterol < 200 gm /day , Saturated Fat < 7%, Walking at recommended speed for atleast 30 mins/day, Alerted to hypoglycaemia (CBG < 70 y/dl)</textarea>       
                 
             </div>
             

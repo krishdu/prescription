@@ -7,7 +7,7 @@ $admin= new admin();
 $result = $admin->deleteClinicalImpression($PRESCRIPTION_ID,$ci_id);
 
 echo $result;
-echo '<table>';
+
 /*
 if (mysql_affected_rows() > 0){
    echo "<tr><td colspan='2'>". mysql_affected_rows() ." item(s) deleted</td></tr>";
@@ -22,11 +22,16 @@ $q15 = "SELECT b.type, b.ID FROM prescribed_cf a, clinical_impression b
         while($rs = mysql_fetch_array($rsd1)) {
             $type = $rs['type'];
             $cf_d = $rs['ID'];
-            echo "<tr><td style='width: 180px;'>".$type."<a id='minus7' href='#' ></a></td>".
-                "<td><a id='minus7' href='#' onclick='deleteClinicalImpression($cf_d,$PRESCRIPTION_ID)'>[-]</a></td> </tr>" ;
+            echo "<div class='row'>
+            		
+	            <div class='col-md-10'>". $type. "</div>
+					<div class='col-md-2' ><a href='#' class='minus' onclick='deleteClinicalImpression(". $cf_d .",". $PRESCRIPTION_ID.")'>[-]</a>
+				</div>
+									
+				</div>"; 
 
         }
             
         } 
-echo '</table>';
+
 ?>

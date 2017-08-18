@@ -210,7 +210,7 @@ if(isset($_SESSION['user_type'])) {
 					  <div class="form-group">
 					    <label class="col-sm-2 control-label">Gender</label>
 					    <div class="col-sm-2">
-					      <select class="form-control" name="sex" id="gender">
+					      <select class="form-control" name="gender" id="gender">
                             <option value="0">--SELECT--</option>
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
@@ -270,7 +270,7 @@ if(isset($_SESSION['user_type'])) {
 					  </div>
 					  <div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-10">
-					    	<input type="button" name="CREATE_PATIENT_DATA" id="add_by_recption" class="btn btn-default"  value="ADD" name="ADD" >
+					    	<input type="button" id="add_by_recption" class="btn btn-default"  value="ADD" name="ADD" >
 					    </div>
 					  </div>
 					</form>

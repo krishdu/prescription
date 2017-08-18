@@ -36,7 +36,7 @@ if( (isset($_SESSION['user_type']) && isset($_GET['chamber_name'])) || (isset($_
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="visit_list_body">
 <?php 
 
 $result = mysql_query("SELECT a.visit_id, b.patient_id, a.visited, b.patient_first_name,
@@ -61,7 +61,7 @@ while ($row = mysql_fetch_array($result)) {
                     <td><?php echo $row['patient_cell_num']; ?></td>
                     <td><?php echo date("d / m / Y", strtotime($row['VISIT_DATE'])); ?></td>
                     <td><?php echo date("h:i A", strtotime($row['VISIT_DATE'])); ?></td>
-                    <td><button type="button" class="btn btn-warning" onclick="removeVisit('<?php echo $row['visit_id']; ?>')">Cancel Booking</button> </td>
+                    <td><a class="btn btn-warning" href="./ajax/removevisit.php?VISIT_ID=<?php echo $row['visit_id']; ?>" role="button">Cancel Booking</a></td>
                 </tr>
     <?php
     $count = $count+1;

@@ -1,68 +1,73 @@
-<?php include_once "./inc/datacon.php";
-include_once "./inc/header.php";
-include_once "classes/admin_class.php";
+<?php include_once "./inc/datacon.php"; ?>
+<?php
+if(isset($_SESSION['user_type']) ){
+if(isset($_GET['PRESCRIPTION_ID'])){
+
 ?>
 
-    
-    <body>
-     
-            <div class="container">
+ 
+<?php include_once "./inc/header_print.php";?>
+
+
+<body>
+            <div class="container" id="printArea">
         
-            <?php include "doc_header.php"; ?> 
+            <!--BEGIN header-->
+            <?php 
             
-            <!--BEGIN pateint details-->
-            <div class="details">
-                <?php
-                    
-                
-                $query  = "select a.visit_id, c.patient_id, c.GENDER, c.patient_first_name, 
-                        c.patient_last_name, c.patient_address, c.patient_city, c.patient_dob, 
-                        c.patient_cell_num, c.patient_alt_cell_num, c.patient_email , b.visit_date
-                        from prescription a, visit b, patient c 
-                        where a.visit_id = b.visit_id 
-                        and b.patient_id=c.patient_id 
-                        and prescription_id = '".$_GET['PRESCRIPTION_ID']."'";
-                
-               $rsd1 = mysql_query($query)  or die(mysql_error());    
-                
-                while($d1 = mysql_fetch_object($rsd1) ) {
-                    
-                ?>
-                <div class="content">
-                    <!--BEGIN pateint details-->
-                    <div class="inner_id" style="margin-right:12px; margin-left:12px;">
-                        <?php echo $d1->patient_id; ?>
-
-                    </div>
-                    <div class="inner_sex" style="margin-right:12px; margin-left:12px;">
-                        <?php echo $d1->GENDER ?>
-
-                    </div>
-                    <div class="inner_age" style="margin-right:12px; margin-left:12px;">
-                        <?php 
-                        $update= new admin(); 
-                        print $update->calcAge1($d1->patient_dob, $d1->visit_date) ; ?>
-
-                    </div>
-                    
-                </div>   
-                <!--BEGIN pateint details-->
-            <div class="details">
+            include_once "classes/admin_class.php"; 
+	            $update= new admin();
+	            $prescription_id = $_GET['PRESCRIPTION_ID'];
+	            $d1 = $update->getPatientInformationforArchievePrescription($prescription_id);
+	            $_SESSION['visit_date'] = $d1->VISIT_DATE;
+	            $chamber_id = $_SESSION['chamber_name'];
+	            
+	            $admin_obj = new admin();
+	            
+	            $obj = $admin_obj->getChamberDetails($chamber_id);
+            ?>
             
-                <div class="del_col_in"><?php echo $d1->patient_first_name." ".$d1->patient_last_name; ?></div>
-                
-                <div class="del_col"><?php echo $d1->patient_address . ", " . $d1->patient_city; ?></div>
-                <div class="del_col_in">Ph: <?php echo $d1->patient_cell_num; ?></div>
-                
             
-            </div>
-                <?php } ?>
-            </div>
-            <!--END of patient details-->
-           
-           
-            <!--BEGIN content-->
             <div class="content">
+	        <div class="col-md-8-print"> 
+	        	<div id='prescription_doc_name'>Dr. Soumyabrata Roy Chowdhuri</div>
+	            MBBS, * Masters in Diabetology<br>
+				*Post Graduate Diplomate in Geriatric Medicine<br>
+				*Post Graduate Certification in Diabetes & Endocrinology<br>
+				 (Univ. of New Castle, Australia)<br>
+				PHYSICIAN - Diabetes, Endocrine & Metabolic Disorders<br>
+				Department of Endocrinology KPC Medical College & Hospitals<br>
+			</div>
+	        <div class="col-md-4-print"><b>Membership & Affiliations</b>:<br> ADA- American Diabetes Association <br>
+				EASD- European Association for Study of Diabetes<br/>
+	            *RCPS &* RCGP [UK](INTL AFFILATE)<br>
+				Endocrine Society (US)<br>
+	            
+	            <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>+91.9830047300 (M)</b><br/>
+				<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>033-40704046 (Chamber)</b><br/>
+	            <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>soumya.askme@gmail.com</b><br/>
+	            
+	        </div>
+	      </div>
+          <!--END of header-->
+          <!-- Begin Patient Details -->
+          <div class="inner_name" >
+                        
+                        #  <?php echo $d1->patient_id; ?>, <?php if($d1->patient_name == null || $d1->patient_name == ""){
+                            echo $d1->patient_first_name." ".$d1->patient_last_name; } else { echo $d1->patient_name ; }?>, <?php echo $d1->GENDER ?>, <?php 
+                        
+                        if($d1->age == 0){
+                            print $update->calcAge1($d1->patient_dob, $d1->VISIT_DATE) ;
+                        }else {
+                            echo $d1->age;
+                        } ?>
+					(<?php echo $d1->patient_address . ", " . $d1->patient_city; ?>, Ph: <?php echo $d1->patient_cell_num; ?>)
+          </div>
+            
+           <!-- End Patient Details -->
+           
+           
+           <div class="row">
             
                 <!--BEGIN block one-->
                 <div class="block"> 
@@ -154,19 +159,17 @@ include_once "classes/admin_class.php";
                 
               </div>
               <!--END of block three-->
-              
-              
-              
+
               
             
             </div>
             <!--END of content-->
             
+            
             <!--BEGIN rx section-->
             
-            <div class="rx">    
-                <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Rx (Prescription)</div>
-                <div class="rx_inner">        
+            <div class="invest_rx"><div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Rx (Prescription)</div>    
+                <div class="col-xs-12 .col-sm-6 .col-lg-8">      
                 
                     <?php
                         $q11 = "SELECT * FROM precribed_medicine WHERE PRESCRIPTION_ID = '".$_GET['PRESCRIPTION_ID']."'";
@@ -175,31 +178,35 @@ include_once "classes/admin_class.php";
                             $result = mysql_query($q11) or die(mysql_error()); 
                     ?>
                     
-                    <table width="720" border="0" cellspacing="1" cellpadding="1" id="datatable">
+                    <table class="table table-striped">
+                          <thead>
+				              <tr>
+				                <th>#</th>
+				                <th>Medicine's Names</th>
+				                
+				                <th>Direction</th>
+				                
+				              </tr>
+				            </thead>
+                          	<tbody>
+                          	
+                          	
+                            <?php $count=1;
+                            while($rs = mysql_fetch_array($result)) { 
+                            ?>
                           <tr>
-                            <td class="head_tbl" width="207">Medicine's Names</td>
-                            <td class="head_tbl" align="left" width="149">Dose Details</td>
-                            <td class="head_tbl" align="left" width="150">Direction</td>
-                            <td class="head_tbl" align="left" width="150">Timing</td>
+                          <td><?php echo $count; ?></td>
+                            <td><?php echo $rs['MEDICINE_NAME'] ?></td>
                             
-							</td>
-                          </tr>
-                          <tr>
-                          	<td  id="medicine" colspan="5">
-                            	
-                            </td>
-                          </tr>
-                            <?php while($rs = mysql_fetch_array($result)) { ?>
-                          <tr>
-                            <td class="odd_tb"><?php echo $rs['MEDICINE_NAME'] ?></td>
-                            <td class="odd_tb"><?php echo $rs['MEDICINE_DIRECTION'] ?></td>
-                            <td class="odd_tb"><?php echo $rs['MEDICINE_DOSE'] ?></td>
-                            <td class="odd_tb" ><?php echo $rs['MEDICINE_TIMING'] ?></td>
-                            <td>
+                            <td><?php echo $rs['MEDICINE_DOSE'] ?></td>
+                           
+                          <td>
                            
                             
                           </tr>
-                            <?php } ?>
+                            <?php $count = $count+1; } ?>
+                          	</tbody>
+                          
                         </table> 
                     
                 </div>
@@ -224,7 +231,7 @@ include_once "classes/admin_class.php";
                     }
                 ?>
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Other Advice (if any)</div>
-                <div class="diet_inner"> <?php echo $other_comment; ?>  </textarea>
+                <div class="invest_inner"> <?php echo $other_comment; ?>  </textarea>
                 </div>
             
             </div>
@@ -272,7 +279,7 @@ include_once "classes/admin_class.php";
            
             <div class="diet">    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Diet & Lifestyle Recommendation</div>
-                <div class="diet_inner">        
+                <div class="invest_inner">        
                 <?php echo $diet1; ?>
                 </div>
             
@@ -280,7 +287,7 @@ include_once "classes/admin_class.php";
             
             <div class="diet">    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Patient's Next Visit</div>
-                <div class="diet_inner">        
+                <div class="invest_inner">        
                 <?php echo $nextvisit1; ?>
                 </div>
             
@@ -297,12 +304,50 @@ include_once "classes/admin_class.php";
             <!--END of submit button-->
                       
             <!--BEGIN footer-->
-           <?php include "footer_pg.html"; 
-           ?> 
-            <!--END of footer-->
             
-            </div><!-- End container -->
+            <?php 
+	$chamber_id = $_SESSION['chamber_name'];
+	$user_id = $_SESSION['chamber_name'];
+	
+	$admin_obj = new admin();
+	
+	$obj = $admin_obj->getChamberDetails($chamber_id);
+	$objDoc = $admin_obj->getDoctorDetails($user_id);
+	//fetch the header information
+	$docname = $objDoc->doctor_full_name;
+	$reg_num = $objDoc->doc_reg_num;
+	$footer = $obj->chamber_footer;
+	$visit_date = $_SESSION['visit_date'];
+	
+	?>
+	
+<div class="row2">
+        <div class="col-md-8-print"> Date : <?php echo $visit_date; ?></div>
+        <div class="col-md-4-print" align="right"><b>(<?php echo $docname; ?>) </b><br>Reg. No. # <?php echo $reg_num; ?></div>
+</div>	
+<div class="row">
+      
+      <div class="alert alert-info" role="alert">
+        <strong><?php echo $footer;?></strong>
+      </div>
+      
+     
+</div><!--END of footer-->
+</div><!-- End container -->
+
+            <div class="content" align="center">
         
+		        <input class="btn btn-success" type="button" id="print_arch_pres" value="Print" onclick="return func_print('<?php echo $docname; ?>');">
+			</div>
+           <?php 
+}  
+
+}else {
+echo "Please logout and login again.";
+}?> 
+            
+            
+        	 
 
         <?php include_once './inc/footer.php';?>
     </body>

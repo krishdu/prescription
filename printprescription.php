@@ -1,46 +1,26 @@
-<?php include_once "./inc/datacon.php";
-include_once "./inc/header.php";
-include_once "classes/admin_class.php";
+<?php include_once "./inc/datacon.php"; ?>
+<?php
+if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset($_SESSION['VISIT_ID'])){
+	$VISIT_ID = $_SESSION['VISIT_ID'];
+	$PRESCRIPTION_ID = $_SESSION['PRESCRIPTION_ID'];
 ?>
 
-
-<script type="text/ecmascript">
-    
-function func_print()
-{ 
-  var disp_setting="toolbar=no,location=no,directories=yes,menubar=no,"; 
-      disp_setting+="scrollbars=yes, width=900, height=600, resize=yes"; 
-  var content_vlue = document.getElementById("printArea").innerHTML; 
-  
-  var docprint=window.open("","",disp_setting); 
-   docprint.document.open(); 
-   docprint.document.write('<html><head><title>:: Dr. Soumyabrata Roy Chaudhuri :: Prescription Management</title>'); 
-   docprint.document.write('<link href="css/style.css" rel="stylesheet" type="text/css">');
-   docprint.document.write('<link rel="stylesheet" href="jquery/demos/demos.css" />');
-   docprint.document.write('</head><body onLoad="self.print()">');          
-   docprint.document.write(content_vlue);          
-   docprint.document.write('</body></html>'); 
-   docprint.document.close(); 
-   docprint.focus(); 
-}
-
-</script>    
-    
-
+ 
+<?php include_once "./inc/header_print.php";?>
 
 <body >
 
 <?php
     
     if(isset($_POST['MAKE_PRESCIPTION'])){ 
-    $VISIT_ID = $_POST['VISIT_ID'];
+    
     //$referred_to = $_POST['referred_to'];
     $diet = $_POST['diet'];
     
     //$nextvist = date("Y-m-d", strtotime($_POST['nextvisit']));
     $next_visit = "After ".$_POST['nextvisit']." Weeks";
     //$comments = $_POST['comments'];
-    $PRESCRIPTION_ID = $_POST['PRESCRIPTION_ID'];
+    
     $patient_id = $_POST['patient_id'];
     $visit_id = $_POST['VISIT_ID'];
     $other_comment = $_POST['other_comment'];
@@ -65,9 +45,9 @@ function func_print()
 
         mysql_query($udateQueryforph);
     }
-    
+    $oth_comnt = mysql_real_escape_string($other_comment);
     mysql_query("update prescription set VISIT_ID = '$VISIT_ID',DIET = '$diet', NEXT_VISIT = '$next_visit', 
-                STATUS ='SAVE', ANY_OTHER_DETAILS='$other_comment' where PRESCRIPTION_ID = '$PRESCRIPTION_ID' and STATUS='DRAFT'") or die(mysql_error());
+    		STATUS ='SAVE', ANY_OTHER_DETAILS='$oth_comnt' where PRESCRIPTION_ID = '$PRESCRIPTION_ID' and STATUS='DRAFT'") or die(mysql_error());
     
    
     if (isset($_POST['inv'])) {
@@ -119,79 +99,69 @@ function func_print()
 ?>
 <!--BEGIN wrapper-->
 <div align="center"><a href="logout.php">Logoff</a></div>
-<div id="printArea">
+
         
             
-            <div class="container">
+            <div class="container" id="printArea">
         
-           <?php include "doc_header.php"; ?> 
+           <!--BEGIN header-->
+            <?php 
+            
+            include_once "classes/admin_class.php"; 
+	            $update= new admin();
+	            
+	            $d1 = $update->getPatientInformationforArchievePrescription($PRESCRIPTION_ID);
+	           
+	            $chamber_id = $_SESSION['chamber_name'];
+	            
+	            $admin_obj = new admin();
+	            
+	            $obj = $admin_obj->getChamberDetails($chamber_id);
+            ?>
             
             
-                <?php
-                    
-                
-                $query  = "select a.visit_id, c.patient_id, c.GENDER, c.patient_first_name, 
-                        c.patient_last_name, c.patient_address, c.patient_city, c.patient_dob, 
-                        c.patient_cell_num, c.patient_alt_cell_num, c.patient_email, c.age , b.visit_date
-                        from prescription a, visit b, patient c 
-                        where a.visit_id = b.visit_id 
-                        and b.patient_id=c.patient_id 
-                        and prescription_id = '".$_POST['PRESCRIPTION_ID']."'";
-                
-                $rsd1 = mysql_query($query)  or die(mysql_error());    
-                
-                while($d1 = mysql_fetch_object($rsd1) ) {
-                    
-                ?>
-                
-             <div class="content">
-                    <!--BEGIN pateint details-->
-                    <div class="inner_id" style="margin-right:12px; margin-left:12px;">
-                        <?php echo $d1->patient_id; ?>
-
-                    </div>
-                    <div class="inner_name" style="margin-right:12px; margin-left:12px;">
-                        <?php echo $d1->patient_first_name." ".$d1->patient_last_name; ?>
-
-                    </div>
-                    <div class="inner_sex" style="margin-right:12px; margin-left:12px;">
-                        <?php echo $d1->GENDER ?>
-
-                    </div>
-                    <div class="inner_age" style="margin-right:12px; margin-left:12px;">
-                       
+            <div class="content">
+	        <div class="col-md-8-print"> 
+	        	<div id='prescription_doc_name'>Dr. Soumyabrata Roy Chowdhuri</div>
+	            MBBS, * Masters in Diabetology<br>
+				*Post Graduate Diplomate in Geriatric Medicine<br>
+				*Post Graduate Certification in Diabetes & Endocrinology<br>
+				 (Univ. of New Castle, Australia)<br>
+				PHYSICIAN - Diabetes, Endocrine & Metabolic Disorders<br>
+				Department of Endocrinology KPC Medical College & Hospitals<br>
+			</div>
+	        <div class="col-md-4-print"><b>Membership & Affiliations</b>:<br> ADA- American Diabetes Association <br>
+				EASD- European Association for Study of Diabetes<br/>
+	            *RCPS &* RCGP [UK](INTL AFFILATE)<br>
+				Endocrine Society (US)<br>
+	            
+	            <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>+91.9830047300 (M)</b><br/>
+				<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>033-40704046 (Chamber)</b><br/>
+	            <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>soumya.askme@gmail.com</b><br/>
+	            
+	        </div>
+	      </div>
+          <!--END of header-->
+          <!-- Begin Patient Details -->
+          <div class="inner_name" >
                         
-                         <?php 
-                        $update= new admin(); 
+                        #  <?php echo $d1->patient_id; ?>, <?php if($d1->patient_name == null || $d1->patient_name == ""){
+                            echo $d1->patient_first_name." ".$d1->patient_last_name; } else { echo $d1->patient_name ; }?>, <?php echo $d1->GENDER ?>, <?php 
                         
                         if($d1->age == 0){
-                            print $update->calcAge1($d1->patient_dob, $d1->visit_date) ; 
+                            print $update->calcAge1($d1->patient_dob, $d1->VISIT_DATE) ;
                         }else {
                             echo $d1->age;
-                        }
-                        ?>
-                            
-                    </div>
-                    <!-- END Patient Details -->
-                
-             </div>  
-                <!--BEGIN pateint details-->
-             <div class="details">
+                        } ?>
+					(<?php echo $d1->patient_address . ", " . $d1->patient_city; ?>, Ph: <?php echo $d1->patient_cell_num; ?>)
+          </div>
             
-                              
-                <div class="del_col"><?php echo $d1->patient_address . ", " . $d1->patient_city; ?></div>
-                <div class="del_col_in">Ph: <?php echo $d1->patient_cell_num; ?></div>
-                
-            
-            </div>
-            <!--END of patient details-->
-                
-                <?php } ?>
+           <!-- End Patient Details -->
             
            
            
             <!--BEGIN content-->
-            <div class="content">
+            <div class="row">
             
                 <!--BEGIN block one-->
                 <div class="block" > 
@@ -216,7 +186,7 @@ function func_print()
                 </div>
                 
                 <!--BEGIN block two-->
-                <div class="block" style="margin-right:12px; margin-left:12px;">
+                <div class="block" >
                     <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Investigation Done</div>
                     <div class="inner">
                         <table>
@@ -295,10 +265,52 @@ function func_print()
             
             </div>
             <!--END of content-->
+            <!--BEGIN rx section-->
+            
+            <div class="invest_rx">    
+                <div class="headings" ><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Rx (Prescription)</div>
+                <div class="col-xs-12 .col-sm-6 .col-lg-8">        
+                
+                    <?php
+                        $q11 = "SELECT * FROM precribed_medicine WHERE PRESCRIPTION_ID = '".$_POST['PRESCRIPTION_ID']."'";
+                            //echo $q5;
+                
+                            $result = mysql_query($q11) or die(mysql_error()); 
+                    ?>
+                    
+                    <table class="table table-striped" >
+                          
+                         <thead>
+				              <tr>
+				                <th>#</th>
+				                <th>Medicine's Names</th>
+				                
+				                <th>Direction</th>
+				                
+				              </tr>
+				            </thead>
+				            <tbody>
+                            <?php $count=1;
+                            while($rs = mysql_fetch_array($result)) { ?>
+                          <tr>
+                          <td><?php echo $count; ?></td>
+                            <td><img src="images/stock_list_bullet.png"/>&nbsp<strong><?php echo $rs['MEDICINE_NAME'] ?></strong>
+                            </td>
+                           <td> <i><?php echo $rs['MEDICINE_DOSE'] ?></i></td>
+                                                 
+                            
+                          </tr>
+                            <?php $count = $count+1; } ?>
+                        </table> 
+                    
+                </div>
+            
+            </div>
+            <!--END of rx section-->
              <!--BEGIN doctor comment section-->
-            <div class="diet" style="margin-top: 5px;">    
+            <div class="diet">    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Comment / Advice</div>
-                <div class="diet_inner">        
+                <div class="invest_inner">        
                 <?php echo $other_comment; ?>
                 </div>
             
@@ -319,47 +331,17 @@ function func_print()
                 $other_comment = $rs['ANY_OTHER_DETAILS'];
             }
             ?>
-            <div class="diet" style="margin-top: 5px;">    
+            <div class="diet">    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Diet & Lifestyle Recommendation</div>
-                <div class="diet_inner">        
+                <div class="invest_inner">        
                 <?php echo $diet1; ?>
                 </div>
             
             </div>
             
-            <!-- END Diet -->s
+            <!-- END Diet -->
             
-            <!--BEGIN rx section-->
             
-            <div class="rx" style="margin-top: 5px;">    
-                <div class="headings" style="margin-bottom: 10px;"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Rx (Prescription)</div>
-                <div class="rx_inner" style="margin-bottom: 10px; ">        
-                
-                    <?php
-                        $q11 = "SELECT * FROM precribed_medicine WHERE PRESCRIPTION_ID = '".$_POST['PRESCRIPTION_ID']."'";
-                            //echo $q5;
-                
-                            $result = mysql_query($q11) or die(mysql_error()); 
-                    ?>
-                    
-                    <table id="table-3">
-                          
-                         
-                            <?php while($rs = mysql_fetch_array($result)) { ?>
-                          <tr>
-                            <td><img src="images/stock_list_bullet.png"/>&nbsp<strong><?php echo $rs['MEDICINE_NAME'] ?></strong>
-                            <img src="images/arrow-right.png" />
-                            <i><?php echo $rs['MEDICINE_DOSE'] ?></i></td>
-                                                 
-                            
-                          </tr>
-                            <?php } ?>
-                        </table> 
-                    
-                </div>
-            
-            </div>
-            <!--END of rx section-->
             
             
             
@@ -396,7 +378,7 @@ function func_print()
             
             <div class="diet" style="margin-top: 10px;">    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Patient's Next Visit</div>
-                <div class="diet_inner">    
+                <div class="invest_inner">    
                     
                 <?php echo $nextvisit1; ?>
                 </div>
@@ -414,20 +396,47 @@ function func_print()
             <!--END of submit button-->
                       
             <!--BEGIN footer-->
-            <?php include "footer_pg.php"; ?> 
-            <!--END of footer-->
             
-            </div>
-             
-        </div><!-- END of container -->
-		<?php include_once './inc/footer.php';?>
-        <!--END of wrapper-->
-        <div class="btn_wrap2">
-            <a href="visit_list.php" onclick="return func_print();">PRINT</a>    
-            <!--<form id="form2" action="visit_list.php" method="POST">
-            <input type="submit" id="PRINT" value="Print" onclick="return func_print();" class="btn"/>
-            </form>-->
-                 
-        </div>
-</body>
+          <?php 
+				$chamber_id = $_SESSION['chamber_name'];
+				$user_id = $_SESSION['chamber_name'];
+				
+				$admin_obj = new admin();
+				
+				$obj = $admin_obj->getChamberDetails($chamber_id);
+				$objDoc = $admin_obj->getDoctorDetails($user_id);
+				//fetch the header information
+				$docname = $objDoc->doctor_full_name;
+				$reg_num = $objDoc->doc_reg_num;
+				$footer = $obj->chamber_footer;
+			
+		?>
+	
+<div class="row2">
+        <div class="col-md-8-print"> Patient's Next Visit : <?php echo $nextvisit1; ?></div>
+        <div class="col-md-4-print" align="right"><b>(<?php echo $docname; ?>) </b><br>Reg. No. # <?php echo $reg_num; ?></div>
+</div>	
+<div class="row">
+      
+      <div class="alert alert-info" role="alert">
+        <strong><?php echo $footer;?></strong>
+      </div>
+      
+     
+</div><!--END of footer-->
+        </div><!-- End container -->
+            <div class="content" align="center">
+        
+		        <a class="btn btn-success" href="visit_list.php" id="print_arch_pres"onclick="return func_print('<?php echo $docname; ?>');">Print</a>
+			</div>
+            
+<?php 
+}  else {
+echo "Please logout and login again.";
+}?> 
+            
+        	 
+
+        <?php include_once './inc/footer.php';?>
+    </body>
 </html>

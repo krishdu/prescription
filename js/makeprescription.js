@@ -23,41 +23,7 @@ function deleteClinicalImpression(ci_id, pres_id){
     return false;
 }
 
-function addClinicalImpression(prescriptionid){
-    //alert("TYPE -> "+type);
-    //alert("Prescription Id -> "+prescriptionid);
-    var citype = document.getElementById("txtCI").value;
-    //alert("TYPE ->"+ citype);
-    if(citype == "" || citype == null)
-    {
-        alert ("Clinical Impression cannot be blank")
-    } else {
 
-        if (window.XMLHttpRequest){
-                    xmlhttp=new XMLHttpRequest();
-        }else{
-                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-
-                xmlhttp.onreadystatechange=function(){
-                if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                    //document.getElementById("CI").innerHTML = "";
-                    //alert(xmlhttp.responseText);
-                    document.getElementById("CI").innerHTML=xmlhttp.responseText;
-                    document.getElementById("txtCI").value = "";
-                    
-            }
-        }
-        
-        
-        str = "ajax/add_clinical_impression.php?mode=ADD_CLINICAL_IMPRESSION&TYPE="+citype+"&prescription_id="+prescriptionid;
-
-        xmlhttp.open("GET",str,true);
-        xmlhttp.send();
-    }
-    document.getElementById("txtCI").focus();
-    return false;
-}
 
 function addPatient(){
        
@@ -416,28 +382,6 @@ function addInvestigation(type){
     return false;
 }
 
-function removeVisit(visit_id){
-  //alert(visit_id)  ;
-  if (window.XMLHttpRequest){
-  		xmlhttp=new XMLHttpRequest();
-  }else{
-  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  
-  xmlhttp.onreadystatechange=function(){
-    if (xmlhttp.readyState==4 && xmlhttp.status==200){
-           //alert(xmlhttp.responseText);
-           document.getElementById("visit_list").innerHTML=xmlhttp.responseText;
-           
-    }
-  };
-  str = "ajax/removevisit.php?mode=REMOVE_VISIT&VISIT_ID="+visit_id;
-  //alert(str);
-  xmlhttp.open("GET",str,true);
-  xmlhttp.send();
-  
-  return false;  
-}
 
 function backtoVisit(){
   location.href= "visit_list.php";
@@ -651,7 +595,7 @@ $(document).ready(function(){
 		    if(!$("#patient_name").val() || !$("#sex").val() || !$("#age").val() || !$("#cell").val() ){
 		    	$("#search_alert_1").html("All fields are mandatory");
 				  $("#search_alert_1").show();
-				  $("#create_result").hide()
+				  $("#create_result").hide();
 		    } else {
 		    	var url = "./ajax/add_patient.php?patient_name="+$("#patient_name").val()+"&sex="+$("#sex").val()+"&age="+$("#age").val()+"&cell="+$("#cell").val();
 		    	$.ajax({url: url, success: function(result){
@@ -667,39 +611,115 @@ $(document).ready(function(){
 	  
 	  	$("#add_by_recption").click(function(){
 		  
-		  var url = "./ajax/add_patient.php"; // the script where you handle the form input.
+		    var url = "./ajax/add_patient.php"; // the script where you handle the form input.
+		    if(empty($("#fname").val()) || empty($("#lname").val()) || empty($("#gender").val()) || empty($("#theDate").val()) ){
+		    	$("#search_alert_2").html("First Name, Last Name, Sex and DOB is mandatory");
+		    	$("#search_alert_2").show();
+		    	$("#create_r_result").hide();
+		    	
+		    } else {
+		    	var url = "./ajax/add_patient.php"; // the script where you handle the form input.
 
-		   
-		    	$("#create_rec_form").submit(function(e) {
-
-				    var url = "./ajax/add_patient.php"; // the script where you handle the form input.
-
-				    
-				    	alert("Submitting the form");
-					    $.ajax({
-				           type: "POST",
-				           url: url,
-				           data: $("#create_rec_form").serialize(), // serializes the form's elements.
-				           success: function(data)
-				           {
-				        	   $("#create_r_result").show();
-					    		
-					    		$("#create_r_result").html(result);
-						        $("#search_alert_2").hide();
-						        $('#doc_create_form').hide();
-				        	   
-				               alert(data); // show response from the php script.
-				           }
-				         });
-				    
-				    e.preventDefault(); // avoid to execute the actual submit of the form.
-				});
-		    //}
-		   
-	  });
-	  
-	  
+			    
+		    	//alert("Submitting the form");
+			    $.ajax({
+		           type: "POST",
+		           url: url,
+		           data: $("#create_rec_form").serialize(), // serializes the form's elements.
+		           success: function(data)
+		           {
+		        	   $("#create_r_result").show();
+			    		
+			    		$("#create_r_result").html(data);
+				        $("#search_alert_2").hide();
+				        $('#create_rec_form').hide();
+		        	   
+		               
+		           }
+		         });
+		    }
+	  	});
+	  	
+	  	$(".minus").click(function(event){
+	  	    event.preventDefault();
+	  	});
+	  	$(".plus").click(function(event){
+	  	    event.preventDefault();
+	  	});
+	  	
 });
+
+function removeVisit(visit_id){
+	  
+	  var url = "ajax/removevisit.php?mode=REMOVE_VISIT&VISIT_ID="+visit_id;
+	  
+	  $.ajax({url: url, success: function(result){
+		  alert("Updated");
+		 // $("#visit_list_body").html(result);
+	    }});
+}
+
+function addClinicalImpression(prescriptionid){
+	
+    var citype = document.getElementById("txtCI").value;
+    
+    var url = "ajax/add_clinical_impression.php?mode=ADD_CLINICAL_IMPRESSION&TYPE="+citype+"&prescription_id="+prescriptionid;
+    
+    if(citype == "" || citype == null)
+    {
+        alert ("Clinical Impression cannot be blank")
+    } else {
+
+        
+        $.ajax({url: url, success: function(result){
+  		  
+        	$("#CI").html(result);
+        	$("#txtCI").val("");
+        	$("#txtCI").focus();
+  	    }});
+    }
+    document.getElementById("txtCI").focus();
+    return false;
+}
+
+function empty( val ) {
+
+    // test results
+    //---------------
+    // []        true, empty array
+    // {}        true, empty object
+    // null      true
+    // undefined true
+    // ""        true, empty string
+    // ''        true, empty string
+    // 0         false, number
+    // true      false, boolean
+    // false     false, boolean
+    // Date      false
+    // function  false
+
+        if (val === undefined)
+        return true;
+
+    if (typeof (val) == 'function' || typeof (val) == 'number' || typeof (val) == 'boolean' || Object.prototype.toString.call(val) === '[object Date]')
+        return false;
+
+    if (val == null || val.length === 0)        // null or 0 length array
+        return true;
+
+    if (typeof (val) == "object") {
+        // empty object
+
+        var r = true;
+
+        for (var f in val)
+            r = false;
+
+        return r;
+    }
+
+    return false;
+}
 
 function getCheckedRadio(elementName) {
     var radioButtons = document.getElementsByName(elementName);

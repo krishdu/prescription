@@ -408,5 +408,19 @@ class admin{
     	
     	return $obj;
     }
+    
+    function getPatientInformationforArchievePrescription($prescription_id){
+    	$_QUERY= "select a.visit_id, c.patient_id, c.GENDER, c.patient_first_name, c.patient_name, 
+                        c.patient_last_name, c.patient_address, c.patient_city, c.patient_dob, c.age,
+                        c.patient_cell_num, c.patient_alt_cell_num, c.patient_email , b.VISIT_DATE
+                        from prescription a, visit b, patient c
+                        where a.visit_id = b.visit_id
+                        and b.patient_id=c.patient_id
+                        and prescription_id = '".$prescription_id."'";
+    	$result = mysql_query($_QUERY) or die(mysql_error());
+    	$obj = mysql_fetch_object($result);
+    	
+    	return $obj;
+    }
 }
 ?>

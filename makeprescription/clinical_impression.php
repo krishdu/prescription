@@ -16,10 +16,9 @@
             ?>
                 <div class="row">      
                     
-                        <div class="col-md-10"><?php echo $type; ?><a id='minus7' href='#' ></a></div>
-                    <div class="col-md-2" ><a id='minus7' href='#' 
-                            onclick="deleteClinicalImpression('<?php echo $cf_d ; ?>',
-                                '<?php echo $PRESCRIPTION_ID ; ?>')">[-]</a>
+                        <div class="col-md-10"><?php echo $type; ?></div>
+                    <div class="col-md-2" ><a class="minus" href='#' 
+                            onclick="deleteClinicalImpression('<?php echo $cf_d ; ?>','<?php echo $PRESCRIPTION_ID ; ?>')">[-]</a>
                     </div> 
                     
                 </div> 
@@ -30,7 +29,7 @@
 
                 </div>
                 <div class="col-md-2" >
-                    <a id='plus7' href='#' onclick="addClinicalImpression('<?php echo $PRESCRIPTION_ID ; ?>')">[+]</a>
+                    <a href='#' onclick="addClinicalImpression('<?php echo $PRESCRIPTION_ID ; ?>')">[+]</a>
                 </div> 
             
 		</div>

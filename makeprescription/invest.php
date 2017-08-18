@@ -29,7 +29,7 @@
                     ?>
                 </div>  
      <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" class="form-control" id="invest1" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE1')" value="ADD" /></div>
 				</div> 
   </div>
@@ -48,7 +48,7 @@
                 </div>      
 
                <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" id="invest2" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE2')" value="ADD" /></div>
 				</div> 
   </div>
@@ -67,7 +67,7 @@
                 </div>      
 
                 <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" id="invest3" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE3')" value="ADD" /></div>
 				</div>
   </div>
@@ -86,7 +86,7 @@
                 </div>      
 
                <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text"  id="invest4" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE4')" value="ADD" /></div>
 				</div>
   </div>
@@ -105,7 +105,7 @@
                 </div>      
 
                <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" id="invest5" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE5')" value="ADD" /></div>
 				</div>
   </div>
@@ -124,7 +124,7 @@
                 </div>      
 
                 <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" id="invest6" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE6')" value="ADD" /></div>
 				</div>
   </div>
@@ -143,7 +143,7 @@
                 </div>      
 
                 <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" id="invest7" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE7')" value="ADD" /></div>
 				</div>
   </div>
@@ -162,7 +162,7 @@
                 </div>      
 
                 <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" id="invest8" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE8')" value="ADD" /></div>
 				</div>
   </div>
@@ -181,7 +181,7 @@
                 </div>      
 
                <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" id="invest9" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE9')" value="ADD" /></div>
 				</div>
   </div>
@@ -200,7 +200,7 @@
                 </div>      
 
                 <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" id="invest10" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE10')" value="ADD" /></div>
 				</div>
   </div>
@@ -219,7 +219,7 @@
                 </div>      
 
                 <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" id="invest11" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE11')" value="ADD" /></div>
 				</div>
   </div>
@@ -238,7 +238,7 @@
                 </div>      
 
                 <div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" id="invest12" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE12')" value="ADD" /></div>
 				</div>
   </div>
@@ -256,7 +256,7 @@
                     ?>
                 </div>      
 				<div class="row">
-				  <div class="col-md-4"> <input type="text" class="form-control" value="" placeholder="Enter investigation name"/></div>
+				  <div class="col-md-4"> <input type="text" id="invest13" class="form-control" value="" placeholder="Enter investigation name"/></div>
 				  <div class="col-md-8"><input type="button" class="btn btn-success" name="ADD" onclick="return addInvestigation('TYPE13')" value="ADD" /></div>
 				</div>
                 

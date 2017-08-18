@@ -5,7 +5,7 @@ if(isset($_SESSION['user_type'])) {
 	$user_type = $_SESSION['user_type']  ;
 	if($user_type == 'DOCTOR' || $user_type == 'RECEPTIONIST'){
 		if($user_type == 'RECEPTIONIST'){
-			if(isset($_POST['CREATE_PATIENT_DATA'])){
+			//if(isset($_POST['CREATE_PATIENT_DATA'])){
 				
 				$gender = $_POST['gender'];
 				$fname = $_POST['fname'];
@@ -33,8 +33,8 @@ if(isset($_SESSION['user_type'])) {
 				/*$sql3 = "insert into patient_health_details_by_receptionist (patient_id) values('$id')";
 				 mysql_query($sql3) or die(mysql_error());*/
 				
-				echo "<div class='b_success'>$fname $lname data saved successfully<br><h2><a href='processData.php?patient_id=$id'>OK</a></h2></div>";
-			}
+				echo "$fname $lname data saved successfully. <a class='btn btn-primary' href='processData.php?patient_id=$id'>Create Visit !!</a>";
+			//}
 		} else {
 			$patient_name = $_GET['patient_name'];
 			$sex = $_GET['sex'];
