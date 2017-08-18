@@ -11,35 +11,29 @@ $sql1 = "select * from medicine_master where medicine_name like '".$strMedicineN
         and MEDICINE_STATUS = 'ACTIVE' ";
 $result1 = mysql_query($sql1)or die(mysql_error());
 $no = mysql_num_rows($result1);
-echo "<table width='888' border='0' cellspacing='0' cellpadding='0'>
-        <tr>
-        <td class='bg_tble'>                    
-            <table width='100%' border='0' cellspacing='1' cellpadding='0'>";    
+
 if($no > 0){
         
-        echo "<tr>
-        <td class='head_tbl'>Medicine Name</td>
+        echo "<table class='table table-striped'><thead>
+        <th>Medicine Name</td>
        
-        <td class='head_tbl'>ACTION</td>
-        </tr>";
+        <th>ACTION</td>
+        </thead><tbody>";
         
         
         while($d1 = mysql_fetch_array($result1)){
            echo "<tr>
-                <td class='odd'>".$d1['MEDICINE_NAME']."</td>
+                <td>".$d1['MEDICINE_NAME']."</td>
                 
-                <td class='odd'><a href='#' onclick='editMedicine(".$d1['MEDICINE_ID'].") ' class='vlink'>EDIT</a>
-                    <a href='#' onclick='deleteMedicine(".$d1['MEDICINE_ID'].") ' class='vlink'>DELETE</a>
+                <td><button class='btn btn-info' onclick='editMedicine(".$d1['MEDICINE_ID'].");' >EDIT</button>
+                    <button class='btn btn-warning' onclick='deleteMedicine(".$d1['MEDICINE_ID'].");' >DELETE</button>
                 </td>
             </tr>";
             
         }
-    }else{
-            echo "<tr><td colspan='2' align='center' style='color:red'> No Result found.</td></tr>";
+        echo "</tbody></table>";
+    } else {
+    	
     }
-    echo "</table>
-       </td>
-    </tr>
-</table>";
 
 ?>

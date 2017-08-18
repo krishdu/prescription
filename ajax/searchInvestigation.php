@@ -11,35 +11,30 @@ $sql1 = "select * from investigation_master where investigation_name like '".$in
         and STATUS = 'ACTIVE' ";
 $result1 = mysql_query($sql1)or die(mysql_error());
 $no = mysql_num_rows($result1);
-echo "<table width='888' border='0' cellspacing='0' cellpadding='0'>
-        <tr>
-        <td class='bg_tble'>                    
-            <table width='100%' border='0' cellspacing='1' cellpadding='0'>";    
+
 if($no > 0){
         
-        echo "<tr>
-        <td class='head_tbl'>Investigation Name</td>
+        echo "<table class='table'><thead><tr>
+        <th class='head_tbl'>Investigation Name</td>
        
-        <td class='head_tbl'>ACTION</td>
-        </tr>";
+        <th class='head_tbl'>ACTION</td>
+        </tr></thead><tbody>";
         
         
         while($d1 = mysql_fetch_array($result1)){
            echo "<tr>
-                <td class='odd'>".$d1['investigation_name']."</td>
+                <td>".$d1['investigation_name']."</td>
                 
-                <td class='odd'><a href='#' onclick='editInvest(".$d1['ID'].") ' class='vlink'>EDIT</a>
-                    <a href='#' onclick='deleteInvest(".$d1['ID'].") ' class='vlink'>DELETE</a>
+                <td><button class='btn btn-info' href='#' onclick='editInvest(".$d1['ID'].") ' class='vlink'>EDIT</button>
+                    <button class='btn btn-warning' onclick='deleteInvest(".$d1['ID'].") ' class='vlink'>DELETE</button>
                 </td>
             </tr>";
             
         }
+        echo "</tbody></table>";
     }else{
-            echo "<tr><td colspan='2' align='center' style='color:red'> No Result found.</td></tr>";
+            echo "No Result found.";
     }
-    echo "</table>
-       </td>
-    </tr>
-</table>";
+    
 
 ?>

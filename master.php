@@ -1,3 +1,8 @@
+<?php include_once "./inc/datacon.php"; ?>
+<?php include_once "./inc/header.php"; 
+?>
+<?php if( isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])) { ?>
+
 <?php include "header.html"; ?>
 
         <script type="text/javascript">
@@ -63,14 +68,21 @@
             function searchMedicine(){
                 //alert(document.getElementById("s_p_id").value);
                 //alert(document.getElementById("s_p_name").value);
-                if(document.getElementById("medicine_name").value == "" ){
+                if(document.getElementById("course").value == "" ){
                     alert("Please Give some Input");
                     return false;
                 } else {
                     
-                    var medicine_name = document.getElementById("medicine_name").value;
-            
-                    if (window.XMLHttpRequest){
+                    var medicine_name = document.getElementById("course").value;
+                    var url = "ajax/searchMedicine.php?medicine_name="+$("#course").val();
+    		    	$.ajax({url: url, success: function(result){
+    		    		//$("#create_result").show();
+    		    		
+    		    		$("#searchMedicineDiv").html(result);
+    			       // $("#search_alert_1").hide();
+    			        //$('#doc_create_form').hide();
+    			    }});
+                    /* if (window.XMLHttpRequest){
                         xmlhttp=new XMLHttpRequest();
                     }else{
                         xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
@@ -84,7 +96,7 @@
                     //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
                     var url = "ajax/searchMedicine.php?medicine_name="+medicine_name;   
                     xmlhttp.open("GET",url,true);
-                    xmlhttp.send();
+                    xmlhttp.send(); */
                 }
         
             }
@@ -188,8 +200,8 @@
         
         function deleteMedicine(medincineID){
             
-            //alert(medincineID);
-            var medicine_name = document.getElementById("medicine_name").value;
+            alert(medincineID);
+            var medicine_name = document.getElementById("course").value;
             if (window.XMLHttpRequest){
                 xmlhttp=new XMLHttpRequest();
             }else{
@@ -212,7 +224,7 @@
         function editMedicine(medincineID){
             
             //alert(medincineID);
-            var medicine_name = document.getElementById("medicine_name").value;
+            var medicine_name = document.getElementById("course").value;
             if (window.XMLHttpRequest){
                 xmlhttp=new XMLHttpRequest();
             }else{
@@ -235,7 +247,7 @@
         function upDateMedicine(medicineID){
             
             var med_name = document.getElementById("med_name").value;
-            var medicine_name = document.getElementById("medicine_name").value;
+            var medicine_name = document.getElementById("course").value;
             
             alert(medicineID);
             alert(med_name);
@@ -275,15 +287,13 @@
 
     <body>
         <?php
-        include "datacon.php";
         if (isset($_SESSION['user_type'])) {
             /* if($_SESSION['user_type'] == 'DOCTOR'){
               header("location:visit_list.php");
               } else if($_SESSION['user_type'] == 'RECEPTIONIST'){ */
             ?>
 
-            <div id="wrapper">
-
+            
                 <div class="container">
                     <!--BEGIN header-->
                     <?php include("banner.php"); ?>
@@ -297,23 +307,23 @@
 
                                 <div class="invest_inner">        
 
-                                    <div id="tabvanilla" class="widget">            
-                                        <ul class="tabnav">
-                                            <li><a href="#tab1">Patient Master</a></li>
-                                            <li><a href="#tab2">Medicine Master</a></li>
-                                            <li><a href="#tab3">Investigation Master</a></li>
-                                        </ul>
-
+                                    <div id="tabs" >            
+                                        <ul class="nav nav-tabs">
+										  <li class="active"><a data-toggle="tab" href="#tab1">Patient Master</a></li>
+										  <li><a data-toggle="tab" href="#tab2">Medicine Master</a></li>
+										  <li><a data-toggle="tab" href="#tab3">Investigation Master</a></li>
+										</ul>
+										<div class="tab-content">
                                         <!--BEGIN tab1-->
-                                        <div id="tab1" class="tabdiv">
+                                        <div id="tab1" class="tab-pane fade in active">
 
 
 
                                             <!--BEGIN search-->
-                                            <div class="patientDetails">
+                                            <div id="tab111" class="check_fields" >
 
-                                                <span><p>Patient ID</p><input id="s_p_id" name="patient_id" type="text" class="input_box_add" value="" /></span>                
-                                                <span><p>Patient Name</p><input id="s_p_name" name="patient_name" type="text" class="input_box_big" value="" /></span>               
+                                                <span><p>Patient ID</p><input id="s_p_id" name="patient_id" type="text" class="form-control" placeholder="Enter patient Id" /></span>                
+                                                <span><p>Patient Name</p><input id="s_p_name" name="patient_name" type="text"class="form-control" placeholder="Enter patient name" /></span>               
                                                 <span><p>&nbsp;</p><input type="submit" value="Search" name="search" class="btn" onclick="search1();" /></span>
 
 
@@ -321,7 +331,7 @@
                                             <!--END of search-->
 
                                             <!--BEGIN search results-->
-                                            <div class="searchResults" id="searchDiv">
+                                            <div class="row" id="searchDiv">
 
                                                 <!--RESULT OF SEARCH -->
 
@@ -333,16 +343,16 @@
                                         <!--END of tab1-->
                                         
                                         <!--BEGIN tab2-->
-                                        <div id="tab2" class="tabdiv">
+                                        <div id="tab2" class="tab-pane fade">
 
 
 
                                             <!--BEGIN search-->
-                                            <div class="patientDetails">
+                                            <div id="tab112" class="check_fields">
                                                 <!--    
                                                 <span><p>Patient ID</p><input id="s_p_id" name="patient_id" type="text" class="input_box_add" value="" /></span>                
                                                 -->
-                                                <span><p>Medicine Name</p><input id="medicine_name" name="medicine_name" type="text" class="input_box_big" value="" /></span>               
+                                                <span><p>Medicine Name</p><input type="text" name="medicine_name" id="course" class="form-control" placeholder="Enter Medicine name" /></span>               
                                                 <span><p>&nbsp;</p><input type="submit" value="Search" name="search" class="btn" onclick="searchMedicine();" /></span>
 
 
@@ -350,7 +360,7 @@
                                             <!--END of search-->
 
                                             <!--BEGIN search results-->
-                                            <div class="searchResults" id="searchMedicineDiv">
+                                            <div class="row" id="searchMedicineDiv">
 
                                                 <!--RESULT OF SEARCH -->
 
@@ -363,16 +373,16 @@
                                         
                                         
                                         <!--BEGIN tab3-->
-                                        <div id="tab3" class="tabdiv">
+                                        <div id="tab3" class="tab-pane fade">
 
 
 
                                             <!--BEGIN search-->
-                                            <div class="patientDetails">
+                                            <div id="tab113" class="check_fields">
                                                 <!--    
                                                 <span><p>Patient ID</p><input id="s_p_id" name="patient_id" type="text" class="input_box_add" value="" /></span>                
                                                 -->
-                                                <span><p>Medicine Name</p><input id="invest_name" name="invest_name" type="text" class="input_box_big" value="" /></span>               
+                                                <span><p>Investigation Name</p><input id="invest_name" name="invest_name" type="text" class="form-control" placeholder="Enter Investigation name" /></span>               
                                                 <span><p>&nbsp;</p><input type="submit" value="Search" name="search" class="btn" onclick="searchInvestigation();" /></span>
 
 
@@ -380,7 +390,7 @@
                                             <!--END of search-->
 
                                             <!--BEGIN search results-->
-                                            <div class="searchResults" id="searchInvestDiv">
+                                            <div class="row" id="searchInvestDiv">
 
                                                 <!--RESULT OF SEARCH -->
 
@@ -390,7 +400,7 @@
 
                                         </div>
                                         <!--END of tab3-->
-                                        
+                                        </div>
                                         
                                     </div>
                                 </div>
@@ -398,21 +408,19 @@
 
                         </div>
                     </div>
-
-                </div>
-
-                <!--BEGIN footer-->
-                <?php include "footer_pg.html"; ?> 
+			<!--BEGIN footer-->
+                <?php include "footer_pg.php"; ?> 
                 <!--END of footer-->
-            </div>
+                </div><!-- End container -->
 
-        </div>
-        <!--END of wrapper-->
         <?php
     } /* } */ else {
         header("location:index_login.php");
     }
     ?>
+    <?php include_once './inc/footer.php';?>
 </body>
+<?php } else {
+echo "You are not authorize to view this page";
+}?>
 </html>
-<?php ob_flush() ?>

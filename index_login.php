@@ -17,18 +17,20 @@ if(isset($_REQUEST['action'])){
 
         
         if(mysql_num_rows($r) > 0){
-            $user_type = $d->label;
+            $user_role = $d->role;
             $user_name = $d->user_name;
             $user_id = $d->user_id;
             
-            $_SESSION['user_type'] = $user_type;
+            $_SESSION['user_type'] = $user_role;
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_name'] = $user_name;
             
-            if($user_type == 'DOCTOR'){
+            if($user_role== 'DOCTOR'){
                     echo "<script>location.href='select_chamber.php'</script>";
-            } else if ($user_type == 'RECEPTIONIST'){
+            } else if ($user_role== 'RECEPTIONIST'){
                     echo "<script>location.href='select_chamber.php'</script>";
+            } else {
+            	echo "You are not authorize to perform any operation !!";
             }
         } else{
         $print="<font color='red'>Invalid User Name or Password</font>";

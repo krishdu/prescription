@@ -16,6 +16,7 @@ if(isset($_GET['PRESCRIPTION_ID'])){
             <?php 
             
             include_once "classes/admin_class.php"; 
+            include_once 'classes/prescription_header.php';
 	            $update= new admin();
 	            $prescription_id = $_GET['PRESCRIPTION_ID'];
 	            $d1 = $update->getPatientInformationforArchievePrescription($prescription_id);
@@ -25,30 +26,25 @@ if(isset($_GET['PRESCRIPTION_ID'])){
 	            $admin_obj = new admin();
 	            
 	            $obj = $admin_obj->getChamberDetails($chamber_id);
+	            $doc_name = $_SESSION['doc_name'];
+	            $header = new Header($doc_name,$chamber_id);
+	            
             ?>
             
             
             <div class="content">
-	        <div class="col-md-8-print"> 
-	        	<div id='prescription_doc_name'>Dr. Soumyabrata Roy Chowdhuri</div>
-	            MBBS, * Masters in Diabetology<br>
-				*Post Graduate Diplomate in Geriatric Medicine<br>
-				*Post Graduate Certification in Diabetes & Endocrinology<br>
-				 (Univ. of New Castle, Australia)<br>
-				PHYSICIAN - Diabetes, Endocrine & Metabolic Disorders<br>
-				Department of Endocrinology KPC Medical College & Hospitals<br>
-			</div>
-	        <div class="col-md-4-print"><b>Membership & Affiliations</b>:<br> ADA- American Diabetes Association <br>
-				EASD- European Association for Study of Diabetes<br/>
-	            *RCPS &* RCGP [UK](INTL AFFILATE)<br>
-				Endocrine Society (US)<br>
-	            
-	            <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>+91.9830047300 (M)</b><br/>
-				<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>033-40704046 (Chamber)</b><br/>
-	            <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>soumya.askme@gmail.com</b><br/>
-	            
-	        </div>
-	      </div>
+		        <div class="col-md-8-print"> 
+			        <div id='prescription_doc_name'><?php echo $header->doctor_full_name;?></div>
+			            <?php echo $header->doctor_degree;?>
+			    </div>
+				<div class="col-md-4-print"><b>Membership & Affiliations</b>:<br> <?php echo $header->doctor_affiliation;?>
+				
+					<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
+					<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->primary_phone_number;?> (Chamber)</b><br/>
+					<img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/>
+					
+				</div>
+	      </div>	
           <!--END of header-->
           <!-- Begin Patient Details -->
           <div class="inner_name" >
@@ -306,29 +302,19 @@ if(isset($_GET['PRESCRIPTION_ID'])){
             <!--BEGIN footer-->
             
             <?php 
-	$chamber_id = $_SESSION['chamber_name'];
-	$user_id = $_SESSION['chamber_name'];
 	
-	$admin_obj = new admin();
-	
-	$obj = $admin_obj->getChamberDetails($chamber_id);
-	$objDoc = $admin_obj->getDoctorDetails($user_id);
-	//fetch the header information
-	$docname = $objDoc->doctor_full_name;
-	$reg_num = $objDoc->doc_reg_num;
-	$footer = $obj->chamber_footer;
 	$visit_date = $_SESSION['visit_date'];
 	
 	?>
 	
 <div class="row2">
         <div class="col-md-8-print"> Date : <?php echo $visit_date; ?></div>
-        <div class="col-md-4-print" align="right"><b>(<?php echo $docname; ?>) </b><br>Reg. No. # <?php echo $reg_num; ?></div>
+        <div class="col-md-4-print" align="right"><b>(<?php echo $header->doctor_full_name;?>) </b><br>Reg. No. # <?php echo $header->doc_reg_num;?></div>
 </div>	
 <div class="row">
       
       <div class="alert alert-info" role="alert">
-        <strong><?php echo $footer;?></strong>
+        <strong><?php echo $header->chamber_footer;?></strong>
       </div>
       
      
@@ -337,7 +323,7 @@ if(isset($_GET['PRESCRIPTION_ID'])){
 
             <div class="content" align="center">
         
-		        <input class="btn btn-success" type="button" id="print_arch_pres" value="Print" onclick="return func_print('<?php echo $docname; ?>');">
+		        <input class="btn btn-success" type="button" id="print_arch_pres" value="Print" onclick="return func_print('<?php echo $header->doctor_full_name;?>');">
 			</div>
            <?php 
 }  

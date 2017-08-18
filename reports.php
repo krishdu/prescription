@@ -1,4 +1,7 @@
-<?php include "header.html"; ?>        
+<?php include_once "./inc/datacon.php"; ?>
+<?php include_once "./inc/header.php"; 
+?>
+<?php if( isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])) { ?>
         <script type="text/javascript">
             function myFocus(element) {
                 if (element.value == element.defaultValue) {
@@ -108,14 +111,13 @@
 
     <body>
         <?php
-        include "datacon.php";
+       
         if (isset($_SESSION['user_type'])) {
             /* if($_SESSION['user_type'] == 'DOCTOR'){
               header("location:visit_list.php");
               } else if($_SESSION['user_type'] == 'RECEPTIONIST'){ */
             ?>
 
-            <div id="wrapper">
 
                 <div class="container">
                     <!--BEGIN header-->
@@ -124,7 +126,7 @@
                     <div class="content">
                         <div class="invest">
 
-                            <div class="headings"><img src="images/Briefcase-Medical.png" />&nbsp;Master Management</div>
+                            <div class="headings"><img src="images/Briefcase-Medical.png" />&nbsp;Reports</div>
 
                             <div class="invest_inner">
 
@@ -233,21 +235,23 @@
 
                         </div>
                     </div>
-
-                </div>
+				<!--BEGIN footer-->
+                <?php include "footer_pg.php"; ?> 
+                <!--END of footer-->
+                </div><!-- End container -->
 
                 <!--BEGIN footer-->
                 <?php include "footer_pg.html"; ?> 
                 <!--END of footer-->
-            </div>
 
-        </div>
-        <!--END of wrapper-->
         <?php
     } /* } */ else {
         header("location:index_login.php");
     }
     ?>
+    <?php include_once './inc/footer.php';?>
 </body>
+<?php } else {
+echo "You are not authorize to view this page";
+}?>
 </html>
-<?php ob_flush() ?>

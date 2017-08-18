@@ -108,6 +108,7 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
             <?php 
             
             include_once "classes/admin_class.php"; 
+            include_once 'classes/prescription_header.php';
 	            $update= new admin();
 	            
 	            $d1 = $update->getPatientInformationforArchievePrescription($PRESCRIPTION_ID);
@@ -117,29 +118,26 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
 	            $admin_obj = new admin();
 	            
 	            $obj = $admin_obj->getChamberDetails($chamber_id);
+	            
+	            $chamber_id = $_SESSION['chamber_name'];
+	            $doc_name = $_SESSION['doc_name'];
+	            $header = new Header($doc_name,$chamber_id);
+	            
             ?>
             
             
             <div class="content">
-	        <div class="col-md-8-print"> 
-	        	<div id='prescription_doc_name'>Dr. Soumyabrata Roy Chowdhuri</div>
-	            MBBS, * Masters in Diabetology<br>
-				*Post Graduate Diplomate in Geriatric Medicine<br>
-				*Post Graduate Certification in Diabetes & Endocrinology<br>
-				 (Univ. of New Castle, Australia)<br>
-				PHYSICIAN - Diabetes, Endocrine & Metabolic Disorders<br>
-				Department of Endocrinology KPC Medical College & Hospitals<br>
-			</div>
-	        <div class="col-md-4-print"><b>Membership & Affiliations</b>:<br> ADA- American Diabetes Association <br>
-				EASD- European Association for Study of Diabetes<br/>
-	            *RCPS &* RCGP [UK](INTL AFFILATE)<br>
-				Endocrine Society (US)<br>
-	            
-	            <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>+91.9830047300 (M)</b><br/>
-				<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>033-40704046 (Chamber)</b><br/>
-	            <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>soumya.askme@gmail.com</b><br/>
-	            
-	        </div>
+		        <div class="col-md-8-print"> 
+			        <div id='prescription_doc_name'><?php echo $header->doctor_full_name;?></div>
+			            <?php echo $header->doctor_degree;?>
+			    </div>
+				<div class="col-md-4-print"><b>Membership & Affiliations</b>:<br> <?php echo $header->doctor_affiliation;?>
+				
+					<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
+					<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->primary_phone_number;?> (Chamber)</b><br/>
+					<img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/>
+					
+				</div>
 	      </div>
           <!--END of header-->
           <!-- Begin Patient Details -->
@@ -414,7 +412,7 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
 	
 <div class="row2">
         <div class="col-md-8-print"> Patient's Next Visit : <?php echo $nextvisit1; ?></div>
-        <div class="col-md-4-print" align="right"><b>(<?php echo $docname; ?>) </b><br>Reg. No. # <?php echo $reg_num; ?></div>
+        <div class="col-md-4-print" align="right"><b>(<?php echo $docname; ?>) </b><br>Reg. No. # <?php echo $header->doc_reg_num;?></div>
 </div>	
 <div class="row">
       
@@ -427,7 +425,7 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
         </div><!-- End container -->
             <div class="content" align="center">
         
-		        <a class="btn btn-success" href="visit_list.php" id="print_arch_pres"onclick="return func_print('<?php echo $docname; ?>');">Print</a>
+		        <a class="btn btn-success" href="visit_list.php" id="print_arch_pres"onclick="return func_print('<?php echo $header->doctor_full_name;?>');">Print</a>
 			</div>
             
 <?php 

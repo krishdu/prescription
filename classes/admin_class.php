@@ -422,5 +422,9 @@ class admin{
     	
     	return $obj;
     }
+    
+    function getPrescriptionHeader($doc_user_name, $chamber_id){
+    	
+    }
 }
 ?>

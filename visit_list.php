@@ -8,9 +8,13 @@ $_SESSION['NAVIGATION'] = 'visit_list';
 <body>
 
 <?php 
-if( (isset($_SESSION['user_type']) && isset($_GET['chamber_name'])) || (isset($_SESSION['user_type']) && isset($_SESSION['chamber_name'])) ) {
+if( isset($_SESSION['user_type']) && (isset($_GET['chamber_name']) ||   isset($_SESSION['chamber_name'])) && (isset($_GET['doc_name']) ||   isset($_SESSION['doc_name']))) {
 	if(isset($_GET['chamber_name'])){
 		$_SESSION['chamber_name'] = $_GET['chamber_name'];
+	}
+	
+	if(isset($_GET['doc_name'])){
+		$_SESSION['doc_name'] = $_GET['doc_name'];
 	}
 	$chamber = $_SESSION['chamber_name'];
 

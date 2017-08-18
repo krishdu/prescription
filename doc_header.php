@@ -2,37 +2,26 @@
 
 		<?php if(isset($_SESSION['chamber_name'])) {
             include_once "./inc/datacon.php"; 
-            include_once "classes/admin_class.php" ;
+            include_once 'classes/prescription_header.php';
             
 		    $chamber_id = $_SESSION['chamber_name'];
+		    $doc_name = $_SESSION['doc_name'];
+		    $header = new Header($doc_name,$chamber_id);
 		    
-		    $admin_obj = new admin();
-		    
-		    $obj = $admin_obj->getChamberDetails($chamber_id);
-		//fetch the header information
-		
-		    //echo $obj->chamber_header;
+	
 		    
 		   ?>
 <!--BEGIN logo-->
 
 <div class="row">
         <div class="col-md-8"> 
-        <div id='prescription_doc_name'>Dr. Soumyabrata Roy Chowdhuri</div>
-            MBBS, * Masters in Diabetology<br>
-			*Post Graduate Diplomate in Geriatric Medicine<br>
-			*Post Graduate Certification in Diabetes & Endocrinology<br>
-			 (Univ. of New Castle, Australia)<br>
-			PHYSICIAN - Diabetes, Endocrine & Metabolic Disorders<br>
-			Department of Endocrinology KPC Medical College & Hospitals<br></div>
-        <div class="col-md-4"><b>Membership & Affiliations</b>:<br> ADA- American Diabetes Association <br>
-			EASD- European Association for Study of Diabetes<br/>
-            *RCPS &* RCGP [UK](INTL AFFILATE)<br>
-			Endocrine Society (US)<br>
+        <div id='prescription_doc_name'><?php echo $header->doctor_full_name;?></div>
+            <?php echo $header->doctor_degree;?></div>
+        <div class="col-md-4"><b>Membership & Affiliations</b>:<br> <?php echo $header->doctor_affiliation;?>
             
-            <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>+91.9830047300 (M)</b><br/>
-			<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>033-40704046 (Chamber)</b><br/>
-            <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>soumya.askme@gmail.com</b><br/>
+            <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
+			<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->primary_phone_number;?> (Chamber)</b><br/>
+            <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/>
             
             </div>
       </div>

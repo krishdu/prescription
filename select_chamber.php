@@ -23,9 +23,8 @@ if(isset($_SESSION['user_type'])) {
 	    include_once 'classes/admin_class.php';
 	    $adminObj = new admin();
 	    $resultObj = $adminObj->getUserDetails($user_id);
-    	$_QUERY = "select chamber_id, chamber_name, chamber_address, chamber_header from chamber_master";
-        $arr = array();
-        $result = mysql_query($_QUERY) or die(mysql_error());   
+    	
+          
         
         ?>  
     
@@ -35,13 +34,16 @@ if(isset($_SESSION['user_type'])) {
 	  <ul class="dropdown-menu">
 	     <?php 
           if($user_type == 'DOCTOR'){
-          		
+          	$_QUERY= "select * from chamber_master where related_doc_name='".$user_name."'";
+          	$result = mysql_query($_QUERY) or die(mysql_error()); 
 	          while($rows = mysql_fetch_array($result)) {
-	          	echo "<li><a href='visit_list.php?chamber_name=".$rows['chamber_id']."'>". $rows['chamber_name']."</a></li>";  
+	          	echo "<li><a href='visit_list.php?chamber_name=".$rows['chamber_id']."&doc_name=".$user_name."'>". $rows['chamber_name']."</a></li>";  
 	          }
           } else if ($user_type == 'RECEPTIONIST'){
+          	$_QUERY= "select * from chamber_master where related_rec_name='".$user_name."'";
+          	$result = mysql_query($_QUERY) or die(mysql_error()); 
 	          	while($rows = mysql_fetch_array($result)) {
-	          		echo "<li><a href='visit_list.php?chamber_name=".$rows['chamber_id']."'>". $rows['chamber_name']."</a></li>";
+	          		echo "<li><a href='select_doctor.php?chamber_name=".$rows['chamber_id']."'>". $rows['chamber_name']."</a></li>";
 	          	}
 		  }?>
 	  </ul>
