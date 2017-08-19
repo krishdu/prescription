@@ -6,9 +6,13 @@ if(isset($_GET['PRESCRIPTION_ID'])){
 ?>
 
  
-<?php include_once "./inc/header_print.php";?>
-
-
+<?php 
+if($_SESSION['doc_name'] == 'dsanyal'){
+    include_once ("./inc/header_print_dsanyal.php") ;
+} else {
+include_once "./inc/header_print.php";
+}
+?>
 <body>
             <div class="container" id="printArea">
         
@@ -33,7 +37,23 @@ if(isset($_GET['PRESCRIPTION_ID'])){
             
             
             <div class="content">
-		        <div class="col-md-8-print"> 
+            <!-- IF DSANYAL -->
+            <?php if($doc_name == 'dsanyal'){?>
+            	 <div class="col-md-8-print"> 
+                    <div id='prescription_doc_name'><?php echo $header->doctor_full_name;?></div>
+                        <?php echo $header->doctor_degree;?></div>
+                    <div class="col-md-4-print">
+                    <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
+                        <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/>
+                        <b><?php echo $header->chamber_name;?></b><br/>
+                        <?php echo $header->chamber_address;?><br/>
+                        Phone : <?php echo $header->primary_phone_number;?> / <?php echo $header->secondary_phone_number;?><br/>
+                        <b>Residence (By Appointment)</b><br/>
+                        <?php echo $header->doctor_address;?>
+                    
+                  </div>
+            <?php } else { ?><!-- ELSE -->
+		        <div class="col-md-8-print-print"> 
 			        <div id='prescription_doc_name'><?php echo $header->doctor_full_name;?></div>
 			            <?php echo $header->doctor_degree;?>
 			    </div>
@@ -44,10 +64,13 @@ if(isset($_GET['PRESCRIPTION_ID'])){
 					<img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/>
 					
 				</div>
+				<?php }?>
+			
+			
 	      </div>	
           <!--END of header-->
           <!-- Begin Patient Details -->
-          <div class="inner_name" >
+          <div class="content_patient_details" >
                         
                         #  <?php echo $d1->patient_id; ?>, <?php if($d1->patient_name == null || $d1->patient_name == ""){
                             echo $d1->patient_first_name." ".$d1->patient_last_name; } else { echo $d1->patient_name ; }?>, <?php echo $d1->GENDER ?>, <?php 
@@ -308,8 +331,8 @@ if(isset($_GET['PRESCRIPTION_ID'])){
 	?>
 	
 <div class="row2">
-        <div class="col-md-8-print"> Date : <?php echo $visit_date; ?></div>
-        <div class="col-md-4-print" align="right"><b>(<?php echo $header->doctor_full_name;?>) </b><br>Reg. No. # <?php echo $header->doc_reg_num;?></div>
+        <div class="col-md-8-print"> Date : <?php echo $visit_date; ?><br>Ref # ( <?php echo $_GET['PRESCRIPTION_ID']; ?> / <?php echo $_GET['visit_id']; ?> / <?php echo $_GET['patient_id']?>) </div>
+        <div class="col-reg-num" align="right"><b>(<?php echo $header->doctor_full_name;?>) </b><br>Reg. No. # <?php echo $header->doc_reg_num;?></div>
 </div>	
 <div class="row">
       

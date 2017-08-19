@@ -132,20 +132,41 @@ include_once "classes/admin_class.php"; ?>
             ?>
             
             
-            <div class="content">
-		        <div class="col-md-8-print"> 
-			        <div id='prescription_doc_name'><?php echo $header->doctor_full_name;?></div>
-			            <?php echo $header->doctor_degree;?>
-			    </div>
-				<div class="col-md-4-print"><b>Membership & Affiliations</b>:<br> <?php echo $header->doctor_affiliation;?>
-				
-					<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
-					<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->primary_phone_number;?> (Chamber)</b><br/>
-					<img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/>
-					
-				</div>
-	      </div>
-          <!--END of header-->
+            <!--BEGIN header-->
+    <div id="header">
+    
+    	<!--BEGIN logo-->
+        <div id="logo">        
+        	<div class="black">
+            <img src="images/logo.png" style="padding-bottom:8px; " /><br/>
+            MBBS (Hons), DTM&amp;H, MD (Medicine), DM (Endocrinology), MRCP<br/>
+            Fellow, American College of Endocrinology (FACE)<br/>
+            Professor of Endocrinology, KPC Medical College<br/>
+            Consultant Endocrinologist & Diabetologist</div>
+            <div class="gray"><b>Member</b>: Endocrine Society (<b>USA</b>), AACE (<b>USA</b>)<br/>
+           
+            </div>        
+        </div>
+        <!--END of logo-->
+        
+        <!--BEGIN info-->
+   		 <div id="info">
+        	<div>
+            <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>+91.9830118388 (M)</b><br/>
+            <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>dr_debmalya@hotmail.com</b><br/>
+            <b>Ananda Clinic (By Appointment)</b><br/>
+            567, Diamond Harbour Road, Kolkata - 34<br/>
+            Phone : 23991153 / 24071765<br/><br/>
+            <b>Residence (By Appointment)</b><br/>
+            36, Block H, New Alipore, Kolkata - 53
+            </div>
+        
+        </div>
+        <!--END of info-->
+    
+    
+    </div>
+    <!--END of header--> 
           <!-- Begin Patient Details -->
           <div class="inner_name" >
                         

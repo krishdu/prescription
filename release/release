@@ -57,3 +57,20 @@ ALTER TABLE  `patient_health_details_master` ADD UNIQUE (
 `NAME` ,
 `STATUS`
 );
+
+
+TRUNCATE `clinical_impression`;
+TRUNCATE `dose_details_master`;
+TRUNCATE `dose_direction`;
+TRUNCATE `dose_timing_master`;
+TRUNCATE `investigation_master`;
+TRUNCATE `medicine_master`;
+TRUNCATE `patient`;
+TRUNCATE `patient_health_details`;
+TRUNCATE `patient_health_details_master`;
+TRUNCATE `patient_investigation`;
+TRUNCATE `precribed_medicine`;
+TRUNCATE `prescribed_cf`;
+TRUNCATE `prescribed_investigation`;
+TRUNCATE `prescription`;
+TRUNCATE `visit`;
