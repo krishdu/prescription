@@ -551,8 +551,7 @@ $(document).ready(function(){
 	      source: "./ajax/get_patient_health_details.php",
 	      minLength: 1,
 	      select: function( event, ui ) {
-	    	  
-	        console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	        //console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
 	      }
 	  }); 
 	  $( "#tabs" ).tabs();

@@ -269,6 +269,7 @@ class admin{
         $height = "";
         $weight = "";
         $bmi = "";
+        $ideal_body_weight = "";
         if(mysql_num_rows($result) > 0){
             //Clinical Impression Type exists in the Database. Get the ID
             while($rs = mysql_fetch_array($result)){
@@ -311,10 +312,39 @@ class admin{
                     values('3' , '$bmi', '$visit_id')";
             }
             mysql_query($query_b) or die(mysql_error());
+            
+            //Insert ideal body weight
+            $sex = $admin->getPatientDetailsFromVisit($visit_id)->GENDER;
+            //echo "SEX ===>>> ".$sex;
+            $ideal_body_weight = $admin->calIdealBodyWeight($sex, $height);
+            
+            $result_ideal_body_weight = mysql_query("select * from patient_health_details where
+            		ID = (select ID from patient_health_details_master where name='Ideal Body Weight (KG)' and status='ACTIVE') and VISIT_ID = '$visit_id'") or die(mysql_error());
+            if(mysql_num_rows($result_ideal_body_weight) > 0 ){
+            	$query_ideal_body_weight= "update patient_health_details set VALUE = '$ideal_body_weight' where
+            	ID = (select ID from patient_health_details_master where name='Ideal Body Weight (KG)' and status='ACTIVE') and VISIT_ID = '".$visit_id."'";
+            	echo "UPDATE ->".$query_ideal_body_weight;
+            } else {
+            	$query_ideal_body_weight= "insert into patient_health_details(ID, VALUE, VISIT_ID)
+            	values( (select ID from patient_health_details_master where name='Ideal Body Weight (KG)' and status='ACTIVE') , '$ideal_body_weight', '$visit_id')";
+            	echo $query_ideal_body_weight;
+            }
+            mysql_query($query_ideal_body_weight) or die(mysql_error());
         }
         
     }
-    
+    function calIdealBodyWeight($sex, $height){
+    	/* Ideal Body Weight (men) = 50kg + 2.3kg*( Height(in) - 60 )
+    	Ideal Body Weight (women) = 45.5kg + 2.3kg *( Height(in) - 60 ) */
+    	$result = "";
+    	if($sex == 'Male'){
+    		$result = 50 + 2.3 * ($height*0.393701 - 60);
+    	} else if($sex == 'Female'){
+    		$result = 45 + 2.3 * ($height*0.393701 - 60);
+    	}
+    	return round($result);
+    	
+    }
     function insertUpdateClinicalImpression($prescription_id, $type){
         
         $query = "select ID from clinical_impression where TYPE = '$type'";
@@ -423,8 +453,15 @@ class admin{
     	return $obj;
     }
     
-    function getPrescriptionHeader($doc_user_name, $chamber_id){
+    function getPatientDetailsFromVisit($visit_id){
+    	$_QUERY = "select a.patient_id, a.GENDER, a.patient_first_name, a.patient_last_name, a.patient_name, a.patient_address, 
+					a.patient_city, a.patient_dob, a.age, a.patient_cell_num, a.patient_alt_cell_num, a.patient_email, a.data_entry_date, 
+					a.chamber_id, a.created_by_user_id, a.create_date, a.isSync 
+				  from patient a, visit b where a.patient_id = b.PATIENT_ID and b.VISIT_ID = '".$visit_id."'";
+    	$result = mysql_query($_QUERY) or die(mysql_error());
+    	$obj = mysql_fetch_object($result);
     	
+    	return $obj;
     }
 }
 ?>

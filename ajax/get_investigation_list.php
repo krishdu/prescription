@@ -12,7 +12,6 @@ while($rs = mysql_fetch_array($rsd)) {
 
 
 $result = mysql_query($sql)or die(mysql_error());
-$rowObject = mysql_fetch_assoc($result) ;
 
 $return_arr= array();
 

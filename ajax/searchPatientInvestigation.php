@@ -12,7 +12,7 @@ $sql1 = "select * from investigation_master where investigation_name like '".$in
 $result1 = mysql_query($sql1)or die(mysql_error());
 $no = mysql_num_rows($result1);
 
-if($no > 0){
+/* if($no > 0){
         
         echo "<table class='table'><thead><tr>
         <th class='head_tbl'>Investigation Name</td>
@@ -34,7 +34,8 @@ if($no > 0){
         echo "</tbody></table>";
     }else{
             echo "No Result found.";
-    }
+    } */
     
+echo "Functionality is not added.";
 
 ?>

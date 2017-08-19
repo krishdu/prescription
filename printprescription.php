@@ -6,8 +6,8 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
 ?>
 
  
-<?php include_once "./inc/header_print.php";?>
-
+<?php include_once "./inc/header_print.php";
+include_once "classes/admin_class.php"; ?>
 <body >
 
 <?php
@@ -23,7 +23,7 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
     
     $patient_id = $_POST['patient_id'];
     $visit_id = $_POST['VISIT_ID'];
-    $other_comment = $_POST['other_comment'];
+    $other_comment = htmlspecialchars($_POST['other_comment']);
     $weight = 0;
     $height = 0;
     //update patient_health_details BMI Value
@@ -95,6 +95,12 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
         
         //echo "<div class='b_success'>PRESCRIPTION created successfully<br><h2><a href='visit_list.php'>OK</a></h2></div>";
         //echo "<div class='b_success'>PRESCRIPTION created successfully<br><h2><a href='print.php?patient_id=$_GET[patient_id]&prescription_id=$PRESCRIPTION_ID&visit_id=$VISIT_ID'>OK</a></h2></div>";
+    } else { 
+    	$admin= new admin(); 
+    	$patient_id = $admin->getPatientDetailsFromVisit($VISIT_ID)->patient_id;
+    	echo "<script>location.href='http://localhost/prescription/archievedprescription.php?PRESCRIPTION_ID=$PRESCRIPTION_ID&visit_id=$VISIT_ID&patient_id=$patient_id'</script>";
+    	
+    	echo "<script>location.href='/visit_list.php'</script>";
     }
 ?>
 <!--BEGIN wrapper-->
@@ -107,7 +113,7 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
            <!--BEGIN header-->
             <?php 
             
-            include_once "classes/admin_class.php"; 
+            
             include_once 'classes/prescription_header.php';
 	            $update= new admin();
 	            
@@ -395,29 +401,16 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
                       
             <!--BEGIN footer-->
             
-          <?php 
-				$chamber_id = $_SESSION['chamber_name'];
-				$user_id = $_SESSION['chamber_name'];
-				
-				$admin_obj = new admin();
-				
-				$obj = $admin_obj->getChamberDetails($chamber_id);
-				$objDoc = $admin_obj->getDoctorDetails($user_id);
-				//fetch the header information
-				$docname = $objDoc->doctor_full_name;
-				$reg_num = $objDoc->doc_reg_num;
-				$footer = $obj->chamber_footer;
-			
-		?>
+          
 	
 <div class="row2">
         <div class="col-md-8-print"> Patient's Next Visit : <?php echo $nextvisit1; ?></div>
-        <div class="col-md-4-print" align="right"><b>(<?php echo $docname; ?>) </b><br>Reg. No. # <?php echo $header->doc_reg_num;?></div>
+        <div class="col-md-4-print" align="right"><b>(<?php echo $header->doctor_full_name;; ?>) </b><br>Reg. No. # <?php echo $header->doc_reg_num;?></div>
 </div>	
 <div class="row">
       
       <div class="alert alert-info" role="alert">
-        <strong><?php echo $footer;?></strong>
+        <strong><?php echo $header->chamber_footer;?></strong>
       </div>
       
      

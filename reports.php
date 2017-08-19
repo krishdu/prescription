@@ -91,7 +91,44 @@
                 }
         
             }
-            
+            function searchInvestigation(){
+                //alert(document.getElementById("s_p_id").value);
+                //alert(document.getElementById("patient_id").value);
+                if(document.getElementById("invest_name").value == ""){
+                    alert("Please Give some Input");
+                    return false;
+                } else {
+                    
+                    var patient_id = document.getElementById("invest_name").value;
+
+                    var url = "ajax/searchPatientInvestigation.php?invest_name="+$("#invest_name").val();
+    		    	$.ajax({url: url, success: function(result){
+    		    		//$("#create_result").show();
+    		    		
+    		    		$("#searchInvestDiv").html(result);
+    			       // $("#search_alert_1").hide();
+    			        //$('#doc_create_form').hide();
+    			    }});
+            		
+                    /* if (window.XMLHttpRequest){
+                        xmlhttp=new XMLHttpRequest();
+                    }else{
+                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+
+                    xmlhttp.onreadystatechange=function(){
+                        if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                            //alert(xmlhttp.responseText);
+                            document.getElementById("searchPatientDiv").innerHTML=xmlhttp.responseText;
+                        }
+                    }
+                    //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
+                    var url = "ajax/searchPatientDataById.php?PATIENT_ID="+patient_id;   
+                    xmlhttp.open("GET",url,true);
+                    xmlhttp.send(); */
+                }
+        
+            }
             
         </script>
         <script>
@@ -132,20 +169,21 @@
 
                                 <div class="invest_inner">        
 
-                                    <div id="tabvanilla" class="widget">            
-                                        <ul class="tabnav">
-                                            <li><a href="#tab1">Clinical Impression</a></li>
-                                            <li><a href="#tab2">Patient Data</a></li>
-                                            <li><a href="#tab3">Investigation Master</a></li>
-                                        </ul>
+                                    <div id="tabs" >            
+                                                                               
+                                        <ul class="nav nav-tabs">
+										  <li class="active"><a data-toggle="tab" href="#tab1">Clinical Impression</a></li>
+										  <li><a data-toggle="tab" href="#tab2">Patient Data</a></li>
+										  <li><a data-toggle="tab" href="#tab3">Investigation Master</a></li>
+										</ul>
 
                                         <!--BEGIN tab1-->
-                                        <div id="tab1" class="tabdiv">
+                                        <div id="tab1" class="tab-pane fade in active">
 
 
 
                                             <!--BEGIN search-->
-                                            <div class="patientDetails">
+                                            <div id="tab111" class="check_fields">
 
                                                 <span><p>Clinical Impression</p>
                                                    
@@ -170,16 +208,16 @@
                                         <!--END of tab1-->
                                         
                                         <!--BEGIN tab2-->
-                                        <div id="tab2" class="tabdiv">
+                                        <div id="tab2" class="tab-pane fade">
 
 
 
                                             <!--BEGIN search-->
-                                            <div class="patientDetails">
+                                            <div id="tab112" class="check_fields">
                                                 <!--    
                                                 <span><p>Patient ID</p><input id="s_p_id" name="patient_id" type="text" class="input_box_add" value="" /></span>                
                                                 -->
-                                                <span><p>Patient ID</p><input id="patient_id" name="patient_id" type="text" class="input_box_big" value="" /></span>               
+                                                <span><p>Patient ID</p><input id="patient_id" name="patient_id" type="text" class="form-control" placeholder="Enter patient Id" /></span>               
                                                 <span><p>&nbsp;</p><input type="submit" value="Search" name="search" class="btn" onclick="searchPatient();" /></span>
 
 
@@ -200,16 +238,16 @@
                                         
                                         
                                         <!--BEGIN tab3-->
-                                        <div id="tab3" class="tabdiv">
+                                        <div id="tab3" class="tab-pane fade">
 
 
 
                                             <!--BEGIN search-->
-                                            <div class="patientDetails">
+                                            <div id="tab113" class="check_fields">
                                                 <!--    
                                                 <span><p>Patient ID</p><input id="s_p_id" name="patient_id" type="text" class="input_box_add" value="" /></span>                
                                                 -->
-                                                <span><p>Medicine Name</p><input id="invest_name" name="invest_name" type="text" class="input_box_big" value="" /></span>               
+                                                <span><p>Investogation Name</p><input id="invest_name" name="invest_name" type="text" class="form-control" placeholder="Enter investigation name" /></span>               
                                                 <span><p>&nbsp;</p><input type="submit" value="Search" name="search" class="btn" onclick="searchInvestigation();" /></span>
 
 

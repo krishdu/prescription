@@ -53,3 +53,7 @@ ALTER TABLE  `myepresc_prescription`.`chamber_master` ADD UNIQUE (
 `related_rec_name`
 )
 
+ALTER TABLE  `patient_health_details_master` ADD UNIQUE (
+`NAME` ,
+`STATUS`
+);

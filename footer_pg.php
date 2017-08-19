@@ -15,7 +15,7 @@
 <footer class="footer">
       
       <div class="alert alert-info" role="alert">
-        <strong><?php echo $header->chamber_footer;;?></strong>
+        <strong><?php echo $header->chamber_footer; ?></strong>
       </div>
       
     </footer>
