@@ -153,6 +153,9 @@ if(isset($_SESSION['user_type'])) {
                    <?php if($_SESSION['user_type'] == 'DOCTOR'){ ?>
                    <!--BEGIN form-->
                    <form id="doc_create_form" class="form-horizontal" >
+                   <input type="hidden" name="chamber_id" value="<?php echo $_SESSION['chamber_name']; ?>">
+				      <input type="hidden" name="doc_id" value="<?php echo $_SESSION['doc_name']; ?>">
+				      <input type="hidden" name="loged_in_user_id" value="<?php echo $_SESSION['user_name']; ?>">
                       <div class="alert alert-danger" role="alert" id="search_alert_1" hidden="true">
 				        
 				      </div>
@@ -204,6 +207,9 @@ if(isset($_SESSION['user_type'])) {
                     
                     
                     <form id="create_rec_form" class="form-horizontal" >
+                    <input type="hidden" name="chamber_id" value="<?php echo $_SESSION['chamber_name']; ?>">
+				      <input type="hidden" name="doc_id" value="<?php echo $_SESSION['doc_name']; ?>">
+				      <input type="hidden" name="loged_in_user_id" value="<?php echo $_SESSION['user_name']; ?>">
                       <div class="alert alert-danger" role="alert" id="search_alert_2" hidden="true">
 				        
 				      </div>

@@ -17,7 +17,12 @@ if( isset($_SESSION['user_type']) && (isset($_GET['chamber_name']) ||   isset($_
 		$_SESSION['doc_name'] = $_GET['doc_name'];
 	}
 	$chamber = $_SESSION['chamber_name'];
-
+	
+	/* For doctor specific information */
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
+	$user_name= $_SESSION['user_name'];
+	//echo $chamber_name ." ". $doc_name ." ". $user_name
 ?>
 
 
@@ -47,19 +52,19 @@ $result = mysql_query("SELECT a.visit_id, b.patient_id, a.visited, b.patient_fir
                         b.patient_last_name, b.patient_name, b.patient_cell_num, a.VISIT_DATE
                         FROM visit a, patient b
                         WHERE a.patient_id = b.patient_id
-                        AND a.visited =  'no' AND a.visit_id
+                        AND a.visited =  'no' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' AND a.visit_id
                         in ( SELECT max( visit_id )
                             FROM visit c
                             WHERE c.visited = 'no'
                             GROUP BY patient_id)
-                            order by VISIT_DATE desc") ;
+                            order by VISIT_DATE desc") or die(mysql_error());
 $count=1;
 while ($row = mysql_fetch_array($result)) {
 
 	?>
                 <tr >
                     <td><?php echo $count;?></td>
-                    <td><a href="create_prescription.php?patient_id=<?php echo $row['patient_id'] ?>&VISIT_ID=<?php echo $row['visit_id']; ?>">
+                    <td><a href="create_prescription.php?patient_id=<?php echo $row['patient_id'] ?>&VISIT_ID=<?php echo $row['visit_id']; ?>&VISIT_ID=<?php echo $row['visit_id']; ?>">
                         <?php if($row['patient_name'] == null || $row['patient_name'] == ""){
                          echo $row['patient_first_name'] . " " . $row['patient_last_name']; } else { echo $row['patient_name']; }?></a></td>
                     <td><?php echo $row['patient_cell_num']; ?></td>

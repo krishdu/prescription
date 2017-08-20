@@ -30,11 +30,13 @@ echo	$header->primary_phone_number;
 echo	$header->chamber_footer; */
 
 
-echo $admin->calIdealBodyWeight('Male', 178);
+/* echo $admin->calIdealBodyWeight('Male', 178);
 echo "<br>";
 echo $admin->calIdealBodyWeight('Female', 156);
 
 echo $admin->getPatientDetailsFromVisit('10424')->GENDER;
 
-$admin->insertUpdateCF('WEIGHT (KG)','100','10426');
+$admin->insertUpdateCF('WEIGHT (KG)','100','10426'); */
+
+echo $admin->getMaxVisitId('sos', 'sroy');
 ?>

@@ -97,8 +97,8 @@ insert into myepresc_prescription.medicine_master(MEDICINE_NAME,	MEDICINE_DIRECT
 select MEDICINE_NAME,	MEDICINE_DIRECTION,	MEDICINE_ENTRY_DATE_TIME,	MEDICINE_STATUS	,chamber_id, doc_id from myepresc_sroy.medicine_master;
 
 
-insert into myepresc_prescription.patient(GENDER,patient_first_name,patient_last_name,patient_name,patient_address,patient_city,patient_dob,age,patient_cell_num,patient_alt_cell_num,patient_email,data_entry_date	,chamber_id, doc_id) 
-select GENDER,patient_first_name,patient_last_name,patient_name,patient_address,patient_city,patient_dob,age,patient_cell_num,patient_alt_cell_num,patient_email,data_entry_date	,chamber_id, doc_id from myepresc_sroy.patient;
+insert into myepresc_prescription.patient(patient_id, GENDER,patient_first_name,patient_last_name,patient_name,patient_address,patient_city,patient_dob,age,patient_cell_num,patient_alt_cell_num,patient_email,data_entry_date	,chamber_id, doc_id) 
+select patient_id, GENDER,patient_first_name,patient_last_name,patient_name,patient_address,patient_city,patient_dob,age,patient_cell_num,patient_alt_cell_num,patient_email,data_entry_date	,chamber_id, doc_id from myepresc_sroy.patient;
 
 
 insert into myepresc_prescription.patient_health_details(ID, VALUE,	VISIT_ID) 

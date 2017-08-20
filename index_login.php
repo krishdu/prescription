@@ -23,7 +23,9 @@ if(isset($_REQUEST['action'])){
             
             $_SESSION['user_type'] = $user_role;
             $_SESSION['user_id'] = $user_id;
+            
             $_SESSION['user_name'] = $user_name;
+            $_SESSION['logged_in_user_id'] = $user_name;
             
             if($user_role== 'DOCTOR'){
                     echo "<script>location.href='select_chamber.php'</script>";

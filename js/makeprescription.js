@@ -596,7 +596,7 @@ $(document).ready(function(){
 				  $("#search_alert_1").show();
 				  $("#create_result").hide();
 		    } else {
-		    	var url = "./ajax/add_patient.php?patient_name="+$("#patient_name").val()+"&sex="+$("#sex").val()+"&age="+$("#age").val()+"&cell="+$("#cell").val();
+		    	var url = "./ajax/add_patient.php?patient_name="+$("#patient_name").val()+"&sex="+$("#sex").val()+"&age="+$("#age").val()+"&cell="+$("#cell").val()++$("#chamber_id").val()+"&age="+$("#doc_id").val()+"&cell="+$("#logged_in_user_id").val();
 		    	$.ajax({url: url, success: function(result){
 		    		$("#create_result").show();
 		    		

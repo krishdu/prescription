@@ -1,11 +1,18 @@
 <?php
 include "datacon.php";
+if(isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name']) ){
+include_once 'classes/admin_class.php';    
+$admin = new admin();
 $patient_id = $_GET['patient_id'];
 
 $VISIT_ID = $_GET['VISIT_ID'];
+$chamber_name = $_SESSION['chamber_name'];
+$doc_name= $_SESSION['doc_name'];
+$logged_in_user = $_SESSION['logged_in_user_id'];
+
 
 // Get Prescription ID from VISIT_ID
-$query2 = "select * from prescription where VISIT_ID = '".$VISIT_ID."' and STATUS = 'DRAFT'";
+$query2 = "select * from prescription where VISIT_ID = '".$VISIT_ID."' and STATUS = 'DRAFT' and a.chamber_id='".$chamber_name."' AND a.doc_id='".$doc_name."' ";
 $result = mysql_query($query2) or die(mysql_error());
 
 if(mysql_num_rows($result) > 0){
@@ -13,8 +20,11 @@ if(mysql_num_rows($result) > 0){
         $PRESCRIPTION_ID = $rows['PRESCRIPTION_ID'];
     }
 } else {
-    mysql_query("insert into prescription(VISIT_ID, REFERRED_TO, DIET, NEXT_VISIT, ANY_OTHER_DETAILS) values('".$VISIT_ID."', '','', '', '')") or die(mysql_error());
-    $PRESCRIPTION_ID = mysql_insert_id();
+    $max_patient_id = $admin->getMaxPatientId($chamber_name, $doc_name);
+    /* mysql_query("insert into prescription(VISIT_ID, REFERRED_TO, DIET, NEXT_VISIT, ANY_OTHER_DETAILS) values('".$VISIT_ID."', '','', '', '')") or die(mysql_error()); */
+    mysql_query("insert into prescription(PRESCRIPTION_ID, VISIT_ID, REFERRED_TO, DIET, NEXT_VISIT, ANY_OTHER_DETAILS, chamber_id, doc_id, created_by_user_id) 
+        values('".$max_patient_id."'".$VISIT_ID."', '','', '', '','".$chamber_name."','".$doc_name."', '". $logged_in_user."')") or die(mysql_error());
+    //$PRESCRIPTION_ID = mysql_insert_id();
     
     //Create Prescription with existing Clinical Expression of the patient
   //  $query_select_clinical_impression = "select * from prescribed_cf where  prescription_id in (
@@ -28,26 +38,26 @@ if(mysql_num_rows($result) > 0){
                                                 FROM prescription
                                                 WHERE visit_id = (
                                                 SELECT max( visit_id )
-                                                FROM visit
-                                                WHERE patient_id = '$patient_id'
-                                                AND visited = 'yes' ) ) " ;
+                                                FROM visit a
+                                                WHERE a.patient_id = '$patient_id'
+                                                AND a.visited = 'yes' and a.chamber_id='$chamber_name' AND a.doc_id='$doc_name') ) " ;
 
     $r3 = mysql_query($query_select_clinical_impression) or die(mysql_error());
     while($row = mysql_fetch_array($r3)) {
-        mysql_query("insert into prescribed_cf (clinical_impression_id 	, prescription_id) 
-                    values('".$row['clinical_impression_id']."','".$PRESCRIPTION_ID."')");
+        mysql_query("insert into prescribed_cf (clinical_impression_id 	, prescription_id, chamber_id, doc_id, created_by_user_id) 
+                    values('".$row['clinical_impression_id']."','".$PRESCRIPTION_ID."'".$chamber_name."','".$doc_name."', '". $logged_in_user."')");
     }
 
     //Create Prescription with existing records of a patient
     $query_pres_history = "select * from precribed_medicine 
                                 where  prescription_id = (
                                     select prescription_id  from prescription where visit_id = (
-                                        select max(visit_id)  from visit where patient_id = '$patient_id' and visited='yes'))";
+                                        select max(visit_id)  from visit a where a.patient_id = '$patient_id' and a.visited='yes' and a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'))";
 
     $r3 = mysql_query($query_pres_history) or die(mysql_error());
     while($row = mysql_fetch_array($r3)) {
-        mysql_query("insert into precribed_medicine (PRESCRIPTION_ID, MEDICINE_NAME, MEDICINE_DIRECTION, MEDICINE_DOSE, MEDICINE_TIMING) 
-                    values('".$PRESCRIPTION_ID."','".$row['MEDICINE_NAME']."', '".$row['MEDICINE_DIRECTION']."', '".$row['MEDICINE_DOSE']."', '".$row['MEDICINE_TIMING']."')");
+        mysql_query("insert into precribed_medicine (PRESCRIPTION_ID, MEDICINE_NAME, MEDICINE_DIRECTION, MEDICINE_DOSE, MEDICINE_TIMING, chamber_id, doc_id, created_by_user_id) 
+                    values('".$PRESCRIPTION_ID."','".$row['MEDICINE_NAME']."', '".$row['MEDICINE_DIRECTION']."', '".$row['MEDICINE_DOSE']."', '".$row['MEDICINE_TIMING']."'".$chamber_name."','".$doc_name."', '". $logged_in_user."')");
     }
 }
 
@@ -56,5 +66,6 @@ if(mysql_num_rows($result) > 0){
 
 
 header("location:prescription2.php?VISIT_ID=$VISIT_ID&patient_id=$patient_id&PRESCRIPTION_ID=$PRESCRIPTION_ID");
-
-?>
+} else {
+echo "You are not authorize to perform this operation";
+}?>
