@@ -147,3 +147,5 @@ select PRESCRIPTION_ID,VISIT_ID,	REFERRED_TO,	DIET,	NEXT_VISIT,	ANY_OTHER_DETAIL
 
 insert into myepresc_prescription.visit(VISIT_ID , PATIENT_ID,	VISIT_DATE,	APPOINTMENT_TO_DOC_NAME,	VISITED,chamber_id, doc_id) 
 select VISIT_ID , PATIENT_ID,	VISIT_DATE,	APPOINTMENT_TO_DOC_NAME,	VISITED,chamber_id, doc_id from myepresc_sroy.visit;
+
+
