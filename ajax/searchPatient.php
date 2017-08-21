@@ -1,21 +1,28 @@
 <?php
 
-require_once "../inc/config.php";
+include_once "../inc/datacon.php";
+
 $patient_id = $_GET["patient_id"];
 $strPatientName = $_GET["patient_name"];
-
+if(isset($_SESSION['user_type']) &&  isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name']) && isset($_SESSION['logged_in_user_id'])) {
+    
+    $chamber_name = $_SESSION['chamber_name'];
+    $doc_name= $_SESSION['doc_name'];
+    $user_name= $_SESSION['logged_in_user_id'];
+    
+    
 $where = "";
 if($patient_id != ""){
         
-        $where .= "and patient_id = '$patient_id'";
+        $where .= "and patient_id = '$patient_id'  and chamber_id = '$chamber_name' and doc_id = '$doc_name' ";
 } 
 if($strPatientName != ""){
         
-        $where .= "and patient_first_name like '$strPatientName%' OR patient_name like '$strPatientName%' ";
+        $where .= "and patient_first_name like '$strPatientName%' OR patient_name like '$strPatientName%'  and chamber_id = '$chamber_name' and doc_id = '$doc_name' ";
 } 
 
 
-$sql1 = "select * from patient where patient_id != ''".$where;
+$sql1 = "select * from patient where patient_id != ''".$where. "order by patient_id asc";
 $result1 = mysql_query($sql1)or die(mysql_error());
 $no = mysql_num_rows($result1);
  
@@ -58,5 +65,7 @@ if($no > 0){
     }else{
             echo "<div class='alert alert-warning' role='alert'> There is no record with specified query. !!</div>";
     }
-
+} else {
+    echo "You are not allowed to perform this operation";
+}
 ?>

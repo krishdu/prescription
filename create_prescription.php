@@ -1,5 +1,5 @@
 <?php
-include "datacon.php";
+include_once "./inc/datacon.php";
 if(isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name']) ){
 include_once 'classes/admin_class.php';    
 $admin = new admin();

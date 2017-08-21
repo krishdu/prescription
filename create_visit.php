@@ -62,25 +62,6 @@ include_once "classes/admin_class.php";
         
     }
 </script>
-<script>
-
-$(document).ready(function(){
-		$( "#datepicker" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			showOn: "button",
-			buttonImage: "images/calendar.gif",
-			buttonImageOnly: true,
-			dateFormat: "dd-mm-yy",
-			yearRange: "c-100:c+1"
-		});
-		
-	});
-
-</script>
-
-
-
     
 <body>
     

@@ -465,7 +465,7 @@ class admin{
     }
     
     function getMaxVisitId($chamber_name, $doc_name){
-        $_QUERY = "SELECT MAX( visit_id ) +1 as max_id FROM visit WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name' and visited = 'yes' ";
+        $_QUERY = "SELECT MAX( visit_id ) +1 as max_id FROM visit WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name' ";
         $result = mysql_query($_QUERY) or die(mysql_error());
         $obj = mysql_fetch_object($result);
         

@@ -39,4 +39,5 @@ echo $admin->getPatientDetailsFromVisit('10424')->GENDER;
 $admin->insertUpdateCF('WEIGHT (KG)','100','10426'); */
 
 echo $admin->getMaxVisitId('sos', 'sroy');
+
 ?>

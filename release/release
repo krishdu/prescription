@@ -75,26 +75,26 @@ TRUNCATE `prescribed_investigation`;
 TRUNCATE `prescription`;
 TRUNCATE `visit`;
 
-insert into myepresc_prescription.clinical_impression(TYPE,DESCRIPTION,chamber_id, doc_id) 
-select TYPE,DESCRIPTION,chamber_id, doc_id from myepresc_sroy.clinical_impression;
+insert into myepresc_prescription.clinical_impression(ID, TYPE,DESCRIPTION,chamber_id, doc_id) 
+select ID,TYPE,DESCRIPTION,chamber_id, doc_id from myepresc_sroy.clinical_impression;
 
 
-insert into myepresc_prescription.dose_details_master(DOSE_DETAILS,chamber_id, doc_id) 
-select DOSE_DETAILS,chamber_id, doc_id from myepresc_sroy.dose_details_master;
+insert into myepresc_prescription.dose_details_master(DOSE_DETAILS_MASTER_ID, DOSE_DETAILS,chamber_id, doc_id) 
+select DOSE_DETAILS_MASTER_ID, DOSE_DETAILS,chamber_id, doc_id from myepresc_sroy.dose_details_master;
 
-insert into myepresc_prescription.dose_direction(DIRECTION	,chamber_id, doc_id) 
-select DIRECTION	,chamber_id, doc_id from myepresc_sroy.dose_direction;
+insert into myepresc_prescription.dose_direction( 	DOSE_DIRECTION_ID, DIRECTION	,chamber_id, doc_id) 
+select  	DOSE_DIRECTION_ID,DIRECTION	,chamber_id, doc_id from myepresc_sroy.dose_direction;
 
 dose_timing_master
 
-insert into myepresc_prescription.dose_timing_master(TIMING	,chamber_id, doc_id) 
-select TIMING	,chamber_id, doc_id from myepresc_sroy.dose_timing_master;
+insert into myepresc_prescription.dose_timing_master(DOSE_TIMING_ID, TIMING	,chamber_id, doc_id) 
+select DOSE_TIMING_ID, TIMING	,chamber_id, doc_id from myepresc_sroy.dose_timing_master;
 
-insert into myepresc_prescription.investigation_master(investigation_name,investigation_type,	unit,	STATUS	,chamber_id, doc_id) 
-select investigation_name,investigation_type,	unit,	STATUS	,chamber_id, doc_id from myepresc_sroy.investigation_master;
+insert into myepresc_prescription.investigation_master(ID, investigation_name,investigation_type,	unit,	STATUS	,chamber_id, doc_id) 
+select ID, investigation_name,investigation_type,	unit,	STATUS	,chamber_id, doc_id from myepresc_sroy.investigation_master;
 
-insert into myepresc_prescription.medicine_master(MEDICINE_NAME,	MEDICINE_DIRECTION,	MEDICINE_ENTRY_DATE_TIME,	MEDICINE_STATUS		,chamber_id, doc_id) 
-select MEDICINE_NAME,	MEDICINE_DIRECTION,	MEDICINE_ENTRY_DATE_TIME,	MEDICINE_STATUS	,chamber_id, doc_id from myepresc_sroy.medicine_master;
+insert into myepresc_prescription.medicine_master(MEDICINE_ID, MEDICINE_NAME,	MEDICINE_DIRECTION,	MEDICINE_ENTRY_DATE_TIME,	MEDICINE_STATUS		,chamber_id, doc_id) 
+select MEDICINE_ID, MEDICINE_NAME,	MEDICINE_DIRECTION,	MEDICINE_ENTRY_DATE_TIME,	MEDICINE_STATUS	,chamber_id, doc_id from myepresc_sroy.medicine_master;
 
 
 insert into myepresc_prescription.patient(patient_id, GENDER,patient_first_name,patient_last_name,patient_name,patient_address,patient_city,patient_dob,age,patient_cell_num,patient_alt_cell_num,patient_email,data_entry_date	,chamber_id, doc_id) 
@@ -112,6 +112,9 @@ select ID, VALUE,	VISIT_ID,chamber_id, doc_id from myepresc_sroy.patient_health_
 
 ALTER TABLE  `myepresc_prescription`.`patient_health_details_master` DROP INDEX  `NAME` ,
 ADD UNIQUE  `NAME` (  `NAME` ,  `STATUS` ,  `chamber_id` ,  `doc_id` );
+
+insert into myepresc_prescription.patient_health_details_master(ID, 	NAME, 	STATUS, 	chamber_id, 	created_by_user_id, 	create_date,	doc_id) 
+select ID, 	NAME, 	STATUS, 	chamber_id, 	created_by_user_id, 	create_date,	doc_id from myepresc_sroy.patient_health_details_master;
 
 
 ALTER TABLE  `myepresc_prescription`.`patient_investigation` DROP INDEX  `patient_id` ,
