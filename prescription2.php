@@ -22,7 +22,7 @@ include_once "classes/admin_class.php";
 
 
 
-if(isset($_SESSION['user_type']) ){
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])){
     
 if(isset($_SESSION['NAVIGATION'])){
 if( $_SESSION['NAVIGATION'] == 'visit_list'){
@@ -230,7 +230,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
         }}else{ 
     header("location:visit_list.php");
         }} else {
-            header("location:index.php");
+            echo "Session expired. Please Login again. <a href='./index_login.php'></a>";
         }
 include_once './inc/footer.php';
 ?>

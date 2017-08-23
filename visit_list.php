@@ -66,7 +66,7 @@ $result = mysql_query("SELECT a.visit_id, b.patient_id, a.visited, b.patient_fir
                         AND a.visited =  'no' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' AND a.visit_id
                         in ( SELECT max( visit_id )
                             FROM visit c
-                            WHERE c.visited = 'no' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'
+                            WHERE c.visited = 'no' AND c.chamber_id='$chamber_name' AND c.doc_id='$doc_name'
                             GROUP BY c.patient_id)
                             order by VISIT_DATE desc") or die(mysql_error());
 $count=1;
