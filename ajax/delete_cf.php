@@ -1,7 +1,10 @@
 <?php
-include "../datacon.php";
+include_once"../inc/datacon.php";
 include '../classes/admin_class.php';
 $admin = new admin();
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
 $visit_id = $_GET['visit_id'];
 $cf_id = $_GET['ID'];
 $mode = $_GET['mode'];
@@ -15,7 +18,7 @@ $q15 = "select a.VALUE, b.NAME, a.ID from
                             patient_health_details a ,patient_health_details_master b
                             where
                             a.ID = b.ID
-                            and a.VISIT_ID = '$visit_id'";
+                            and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
 $rsd1 = mysql_query($q15);
 
 
@@ -40,4 +43,5 @@ $rsd1 = mysql_query($q15);
             
        
 echo '</table>';
+}
 ?>

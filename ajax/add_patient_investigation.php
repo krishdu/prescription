@@ -1,6 +1,9 @@
 <?php
-include "../datacon.php";
+include_once"../inc/datacon.php";
 include '../classes/admin_class.php';
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
 $PATIENT_ID = $_GET['patientid'];
 $VISIT_ID = $_GET['visit_id'];
 $INVESTIGATION_NAME = $_GET['invName'];
@@ -28,7 +31,7 @@ $result = mysql_query("select b.investigation_name, a.investigation_id,  b.unit,
                             from patient_investigation a, investigation_master b
                             where a.investigation_id = b.ID 
                             and a.visit_id = '$VISIT_ID'
-                            and a.patient_id = '$PATIENT_ID'" ) or die(mysql_error());
+                            and a.patient_id = '$PATIENT_ID' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'" ) or die(mysql_error());
 
 
 
@@ -62,5 +65,5 @@ while($d = mysql_fetch_object($result)){
    
 }
  echo "</table>"; 
-
+}
 ?>

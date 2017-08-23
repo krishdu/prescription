@@ -1,7 +1,10 @@
 <?php
-include "../datacon.php";
+include "../inc/datacon.php";
 include "../classes/admin_class.php";
 
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
 $patient_id = $_GET["PATIENT_ID"];
 
 
@@ -171,4 +174,7 @@ if($no > 0){
     </tr>
 </table>";
 */
+}else {
+	echo "Session expired";
+}
 ?>

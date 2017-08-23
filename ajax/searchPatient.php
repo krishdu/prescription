@@ -2,6 +2,9 @@
 
 include_once "../inc/datacon.php";
 
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
 $patient_id = $_GET["patient_id"];
 $strPatientName = $_GET["patient_name"];
 if(isset($_SESSION['user_type']) &&  isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name']) && isset($_SESSION['logged_in_user_id'])) {
@@ -67,5 +70,8 @@ if($no > 0){
     }
 } else {
     echo "You are not allowed to perform this operation";
+}
+}else {
+	echo "Session expired";
 }
 ?>

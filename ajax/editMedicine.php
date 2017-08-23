@@ -1,14 +1,16 @@
 <?php
 
-require_once "../inc/config.php";
-
+include_once"../inc/datacon.php";
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
 $medincineID = $_GET["medincineID"];
 $mode = $_GET["MODE"];
 
 if($mode == 'DELETE'){
 
     $query = "UPDATE medicine_master SET MEDICINE_STATUS='INACTIVE' where 
-                MEDICINE_ID = '".$medincineID."'";
+                MEDICINE_ID = '".$medincineID."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
 
     mysql_query($query)or die(mysql_error());
 
@@ -17,7 +19,7 @@ if($mode == 'DELETE'){
 } else if($mode == 'EDIT'){
     $sql1 = "select * from medicine_master where 
                 MEDICINE_ID = '".$medincineID."' 
-                and MEDICINE_STATUS = 'ACTIVE' ";
+                and MEDICINE_STATUS = 'ACTIVE' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
     $result1 = mysql_query($sql1)or die(mysql_error());
     $no = mysql_num_rows($result1);
     echo "<table width='600' border='0' cellspacing='0' cellpadding='0'>";
@@ -38,7 +40,7 @@ if($mode == 'DELETE'){
 } else if($mode == 'UPDATE'){
     $med_name = $_GET["med_name"];
     $query = "UPDATE medicine_master SET MEDICINE_NAME='".$med_name."' where 
-                MEDICINE_ID = '".$medincineID."'";
+                MEDICINE_ID = '".$medincineID."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
 
     //echo $query;
     mysql_query($query)or die(mysql_error());
@@ -46,5 +48,6 @@ if($mode == 'DELETE'){
     include 'searchMedicine.php';
     
 } 
+}
 
 ?>

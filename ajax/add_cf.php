@@ -1,7 +1,10 @@
 <?php
-include "../datacon.php";
+include_once"../inc/datacon.php";
 include '../classes/admin_class.php';
-
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){ 
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
+	
 $cfname = $_GET['cfname'];
 $cfvalue = str_replace("PLUS","+",$_GET['cfvalue']);
 $visit_id = $_GET['visit_id'];
@@ -16,7 +19,7 @@ $q15 = "select a.VALUE, b.NAME, a.ID from
                                 patient_health_details a ,patient_health_details_master b
                                 where
                                 a.ID = b.ID
-                                and a.VISIT_ID = '$visit_id'";
+                                and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' ";
 
 
 $rsd1 = mysql_query($q15);
@@ -44,5 +47,6 @@ while($rs = mysql_fetch_array($rsd1)) {
 
     echo"</table>";
 
+}
 }
 ?>

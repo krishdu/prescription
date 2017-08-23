@@ -1,7 +1,9 @@
 <?php
 
-require_once "../inc/config.php";
-
+include_once "../inc/datacon.php";
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
 $strMedicineName = $_GET["medicine_name"];
 
 
@@ -35,5 +37,7 @@ if($no > 0){
     } else {
     	
     }
-
+}else {
+	echo "Session expired";
+}
 ?>

@@ -1,29 +1,6 @@
 /* THIS IS A CUSTOM JAVASCRIPT FILE */
 
 
-function deleteClinicalImpression(ci_id, pres_id){
-    //alert("ID -> "+ci_id);
-    //alert("Prescription Id -> "+pres_id);
-    if (window.XMLHttpRequest){
-  		xmlhttp=new XMLHttpRequest();
-    }else{
-            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-            xmlhttp.onreadystatechange=function(){
-            if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                
-                document.getElementById("CI").innerHTML=xmlhttp.responseText;
-        }
-    }
-    str = "ajax/delete_clinical_impression.php?mode=DELETE_CLINICAL_IMPRESSION&ID="+ci_id+"&PRESCRIPTION_ID="+pres_id;
-
-    xmlhttp.open("GET",str,true);
-    xmlhttp.send();
-    return false;
-}
-
-
 
 function addPatient(){
        
@@ -680,6 +657,18 @@ function addClinicalImpression(prescriptionid){
     document.getElementById("txtCI").focus();
     return false;
 }
+
+function deleteClinicalImpression(ci_id, pres_id){
+   
+    var url = "ajax/delete_clinical_impression.php?mode=DELETE_CLINICAL_IMPRESSION&ID="+ci_id+"&PRESCRIPTION_ID="+pres_id;        
+    $.ajax({url: url, success: function(result){
+		  
+    	$("#CI").html(result);
+    }});
+  
+    return false;
+}
+
 
 function empty( val ) {
 

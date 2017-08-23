@@ -1,7 +1,10 @@
 <?php
 
-require_once "../inc/config.php";
-
+require_once "../inc/datacon.php";
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
+	
 $invest_name = $_GET["invest_name"];
 
 
@@ -37,5 +40,8 @@ $no = mysql_num_rows($result1);
     } */
     
 echo "Functionality is not added.";
+}else {
+	echo "Session expired";
+}
 
 ?>

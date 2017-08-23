@@ -80,7 +80,7 @@ class admin{
             $clinicalImpression = $admin->deriveClinicalImpressionFromEGFR($eGFR);
             
             //GET PRESCRIPTION ID FROM VISIT ID
-            $prescription = $admin->getPrescriptionFromVisitId($visit_id);
+            $prescription = $admin->getPrescriptionFromVisitId($visit_id,$chamber_name,$doc_name);
             $prescription_id = $prescription->PRESCRIPTION_ID;
             $admin->insertUpdateClinicalImpression($prescription_id, $clinicalImpression);
         }
@@ -122,20 +122,20 @@ class admin{
         }
     }
     
-    function deletePatientInvestigation($investigation_id,$visit_id ){
+    function deletePatientInvestigation($investigation_id,$visit_id,$chamber_name,$doc_name ){
         
-        mysql_query("delete from patient_investigation 
-                    where investigation_id = '$investigation_id' 
-                    and visit_id ='$visit_id' ") or die(mysql_error());
+        mysql_query("delete from patient_investigation a
+                    where a.investigation_id = '$investigation_id' 
+                    and a.visit_id ='$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
         
         
         $admin = new admin();
         //get prescription id
-        $prescription = $admin->getPrescriptionFromVisitId($visit_id);
+        $prescription = $admin->getPrescriptionFromVisitId($visit_id,$chamber_name,$doc_name);
         $prescription_id = $prescription->PRESCRIPTION_ID;
         
         //get investigation
-        $investigation = $admin->getInvestigationFromId($investigation_id);
+        $investigation = $admin->getInvestigationFromId($investigation_id,$chamber_name,$doc_name);
         $investigation_name = $investigation->investigation_name;
         
        
@@ -258,10 +258,10 @@ class admin{
         
         return $obj;
     }
-    function insertUpdateCF($cfname,$cfvalue,$visit_id){
+    function insertUpdateCF($cfname,$cfvalue,$visit_id,$chamber_name,$doc_name){
         
         $admin = new admin();
-        $query = "select ID from patient_health_details_master where NAME = '$cfname'";
+        $query = "select a.ID from patient_health_details_master a where a.NAME = '$cfname' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
 
 
         $result = mysql_query($query);
@@ -277,23 +277,23 @@ class admin{
             }
         } else {
             //Insert into master and then add
-            $query = "insert into patient_health_details_master (NAME) values('$cfname')";
+            $query = "insert into patient_health_details_master (NAME, create_date, chamber_id, doc_id) values('$cfname', NOW(), '$chamber_name', '$doc_name')";
             mysql_query($query);
             $id = mysql_insert_id();
         }
-        $query = "insert into patient_health_details(ID, VALUE, VISIT_ID) 
-                    values('$id' , '$cfvalue', '$visit_id')";
+        $query = "insert into patient_health_details(ID, VALUE, VISIT_ID, create_date, chamber_id, doc_id) 
+                    values('$id' , '$cfvalue', '$visit_id' NOW(), '$chamber_name', '$doc_name')";
         mysql_query($query);
 
         $result1 = mysql_query("select a.VALUE from patient_health_details a 
-                where a.ID = '1' and a.VISIT_ID = '$visit_id'") or die(mysql_error());
+                where a.ID = '1' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
 
         if(mysql_num_rows($result1) > 0){
             $obj = mysql_fetch_object($result1);
             $height = $obj->VALUE;
         }
         $result2 = mysql_query("select a.VALUE from patient_health_details a 
-                where a.ID = '2' and a.VISIT_ID = '$visit_id'") or die(mysql_error());
+                where a.ID = '2' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
 
         if(mysql_num_rows($result2) > 0){
             $obj = mysql_fetch_object($result2);
@@ -303,13 +303,13 @@ class admin{
         if($height != "" && $weight != ""){
             $bmi = $admin->calcBMI($weight, $height);
             $result_id_f = mysql_query("select * from patient_health_details where 
-                ID = '3' and VISIT_ID = '$visit_id'") or die(mysql_error());
+                ID = '3' and VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
             if(mysql_num_rows($result_id_f) > 0 ){
                 $query_b = "update patient_health_details set VALUE = '$bmi' where 
-                ID ='3' and VISIT_ID = '".$visit_id."'";
+                ID ='3' and VISIT_ID = '".$visit_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
             } else {
-            $query_b = "insert into patient_health_details(ID, VALUE, VISIT_ID) 
-                    values('3' , '$bmi', '$visit_id')";
+            $query_b = "insert into patient_health_details(ID, VALUE, VISIT_ID, create_date, chamber_id, doc_id) 
+                    values('3' , '$bmi', '$visit_id', NOW(), '$chamber_name', '$doc_name')";
             }
             mysql_query($query_b) or die(mysql_error());
             
@@ -345,9 +345,9 @@ class admin{
     	return round($result);
     	
     }
-    function insertUpdateClinicalImpression($prescription_id, $type){
+    function insertUpdateClinicalImpression($prescription_id, $type,$chamber_name,$doc_name){
         
-        $query = "select ID from clinical_impression where TYPE = '$type'";
+        $query = "select ID from clinical_impression a where a.TYPE = '$type' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         $result = mysql_query($query);
         $id = "";
         if(mysql_num_rows($result) > 0){
@@ -357,40 +357,40 @@ class admin{
             }
         } else {
             //Insert into master and then add
-            $query = "insert into clinical_impression (TYPE, DESCRIPTION) values('$type','$type')";
+            $query = "insert into clinical_impression a (TYPE, DESCRIPTION,create_date,chamber_id,doc_id ) values('$type','$type', NOW(), '$chamber_id', '$doc_id')";
             mysql_query($query) or die(mysql_error());
             $id = mysql_insert_id();
         }
-        $query = "insert into prescribed_cf(clinical_impression_id, prescription_id) 
-                    values('$id' , '$prescription_id')";
+        $query = "insert into prescribed_cf(clinical_impression_id, prescription_idcreate_date,chamber_id,doc_id) 
+                    values('$id' , '$prescription_id', NOW(), '$chamber_id', '$doc_id')";
         mysql_query($query) or die(mysql_error());
     }
-    function deleteClinicalImpression($prescription_id,$ci_id){
+    function deleteClinicalImpression($prescription_id,$ci_id, $chamber_name, $doc_name){
         //$message = "";
-        mysql_query("delete from prescribed_cf 
-             where prescription_id = '$prescription_id' 
-             and clinical_impression_id  ='$ci_id' ") or die(mysql_error());
+        mysql_query("delete from prescribed_cf a
+             where a.prescription_id = '$prescription_id' 
+             and a.clinical_impression_id  ='$ci_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
         
         
     }
-    function getPrescriptionFromVisitId($visitid){
-        $_QUERY="select * from prescription where VISIT_ID = '".$visitid."'";
+    function getPrescriptionFromVisitId($visitid,$chamber_name,$doc_name){
+        $_QUERY="select * from prescription a where a.VISIT_ID = '".$visitid."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         
         $result = mysql_query($_QUERY) or die(mysql_error());
         $obj = mysql_fetch_object($result);
         
         return $obj;
     }
-    function getClinicalImpressionFromId($ci_id){
-        $_QUERY="select * from clinical_impression where ID = '".$ci_id."'";
+    function getClinicalImpressionFromId($ci_id,$chamber_name,$doc_name){
+        $_QUERY="select * from clinical_impression a where a.ID = '".$ci_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         
         $result = mysql_query($_QUERY) or die(mysql_error());
         $obj = mysql_fetch_object($result);
         
         return $obj;
     }
-    function getVisitFromId($visit_id){
-        $_QUERY="select * from visit where VISIT_ID  = '".$visit_id."'";
+    function getVisitFromId($visit_id,$chamber_name,$doc_name){
+        $_QUERY="select * from visit a where a.VISIT_ID  = '".$visit_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         
         $result = mysql_query($_QUERY) or die(mysql_error());
         $obj = mysql_fetch_object($result);
