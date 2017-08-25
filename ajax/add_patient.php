@@ -82,7 +82,7 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 			
 			echo "VISIT : ". $existing_visit_id . " has been created. ";
 			
-			$result1 = mysql_query("select max(visit_id) as visit_id from visit where patient_id = '".$patient_id."' and visited = 'yes'" );
+			$result1 = mysql_query("select max(visit_id) as visit_id from visit where patient_id = '".$patient_id."' and visited = 'yes' and a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'" );
 			
 			if(mysql_num_rows($result1) > 0){
 			    //Already visited. So fetch the visit id (visited_id) for the last visit
@@ -94,7 +94,7 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 			    /** START INSERTING OLD PATIENT INVESTIGATION **/
 			    //INsert into patient_investigation
 			    
-			    $result2 = mysql_query("select * from patient_investigation where patient_id  = '".$patient_id."'and visit_id='".$visited_id."'");
+			    $result2 = mysql_query("select * from patient_investigation where patient_id  = '".$patient_id."'and visit_id='".$visited_id."' and a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'");
 			    
 			    while($existingRows = mysql_fetch_array($result2)){
 			        $inv_id = $existingRows['investigation_id'];
@@ -107,8 +107,8 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 			        
 			        if(mysql_num_rows($result) <= 0) {
 			        
-			            $query_insert_into_patient_investigation = "insert into patient_investigation (patient_id, visit_id, investigation_id, value) 
-			                                                    values ('".$patient_id."','".$existing_visit_id."','".$inv_id."','".$VALUE."')";
+			            $query_insert_into_patient_investigation = "insert into patient_investigation (patient_id, visit_id, investigation_id, value, chamber_id, doc_id) 
+			                                                    values ('".$patient_id."','".$existing_visit_id."','".$inv_id."','".$VALUE.",'".$chamber_name."','".$doc_name."')";
 			
 			            mysql_query($query_insert_into_patient_investigation) or die(mysql_error());
 			        }
@@ -122,7 +122,7 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 			    /** START INSERTING OLD PATIENT INVESTIGATION BY RECEPTIONIST **/
 			    //INsert into patient_health_details_by_receptionist
 			    
-			    $result3 = mysql_query("select * from patient_health_details where visit_id='".$visited_id."'");
+			    $result3 = mysql_query("select * from patient_health_details where visit_id='".$visited_id."' and a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'");
 			    
 			    while($existingRows1 = mysql_fetch_array($result3)){
 			    
@@ -131,11 +131,11 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 			        if($id == 1 || $id == 2){
 			            
 			            $checkQuery2 = "select * from patient_health_details where ID = '".$id."'
-			                        and VISIT_ID = '".$existing_visit_id."' ";
-			            $result4 = mysql_query($checkQuery);
+			                        and VISIT_ID = '".$existing_visit_id."' and a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
+			            $result4 = mysql_query($checkQuery) or die(mysql_error());
 			            if(mysql_num_rows($result4) <= 0) {
 			                $query_insert_into_patient_health_details = "insert into patient_health_details 
-			                            (ID, VALUE, VISIT_ID) values ('".$id."','".$value."','".$existing_visit_id."')";
+			                            (ID, VALUE, VISIT_ID, chamber_id, doc_id) values ('".$id."','".$value."','".$existing_visit_id.",'".$chamber_name."','".$doc_name."')";
 			                mysql_query($query_insert_into_patient_health_details) or die(mysql_error());
 			            }
 			        }

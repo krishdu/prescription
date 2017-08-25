@@ -15,7 +15,7 @@ WHERE e.TYPE ='".$ci."'
 and e.ID = a.clinical_impression_id
 and a.prescription_id=b.prescription_id
 and b.visit_id = c.visit_id
-and c.patient_id = d.patient_id
+and c.patient_id = d.patient_id AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'
 ORDER BY d.patient_first_name ASC";
 
 //echo $sql1;

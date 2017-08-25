@@ -13,7 +13,7 @@ $admin->deletePatientInvestigation($INVESTIGATION_ID,$VISIT_ID );
 
 $result = mysql_query("select b.investigation_name, a.investigation_id,  b.unit, a.value, b.investigation_type
                             from patient_investigation a, investigation_master b
-                            where a.investigation_id = b.ID 
+                            where a.investigation_id = b.ID and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id
                             and a.visit_id = '$VISIT_ID' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'" );
 
 while($d = mysql_fetch_object($result)){

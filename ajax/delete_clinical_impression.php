@@ -17,7 +17,7 @@ if (mysql_affected_rows() > 0){
 } */
 
 $q15 = "SELECT b.type, b.ID FROM prescribed_cf a, clinical_impression b
-                WHERE a.clinical_impression_id = b.id
+                WHERE a.clinical_impression_id = b.id and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id
                 AND a.prescription_id = '$PRESCRIPTION_ID' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         $rsd1 = mysql_query($q15);
 

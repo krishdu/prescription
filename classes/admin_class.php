@@ -67,22 +67,25 @@ class admin{
         return $cf;
     }
     
-    function insertUpdatePatientInvestigation($investigation_name, $type, $unit, $value, $patient_id, $visit_id ){
+    function insertUpdatePatientInvestigation($investigation_name, $type, $unit, $value, $patient_id, $visit_id,$chamber_name,$doc_name){
         $admin = new admin();
         if(strtoupper($investigation_name) == "CREATININE" ){
-            $patient = $admin->getPatientDetailsPatientId($patient_id);
+        	$patient = $admin->getPatientDetailsPatientId($patient_id,$chamber_name,$doc_name);
             $age = $admin->calcAge($patient->patient_dob);
+            //echo $age;
             $sex = $patient->GENDER;
             $cr = $value;
             $eGFR = $admin->calcEGFR($sex, $cr, $age);
+            //echo $eGFR;
             //INSERT $eGFR in C/F
-            $admin->insertUpdateCF("eGFR", $eGFR, $visit_id);
+            $admin->insertUpdateCF("eGFR", $eGFR, $visit_id,$chamber_name,$doc_name);
+            //echo "inserted";
             $clinicalImpression = $admin->deriveClinicalImpressionFromEGFR($eGFR);
             
             //GET PRESCRIPTION ID FROM VISIT ID
             $prescription = $admin->getPrescriptionFromVisitId($visit_id,$chamber_name,$doc_name);
             $prescription_id = $prescription->PRESCRIPTION_ID;
-            $admin->insertUpdateClinicalImpression($prescription_id, $clinicalImpression);
+            $admin->insertUpdateClinicalImpression($prescription_id, $clinicalImpression,$chamber_name,$doc_name);
         }
         
         $query_getinvestigation_details_from_master = "select * from investigation_master where  investigation_name  = '".$investigation_name."'" ;
@@ -99,24 +102,24 @@ class admin{
 
             mysql_query($query_update_into_investigation_master) or die(mysql_error());*/
             //update investigation master
-            mysql_query("update investigation_master set  unit = '$unit' where ID ='$inv_id'" );
+            mysql_query("update investigation_master a set  a.unit = '$unit' where a.ID ='$inv_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'" ) or die(mysql_error());
 
         //INsert into patient_investigation
-            $query_insert_into_patient_investigation = "insert into patient_investigation (patient_id, visit_id, investigation_id, value) 
-                                                    values ('".$patient_id."','".$visit_id."','".$inv_id."','".$value."')";
+            $query_insert_into_patient_investigation = "insert into patient_investigation (patient_id, visit_id, investigation_id, value, chamber_id, doc_id) 
+                                                    values ('".$patient_id."','".$visit_id."','".$inv_id."','".$value."','".$chamber_name."','".$doc_name."')";
             mysql_query($query_insert_into_patient_investigation) or die(mysql_error());
         } else {
             //Investigation does not exists in database
             //Insert into investigation_master 
-            $query_insert_into_investigation_master = "insert into investigation_master (investigation_name , investigation_type, unit)
-                                                        values('".$investigation_name."','".$type."','".$unit."')";
+            $query_insert_into_investigation_master = "insert into investigation_master (investigation_name , investigation_type, unit, chamber_id, doc_id)
+                                                        values('".$investigation_name."','".$type."','".$unit."','".$chamber_name."','".$doc_name."')";
             mysql_query($query_insert_into_investigation_master) or die(mysql_error());
             //Get the investigation Id
             $inv_id = mysql_insert_id() or die(mysql_error());
 
             //INsert into patient_investigation
-            $query_insert_into_patient_investigation = "insert into patient_investigation (patient_id, visit_id, investigation_id, value) 
-                                                    values ('".$patient_id."','".$visit_id."','".$inv_id."','".$value."')";
+            $query_insert_into_patient_investigation = "insert into patient_investigation (patient_id, visit_id, investigation_id, value, chamber_id, doc_id) 
+                                                    values ('".$patient_id."','".$visit_id."','".$inv_id."','".$value."','".$chamber_name."','".$doc_name."')";
             mysql_query($query_insert_into_patient_investigation) or die(mysql_error());
 
         }
@@ -224,34 +227,34 @@ class admin{
             if($height != "" && $weight != ""){
                 $bmi = $admin->calcBMI($weight, $height);
 
-                $result_id_f = mysql_query("select * from patient_health_details where ID = '3'") or die(mysql_error());
+                $result_id_f = mysql_query("select * from patient_health_details a where a.ID = '3' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
                 if(mysql_num_rows($result_id_f) > 0 ){
-                    $query_b = "update patient_health_details set VALUE = '$bmi' where ID ='3' and VISIT_ID = '".$visit_id."'";
+                    $query_b = "update patient_health_details a set a.VALUE = '$bmi' where a.ID ='3' and VISIT_ID = '".$visit_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
                 } else {
-                $query_b = "insert into patient_health_details(ID, VALUE, VISIT_ID) 
-                        values('3' , '$bmi', '$visit_id')";
+                $query_b = "insert into patient_health_details(ID, VALUE, VISIT_ID, chamber_id, doc_id) 
+                values('3' , '$bmi', '$visit_id', '$chamber_name', '$doc_name')";
                 }
                 mysql_query($query_b) or die(mysql_error());
             }
         }
         return $result;
     }
-    function getPatientDetailsPatientId($patientId){
-        $_QUERY = "select * from patient where patient_id = '".$patientId."'";
+    function getPatientDetailsPatientId($patientId,$chamber_name,$doc_name){
+        $_QUERY = "select * from patient a where a.patient_id = '".$patientId."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         $result = mysql_query($_QUERY) or die(mysql_error());
         $obj = mysql_fetch_object($result);
         
         return $obj;
     }
-    function getInvestigationFromId($investigation_id){
-        $_QUERY = "select * from investigation_master where ID = '".$investigation_id."'";
+    function getInvestigationFromId($investigation_id,$chamber_name,$doc_name){
+        $_QUERY = "select * from investigation_master a where a.ID = '".$investigation_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         $result = mysql_query($_QUERY) or die(mysql_error());
         $obj = mysql_fetch_object($result);
         
         return $obj;
     }
-    function getClinicalImpressionfromName($ci_name){
-        $_QUERY = "select * from clinical_impression where TYPE = '".$ci_name."'";
+    function getClinicalImpressionfromName($ci_name,$chamber_name,$doc_name){
+        $_QUERY = "select * from clinical_impression where TYPE = '".$ci_name."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         //echo $_QUERY;
         $result = mysql_query($_QUERY) or die(mysql_error());
         $obj = mysql_fetch_object($result);
@@ -302,11 +305,11 @@ class admin{
 
         if($height != "" && $weight != ""){
             $bmi = $admin->calcBMI($weight, $height);
-            $result_id_f = mysql_query("select * from patient_health_details where 
-                ID = '3' and VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
+            $result_id_f = mysql_query("select * from patient_health_details a where 
+                a.ID = '3' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
             if(mysql_num_rows($result_id_f) > 0 ){
-                $query_b = "update patient_health_details set VALUE = '$bmi' where 
-                ID ='3' and VISIT_ID = '".$visit_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
+                $query_b = "update patient_health_details a set VALUE = '$bmi' where 
+                a.ID ='3' and a.VISIT_ID = '".$visit_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
             } else {
             $query_b = "insert into patient_health_details(ID, VALUE, VISIT_ID, create_date, chamber_id, doc_id) 
                     values('3' , '$bmi', '$visit_id', NOW(), '$chamber_name', '$doc_name')";
@@ -318,11 +321,13 @@ class admin{
             //echo "SEX ===>>> ".$sex;
             $ideal_body_weight = $admin->calIdealBodyWeight($sex, $height);
             
-            $result_ideal_body_weight = mysql_query("select * from patient_health_details where
-            		ID = (select ID from patient_health_details_master where name='Ideal Body Weight (KG)' and status='ACTIVE') and VISIT_ID = '$visit_id'") or die(mysql_error());
+            $result_ideal_body_weight = mysql_query("select * from patient_health_details a,  patient_health_details_master b where
+														a.ID = b.ID and a.chamber_id = b.chamber_id and a.doc_id = b.doc_id 
+														and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'
+														and a.VISIT_ID = '$visit_id'") or die(mysql_error());
             if(mysql_num_rows($result_ideal_body_weight) > 0 ){
-            	$query_ideal_body_weight= "update patient_health_details set VALUE = '$ideal_body_weight' where
-            	ID = (select ID from patient_health_details_master where name='Ideal Body Weight (KG)' and status='ACTIVE') and VISIT_ID = '".$visit_id."'";
+            	$query_ideal_body_weight= "update patient_health_details b set b.VALUE = '$ideal_body_weight' where
+            	b.ID = (select ID from patient_health_details_master a where a.name='Ideal Body Weight (KG)' and status='ACTIVE' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name') and b.VISIT_ID = '".$visit_id."'";
             	echo "UPDATE ->".$query_ideal_body_weight;
             } else {
             	$query_ideal_body_weight= "insert into patient_health_details(ID, VALUE, VISIT_ID)
@@ -362,7 +367,7 @@ class admin{
             $id = mysql_insert_id();
         }
         $query = "insert into prescribed_cf(clinical_impression_id, prescription_idcreate_date,chamber_id,doc_id) 
-                    values('$id' , '$prescription_id', NOW(), '$chamber_id', '$doc_id')";
+        values('$id' , '$prescription_id', NOW(), '$chamber_name', '$doc_name')";
         mysql_query($query) or die(mysql_error());
     }
     function deleteClinicalImpression($prescription_id,$ci_id, $chamber_name, $doc_name){

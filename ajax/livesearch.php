@@ -33,20 +33,20 @@ if($dose3 != ""){
 
 
 
-$sql0 = "select * from medicine_master where MEDICINE_NAME = '$medicine_name'";
+$sql0 = "select * from medicine_master where MEDICINE_NAME = '$medicine_name' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
 $result0 = mysql_query($sql0) or die(mysql_error());
 if(mysql_num_rows($result0) == 0){
-mysql_query("insert into medicine_master(MEDICINE_NAME,  MEDICINE_ENTRY_DATE_TIME) 
-			values('$medicine_name', NOW())") or die(mysql_error());
+mysql_query("insert into medicine_master(MEDICINE_NAME,  MEDICINE_ENTRY_DATE_TIME, , chamber_id, doc_id) 
+			values('$medicine_name', NOW(), ,'$chamber_name','$doc_name')") or die(mysql_error());
 }
 
 
-$sql3 = "insert into precribed_medicine (PRESCRIPTION_ID, MEDICINE_NAME, MEDICINE_DOSE) 
-								values('$PRESCRIPTION_ID','$medicine_name', '$dose')";
+$sql3 = "insert into precribed_medicine (PRESCRIPTION_ID, MEDICINE_NAME, MEDICINE_DOSE, , chamber_id, doc_id) 
+								values('$PRESCRIPTION_ID','$medicine_name', '$dose', ,'$chamber_name','$doc_name')";
 mysql_query($sql3) or die(mysql_error());
 
 
-$sql2 = "select * from precribed_medicine where PRESCRIPTION_ID = '$PRESCRIPTION_ID'";
+$sql2 = "select * from precribed_medicine where PRESCRIPTION_ID = '$PRESCRIPTION_ID' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
 $result = mysql_query($sql2) or die(mysql_error());
 
 echo "<table id='table-3'>";
@@ -75,8 +75,8 @@ if(mysql_affected_rows() > 0){
         
         //search for the dose
         
-        $query_search = "select * from dose_details_master where DOSE_DETAILS = '".$dose."'";
-        $query_insert = "insert into dose_details_master(DOSE_DETAILS) values ('".$dose."')";
+        $query_search = "select * from dose_details_master where DOSE_DETAILS = '".$dose."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
+        $query_insert = "insert into dose_details_master(DOSE_DETAILS, chamber_id, doc_id) values ('".$dose."','".$chamber_name."','".$doc_name."')";
         
         $result = mysql_query($query_search);
 	

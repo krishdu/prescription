@@ -10,8 +10,8 @@ $invest_name = $_GET["invest_name"];
 
 
 
-$sql1 = "select * from investigation_master where investigation_name like '".$invest_name."%' 
-        and STATUS = 'ACTIVE' ";
+$sql1 = "select * from investigation_master a where a.investigation_name like '".$invest_name."%' 
+        and a.STATUS = 'ACTIVE' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
 $result1 = mysql_query($sql1)or die(mysql_error());
 $no = mysql_num_rows($result1);
 

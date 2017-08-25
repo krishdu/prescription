@@ -40,4 +40,5 @@ $admin->insertUpdateCF('WEIGHT (KG)','100','10426'); */
 
 echo $admin->getMaxVisitId('sos', 'sroy');
 
+
 ?>

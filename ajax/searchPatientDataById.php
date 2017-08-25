@@ -10,7 +10,8 @@ $patient_id = $_GET["PATIENT_ID"];
 
 $sql1 = "SELECT a.PRESCRIPTION_ID, a.VISIT_ID, b.PATIENT_ID , b.VISIT_DATE
         from prescription a, visit b
-        where a.VISIT_ID = b.VISIT_ID and
+        where a.VISIT_ID = b.VISIT_ID and AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' and
+		a.chamber_id=b.chamber_id and a.doc_id=b.doc_id and
         b.PATIENT_ID = '".$patient_id."' order by b.VISIT_DATE asc";
 $result1 = mysql_query($sql1)or die(mysql_error());
 $no = mysql_num_rows($result1);
@@ -36,8 +37,9 @@ while($d1 = mysql_fetch_array($result1)){
     echo "<td>".date("d / m / Y", strtotime($d1['VISIT_DATE']))."</td>";
     echo "<td>";
     $sql2 = "SELECT a.prescription_id, a.clinical_impression_id, b.TYPE 
-        from prescribed_cf a, clinical_impression b
-        where a.clinical_impression_id 	 = b.ID and
+        from prescribed_cf a, clinical_impression b 
+        where a.clinical_impression_id 	 = b.ID AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' and
+		a.chamber_id=b.chamber_id and a.doc_id=b.doc_id and
         a.prescription_id = '".$d1['PRESCRIPTION_ID']."' order by b.TYPE asc";
     $result2 = mysql_query($sql2)or die(mysql_error());
     echo "<table>";
@@ -52,7 +54,8 @@ while($d1 = mysql_fetch_array($result1)){
     echo "<td>";
     $sql3 = "SELECT a.value, b.investigation_name
         from patient_investigation a, investigation_master b
-        where a.investigation_id = b.ID and
+        where a.investigation_id = b.ID AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' and
+		a.chamber_id=b.chamber_id and a.doc_id=b.doc_id and 
         a.visit_id = '".$d1['VISIT_ID']."' order by b.investigation_name asc";
     $result3 = mysql_query($sql3)or die(mysql_error());
     echo "<table>";
@@ -67,7 +70,7 @@ while($d1 = mysql_fetch_array($result1)){
     echo "<td>";
     $sql4 = "SELECT a.MEDICINE_NAME
         from precribed_medicine a
-        where a.PRESCRIPTION_ID = '".$d1['PRESCRIPTION_ID']."' order by a.MEDICINE_NAME asc";
+        where a.PRESCRIPTION_ID = '".$d1['PRESCRIPTION_ID']."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' order by a.MEDICINE_NAME asc";
     $result4 = mysql_query($sql4)or die(mysql_error());
     echo "<table>";
     while($d4 = mysql_fetch_array($result4)){
