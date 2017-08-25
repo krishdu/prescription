@@ -48,80 +48,9 @@ function addPatient(){
     }
 }
    
-function addCF(visit_id){
-    //alert("visit_id -> "+visit_id);
-    //alert("Prescription Id -> "+prescriptionid);
-    var cfname = document.getElementById("txtCFName").value;
-    var cfvalue = document.getElementById("txtCFValue").value;
-    //alert("TYPE ->"+ citype);
-    if(cfname == "" || cfname == null) {
-        alert ("C/F Name cannot be blank")
-    } else if(cfvalue == "" || cfvalue == null)  {
-        alert ("C/F Value cannot be blank")
-    }else {
-        if(cfvalue == '+'){
-            cfvalue = 'PLUS';
-        }
-        if (window.XMLHttpRequest){
-                    xmlhttp=new XMLHttpRequest();
-        }else{
-                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
 
-                xmlhttp.onreadystatechange=function(){
-                if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                    //document.getElementById("CI").innerHTML = "";
-                    //alert(xmlhttp.responseText);
-                    document.getElementById("CF").innerHTML=xmlhttp.responseText;
-                    document.getElementById("txtCFName").value = "";
-                    document.getElementById("txtCFValue").value = "";
-                    
-            }
-        }
-        
-        
-        str = "ajax/add_cf.php?mode=ADD_CF&cfname="+cfname+"&cfvalue="+cfvalue+"&visit_id="+visit_id;
 
-        xmlhttp.open("GET",str,true);
-        xmlhttp.send();
-    }
-    document.getElementById("txtCFName").focus();
-    return false;
-}
 
-function updateDeleteCF(cf_id, visit_id, mode){
-    //alert("ID -> "+ci_id);
-    //alert("Prescription Id -> "+pres_id);
-    //alert(thisObj.parentNode.parentNode.childNodes[0].innerText);
-    
-    var cfvalue = document.getElementById("CF_"+cf_id).value;
-    //alert(cf_id +" "+visit_id+"  "+mode);
-    //alert(cfvalue);
-    if(cfvalue == "" || cfvalue == null)  {
-        alert ("C/F Value cannot be blank")
-    } else {
-        if(cfvalue == '+'){
-            cfvalue = 'PLUS';
-        }
-        if (window.XMLHttpRequest){
-                    xmlhttp=new XMLHttpRequest();
-        }else{
-                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-
-                xmlhttp.onreadystatechange=function(){
-                if (xmlhttp.readyState==4 && xmlhttp.status==200){
-
-                    document.getElementById("CF").innerHTML=xmlhttp.responseText;
-            }
-        }
-        str = "ajax/delete_cf.php?mode=ADD_CF&ID="+cf_id+"&visit_id="+visit_id+"&mode="+mode+"&cfvalue="+cfvalue;
-
-        xmlhttp.open("GET",str,true);
-        xmlhttp.send();
-    }
-    return false;
-}
 
 
 function saveResult()
@@ -437,7 +366,7 @@ function deletePatientInvestigation(visit_id, investigation_id){
         
         str = "ajax/delete_patient_investigation.php?mode=DELETE_PATIENT_INVESTIGATION"+
             "&INVESTIGATION_ID="+investigation_id+"&VISIT_ID="+visit_id;
-        
+        /*alert(str);*/
         xmlhttp.open("GET",str,true);
         xmlhttp.send();
     
@@ -669,6 +598,61 @@ function deleteClinicalImpression(ci_id, pres_id){
     return false;
 }
 
+function addCF(visit_id){
+    //alert("visit_id -> "+visit_id);
+    //alert("Prescription Id -> "+prescriptionid);
+    var cfname = document.getElementById("txtCFName").value;
+    var cfvalue = document.getElementById("txtCFValue").value;
+    //alert("TYPE ->"+ citype);
+    if(cfname == "" || cfname == null) {
+        alert ("C/F Name cannot be blank")
+    } else if(cfvalue == "" || cfvalue == null)  {
+        alert ("C/F Value cannot be blank")
+    }else {
+        if(cfvalue == '+'){
+            cfvalue = 'PLUS';
+        }
+        
+        var url = "ajax/add_cf.php?mode=ADD_CF&cfname="+cfname+"&cfvalue="+cfvalue+"&visit_id="+visit_id;
+        
+        $.ajax({url: url, success: function(result){
+  		  
+        	$("#CF").html(result);
+        	$("#txtCFName").val("");
+        	$("#txtCFValue").val("");
+        	$("#txtCFName").focus();
+        }});
+
+       
+    }
+    document.getElementById("txtCFName").focus();
+    return false;
+}
+
+function updateDeleteCF(cf_id, visit_id, mode){
+    //alert("ID -> "+ci_id);
+    //alert("Prescription Id -> "+pres_id);
+    //alert(thisObj.parentNode.parentNode.childNodes[0].innerText);
+    
+    var cfvalue = document.getElementById("CF_"+cf_id).value;
+    //alert(cf_id +" "+visit_id+"  "+mode);
+    //alert(cfvalue);
+    if(cfvalue == "" || cfvalue == null)  {
+        alert ("C/F Value cannot be blank")
+    } else {
+        if(cfvalue == '+'){
+            cfvalue = 'PLUS';
+        }
+       
+        var url = "ajax/delete_cf.php?ID="+cf_id+"&visit_id="+visit_id+"&mode="+mode+"&cfvalue="+cfvalue;
+
+        $.ajax({url: url, success: function(result){
+    		  
+        	$("#CF").html(result);
+        }});
+    }
+    return false;
+}
 
 function empty( val ) {
 

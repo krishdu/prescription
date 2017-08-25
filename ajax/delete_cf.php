@@ -12,7 +12,7 @@ $cfvalue = str_replace("PLUS","+",$_GET['cfvalue']);
 //$message = "";
 echo '<table>';
 
-$admin->deleteCF($mode, $cf_id, $visit_id, $cfvalue);
+$admin->deleteCF($mode, $cf_id, $visit_id, $cfvalue,$chamber_name,$doc_name);
 
 $q15 = "select a.VALUE, b.NAME, a.ID from
                             patient_health_details a ,patient_health_details_master b

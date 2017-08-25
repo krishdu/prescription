@@ -8,7 +8,7 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 $q = strtolower($_GET["term"]);
 if (!$q) return;
 
-$sql = "select * from clinical_impression where TYPE LIKE '$q%' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
+$sql = "select * from clinical_impression a where a.TYPE LIKE '$q%' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
 /* $rsd = mysql_query($sql);
 while($rs = mysql_fetch_array($rsd)) {
 	$cname = $rs['TYPE'];

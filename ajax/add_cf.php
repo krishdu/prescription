@@ -13,7 +13,7 @@ $admin = new admin();
 
 if($cfname !=''){
    
-   $admin->insertUpdateCF($cfname, $cfvalue, $visit_id);    
+   $admin->insertUpdateCF($cfname, $cfvalue, $visit_id, $chamber_name, $doc_name);    
 }
 $q15 = "select a.VALUE, b.NAME, a.ID from
                                 patient_health_details a ,patient_health_details_master b
