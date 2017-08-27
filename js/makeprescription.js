@@ -50,130 +50,6 @@ function addPatient(){
    
 
 
-
-
-
-function saveResult()
-{
-/*if (str.length==0)
-  {
-  document.getElementById("medicine").innerHTML="";
-  document.getElementById("medicine").style.border="0px";
-  return;
-  }*/
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  ///////////////////////////////////////
-  var medicine_name = document.getElementById("course").value;
-  var dose1 = document.getElementById("dose1").value;
-  
-  var dose1dir = getCheckedRadio("bfradio");
-  var dose2 = document.getElementById("dose2").value;
-  var dose2dir = getCheckedRadio("lradio");
-  var dose3 = document.getElementById("dose3").value;
-  var dose3dir = getCheckedRadio("dradio");
-  var dose4 = document.getElementById("dose4").value;
-  var dose4dir = getCheckedRadio("bdradio");
-  
-  
-  var dosage = "";
-  
-  if(dose1dir != ""){
-      dosage = dosage +dose1+ " "+ dose1dir+" breakfast. ";
-  }
-  if(dose2dir != ""){
-      dosage = dosage +dose2+ " "+ dose2dir+" lunch. ";
-  }
-  if(dose3dir != ""){
-      dosage = dosage +dose3+ " "+ dose3dir+" dinner. ";
-  }
-  if(dose4dir != ""){
-      dosage = dosage +dose4+ " "+ dose4dir+" bedtime. ";
-  }
-  
-  alert(dosage);
- 
- 
-  var patient_id = document.getElementById("patient_id").value;
-  var PRESCRIPTION_ID = document.getElementById("PRESCRIPTION_ID").value;
-  var VISIT_ID = document.getElementById('VISIT_ID').value;
-  
-  if(medicine_name == ""){
-	  alert("Name should not be Blank");
-          document.getElementById("course").focus();
-	  return false;
-  }else if(dosage == ""){
-	  alert("Dosage Should not be blank");
-          document.getElementById("dose1").focus();
-	  return false;
-  }
-  
- // alert(medicine_name + dose + direction + timing + patient_id);
-  //////////////////////////////////////
-  
-
-
-  
-xmlhttp.onreadystatechange=function() {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-        document.getElementById("medicine").innerHTML=xmlhttp.responseText;
-      	
-        document.getElementById("course").value = "";
-        document.getElementById("dose1").value = "";
-        document.getElementById("dose2").value = "";
-        document.getElementById("dose3").value = "";
-        //Clear All Radio Button
-        clearAllRadioButton();
-        document.getElementById("course").focus();
-        
-    }
-  }
-  str = "ajax/livesearch.php?mode=ADD_MEDICINDE&medicine_name="+medicine_name+"&dose="
-            +dosage+"&patient_id="+patient_id+"&PRESCRIPTION_ID="
-            +PRESCRIPTION_ID+"&VISIT_ID="+VISIT_ID+"&dose1="+dose1+"&dose2="+dose2+"&dose3="+dose3;
-  //alert(str);
-  
-  
-  
-  
-  xmlhttp.open("GET",str,true);
-  xmlhttp.send();
-  
-  
-  return false;
-}
-
-function del(k,pid){
-	alert("Medicine ID="+k);
-        alert("pRESCRIPTION id = "+pid);
-  if (window.XMLHttpRequest){
-  		xmlhttp=new XMLHttpRequest();
-  }else{
-  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  
-	xmlhttp.onreadystatechange=function(){
-  	if (xmlhttp.readyState==4 && xmlhttp.status==200){
-            document.getElementById("medicine").innerHTML=xmlhttp.responseText;
-            document.getElementById("course").focus();
-    }
-  }
-  str = "ajax/delete_precribed_medicine.php?mode=DELETE_MEDICINE&MEDICINE_ID="+k+"&PRES_ID="+pid;
-  
-  xmlhttp.open("GET",str,true);
-  xmlhttp.send();
-  
-  return false;
-  
-}
-
-
 function addInvestigation(type){
     var invname ;
     var divObj = null;
@@ -392,6 +268,8 @@ $(document).ready(function(){
 	      select: function( event, ui ) {
 	    	  
 	        console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	       
+	        $("#hidden_prescribed_medicine_id").val(ui.item.id);
 	      }
 	    });
     
@@ -401,6 +279,7 @@ $(document).ready(function(){
 	      select: function( event, ui ) {
 	    	  
 	        console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	        
 	      }
 	    });
 	$( "#dose2" ).autocomplete({
@@ -545,6 +424,102 @@ $(document).ready(function(){
 		    }
 	  	});
 	  	
+	  	$("#add_medicine_for_prescription").click(function(){
+	  		//alert("Inside save result");
+
+	  	  var medicine_name = document.getElementById("course").value;
+	  	  //alert(medicine_name);
+	  	  
+	  	  var dose1 = document.getElementById("dose1").value;
+	  	  
+	  	  var dose1dir = getCheckedRadio("bfradio");
+	  	  var dose2 = document.getElementById("dose2").value;
+	  	  var dose2dir = getCheckedRadio("lradio");
+	  	  var dose3 = document.getElementById("dose3").value;
+	  	  //alert(dose3);
+	  	  var dose3dir = getCheckedRadio("dradio");
+	  	  var dose4 = document.getElementById("dose4").value;
+	  	  
+	  	  //alert(dose4);
+	  	  var dose4dir = getCheckedRadio("bdradio");
+	  	  //alert(dose4dir);
+	  	  
+	  	  var dosage = "";
+	  	  
+	  	  if(dose1dir != ""){
+	  	      dosage = dosage +dose1+ " "+ dose1dir+" breakfast. ";
+	  	  }
+	  	  if(dose2dir != ""){
+	  	      dosage = dosage +dose2+ " "+ dose2dir+" lunch. ";
+	  	  }
+	  	  if(dose3dir != ""){
+	  	      dosage = dosage +dose3+ " "+ dose3dir+" dinner. ";
+	  	  }
+	  	  if(dose4dir != ""){
+	  	      dosage = dosage +dose4+ " "+ dose4dir+" bedtime. ";
+	  	  }
+	  	  
+	  	  //alert(dosage);
+	  	 
+	  	 
+	  	  var patient_id = document.getElementById("patient_id").value;
+	  	  var PRESCRIPTION_ID = document.getElementById("PRESCRIPTION_ID").value;
+	  	  var VISIT_ID = document.getElementById('VISIT_ID').value;
+	  	  var prescribe_medicine_id = document.getElementById('hidden_prescribed_medicine_id').value;
+	  	  //alert(prescribe_medicine_id);
+	  	  if(medicine_name == "" || prescribe_medicine_id == ""){
+	  		  alert("Name should not be Blank");
+	  	          document.getElementById("course").focus();
+	  		  return false;
+	  	  }else if(dosage == ""){
+	  		  alert("Dosage Should not be blank");
+	  	          document.getElementById("dose1").focus();
+	  		  return false;
+	  	  }
+	  	  
+	  	 // alert(medicine_name + dose + direction + timing + patient_id);
+	  	  //////////////////////////////////////
+	  	  
+
+	  		  if (window.XMLHttpRequest)
+	  		  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  		  xmlhttp=new XMLHttpRequest();
+	  		  }
+	  		  else
+	  		  {// code for IE6, IE5
+	  		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  		  }
+	  	  
+	  		xmlhttp.onreadystatechange=function() {
+	  		  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	  		        document.getElementById("medicine").innerHTML=xmlhttp.responseText;
+	  		      	
+	  		        document.getElementById("course").value = "";
+	  		        document.getElementById("dose1").value = "";
+	  		        document.getElementById("dose2").value = "";
+	  		        document.getElementById("dose3").value = "";
+	  		        document.getElementById("dose4").value = "";
+	  		        //Clear All Radio Button
+	  		        clearAllRadioButton();
+	  		        document.getElementById("course").focus();
+	  		        
+	  		    }
+	  	  }
+	  	  str = "ajax/livesearch.php?mode=ADD_MEDICINDE&medicine_name="+medicine_name+"&dose="
+	  	            +dosage+"&patient_id="+patient_id+"&PRESCRIPTION_ID="
+	  	            +PRESCRIPTION_ID+"&prescribe_medicine_id="+prescribe_medicine_id+"&VISIT_ID="+VISIT_ID+"&dose1="+dose1+"&dose2="+dose2+"&dose3="+dose3;
+	  	  //alert(str);
+	  	  //console.log(str);
+	  	  
+	  	  
+	  	  
+	  	  xmlhttp.open("GET",str,true);
+	  	  xmlhttp.send();
+	  	  
+	  	  
+	  	  return false;
+	  	});
+	  	
 	  	$(".minus").click(function(event){
 	  	    event.preventDefault();
 	  	});
@@ -652,6 +627,23 @@ function updateDeleteCF(cf_id, visit_id, mode){
         }});
     }
     return false;
+}
+
+function del(k,pid){
+	alert("Medicine ID="+k);
+    alert("pRESCRIPTION id = "+pid);
+ 
+ /* str = "ajax/delete_precribed_medicine.php?mode=DELETE_MEDICINE&MEDICINE_ID="+k+"&PRES_ID="+pid;*/
+	var url = "ajax/delete_precribed_medicine.php?mode=DELETE_MEDICINE&MEDICINE_ID="+k+"&PRES_ID="+pid;
+	$.ajax({url: url, success: function(result){
+		  
+    	$("#medicine").html(result);
+    	document.getElementById("course").focus();
+    }});
+	
+
+  return false;
+  
 }
 
 function empty( val ) {

@@ -23,7 +23,8 @@ include_once "classes/admin_class.php";
 
 
 if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])){
-    
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
 if(isset($_SESSION['NAVIGATION'])){
 if( $_SESSION['NAVIGATION'] == 'visit_list'){
     
@@ -51,7 +52,7 @@ $_SESSION['VISIT_ID'] = $visit_id;
 //$r1 = mysql_query("select * from patient where patient_id = '$patient_id'") or die(mysql_error());
 
 $update= new admin(); 
-$d1 = $update->getPatientInformationForPrescription($patient_id);
+$d1 = $update->getPatientInformationForPrescription($patient_id, $chamber_name, $doc_name);
 //$r2 = mysql_query("select * from visit where PATIENT_ID = '$patient_id'");
 //$n2 = mysql_num_rows($r2);
 ?>
@@ -123,7 +124,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
                     //Retrieve last prescription id
                     //$q11 = "select * from precribed_medicine where PRESCRIPTION_ID = '".$lastPrescription."'"; 
                     //echo $q11;
-                    $q11 = "SELECT * FROM precribed_medicine WHERE PRESCRIPTION_ID = '".$PRESCRIPTION_ID."'";
+                    $q11 = "SELECT * FROM precribed_medicine a WHERE PRESCRIPTION_ID = '".$PRESCRIPTION_ID."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
                             //echo $q5;
                     
                             $result = mysql_query($q11) or die(mysql_error()); 
@@ -142,7 +143,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
                                         <i><?php echo $rs['MEDICINE_DOSE'] ?></i><input type="hidden" class="input_box_small" name="dose" value="<?php echo $rs['MEDICINE_DOSE'];?>" /></td>
                                 <td  align="center" width="90"    >
 
-                                    <a id="minus7" href="#" onclick="del(<?php echo $rs['MEDICINE_ID'] ?>,<?php echo $PRESCRIPTION_ID ?>)">[-]</a> 
+                                    <button id="remove_<?php echo $rs['MEDICINE_ID'] ?>" class="btn btn-warning" onclick="del(<?php echo $rs['MEDICINE_ID'] ?>,<?php echo $PRESCRIPTION_ID ?>);">Remove</button> 
 
 
                                 </td>
@@ -166,10 +167,11 @@ $d1 = $update->getPatientInformationForPrescription($patient_id);
 						<div class="col-md-2"><input name="dose1" id="dose1" type="text"  class="form-control" placeholder="Breakfast"/><input type="radio" name="bfradio" value ="before"/> before <input type="radio" name="bfradio" value ="after"/> after</div>
 						<div class="col-md-2"><input name="dose2" id="dose2" type="text" class="form-control" placeholder="Lunch"/><input type="radio" name="lradio" value ="before"/> before <input type="radio" name="lradio" value ="after"/> after</div>
 						<div class="col-md-2"><input name="dose3" id="dose3" type="text" class="form-control" placeholder="Dinner"/><input type="radio" name="dradio" value ="before"/> before <input type="radio" name="dradio" value ="after"/> after</div>
-						<div class="col-md-2"><input name="dose4" id="dose4" type="text" class="form-control" placeholder="Bedtime"/><input type="radio" name="dradio" value ="before"/> before <input type="radio" name="dradio" value ="after"/> after</div>
+						<div class="col-md-2"><input name="dose4" id="dose4" type="text" class="form-control" placeholder="Bedtime"/><input type="radio" name="bdradio" value ="before"/> before <input type="radio" name="bdradio" value ="after"/> after</div>
 						<div class="col-md-1"><input type="hidden" name="PRESCRIPTION_ID" value="<?php echo $_GET['PRESCRIPTION_ID']; ?>" id="PRESCRIPTION_ID" />
+						<input type="hidden" name="hidden_prescribed_medicine_id" value="" id="hidden_prescribed_medicine_id" />
 								<input type="hidden" name="patient_id" value="<?php echo $_GET['patient_id']; ?>" id="patient_id" />
-								<input type="hidden" name="VISIT_ID" value="<?php echo $_GET['VISIT_ID']; ?>" id="VISIT_ID" /><a id="plus7" href="#" onclick="return saveResult()">[+]</a> </div>
+								<input type="hidden" name="VISIT_ID" value="<?php echo $_GET['VISIT_ID']; ?>" id="VISIT_ID" /><button class="btn btn-primary" id="add_medicine_for_prescription" >Add</button> </div>
 					</div>
                                  
                 

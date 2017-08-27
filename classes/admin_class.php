@@ -440,14 +440,14 @@ class admin{
         
         return $obj;
     }
-    function getPatientInformationForPrescription($patient_id){
+    function getPatientInformationForPrescription($patient_id, $chamber_name, $doc_name){
     	
     	$_QUERY="SELECT a.patient_id, a.GENDER, a.patient_first_name, a.patient_last_name, a.patient_name,
     	a.patient_address, a.patient_city, a.patient_dob, a.patient_cell_num, a.patient_alt_cell_num, a.age,
     	a.patient_email, data_entry_date, b.VISIT_ID, b.PATIENT_ID, b.VISIT_DATE,
     	b.APPOINTMENT_TO_DOC_NAME, b.VISITED
     	FROM patient a, visit b
-    	WHERE b.PATIENT_ID = a.patient_id
+    	WHERE b.PATIENT_ID = a.patient_id and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id
     	AND a.patient_id = '$patient_id'
     	AND b.visited = 'no'";
     			
@@ -457,25 +457,26 @@ class admin{
     	return $obj;
     }
     
-    function getPatientInformationforArchievePrescription($prescription_id){
+    function getPatientInformationforArchievePrescription($prescription_id, $chamber_name, $doc_name){
     	$_QUERY= "select a.visit_id, c.patient_id, c.GENDER, c.patient_first_name, c.patient_name, 
                         c.patient_last_name, c.patient_address, c.patient_city, c.patient_dob, c.age,
                         c.patient_cell_num, c.patient_alt_cell_num, c.patient_email , b.VISIT_DATE
                         from prescription a, visit b, patient c
                         where a.visit_id = b.visit_id
-                        and b.patient_id=c.patient_id
-                        and prescription_id = '".$prescription_id."'";
+                        and b.patient_id=c.patient_id and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id
+                        and a.prescription_id = '".$prescription_id."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."'";
     	$result = mysql_query($_QUERY) or die(mysql_error());
     	$obj = mysql_fetch_object($result);
     	
     	return $obj;
     }
     
-    function getPatientDetailsFromVisit($visit_id){
+    function getPatientDetailsFromVisit($visit_id, $chamber_name, $doc_name){
     	$_QUERY = "select a.patient_id, a.GENDER, a.patient_first_name, a.patient_last_name, a.patient_name, a.patient_address, 
 					a.patient_city, a.patient_dob, a.age, a.patient_cell_num, a.patient_alt_cell_num, a.patient_email, a.data_entry_date, 
 					a.chamber_id, a.created_by_user_id, a.create_date, a.isSync 
-				  from patient a, visit b where a.patient_id = b.PATIENT_ID and b.VISIT_ID = '".$visit_id."'";
+				    from patient a, visit b where a.patient_id = b.PATIENT_ID and b.VISIT_ID = '".$visit_id."' 
+					and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id";
     	$result = mysql_query($_QUERY) or die(mysql_error());
     	$obj = mysql_fetch_object($result);
     	
@@ -534,6 +535,50 @@ class admin{
     	return $max_id;
     }
     
+    function getMaxDoseDetailsMasterID($chamber_name, $doc_name){
+    	$_QUERY = "select max(DOSE_DETAILS_MASTER_ID)+1 as max_id from dose_details_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
+    	
+    	$result = mysql_query($_QUERY) or die(mysql_error());
+    	$obj = mysql_fetch_object($result);
+    	
+    	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
+    	$max_id = $obj->max_id;
+    	
+    	return $max_id;
+    }
     
+    function insertintoDoseMasterTable ($dose, $chamber_name, $doc_name){
+    	
+    	//search for the dose
+    	$admin = new admin();
+    	//echo "2";
+    	$query_search = "select * from dose_details_master a where a.DOSE_DETAILS = '".$dose."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
+    	echo $query_search;
+    	$id = $admin->getMaxDoseDetailsMasterID($chamber_name, $doc_name);
+    	//echo "Id ==>>".$id;
+    	$query_insert = "insert into dose_details_master(DOSE_DETAILS_MASTER_ID, DOSE_DETAILS, chamber_id, doc_id) values ('".$id."','".$dose."','".$chamber_name."','".$doc_name."')";
+    	//echo $query_insert;
+    	$result = mysql_query($query_search) or die(mysql_error());
+    	$num_res = mysql_num_rows($result);
+    	echo "num_res=".$num_res;
+    	 if ($num_res<= 0){
+    		//Insert into dose_details_master
+    		//echo "Exceuted the query";
+    		mysql_query($query_insert) or die(mysql_error());
+    	} 
+    	
+    }
+    
+    function getMaxMedicineID($chamber_name, $doc_name){
+    	$_QUERY = "select max(MEDICINE_ID)+1 as max_id from medicine_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
+    	
+    	$result = mysql_query($_QUERY) or die(mysql_error());
+    	$obj = mysql_fetch_object($result);
+    	
+    	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
+    	$max_id = $obj->max_id;
+    	
+    	return $max_id;
+    }
 }
 ?>

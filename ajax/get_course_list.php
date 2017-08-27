@@ -21,7 +21,7 @@ while($rs = mysql_fetch_array($rsd)) {
 	{
 		$row_array['label'] = $row['MEDICINE_NAME'];
 		$row_array['value'] = $row['MEDICINE_NAME'];
-		
+		$row_array['id'] = $row['MEDICINE_ID'];
 		array_push($return_arr,$row_array);
 		
 	}

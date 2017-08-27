@@ -123,8 +123,8 @@ ADD UNIQUE  `patient_id` (  `patient_id` ,  `visit_id` ,  `investigation_id` ,  
 insert into myepresc_prescription.patient_investigation(patient_id,	visit_id,	investigation_id,	value,chamber_id, doc_id) 
 select patient_id,	visit_id,	investigation_id,	value,chamber_id, doc_id from myepresc_sroy.patient_investigation;
 
-insert into myepresc_prescription.precribed_medicine(PRESCRIPTION_ID,	MEDICINE_NAME,	MEDICINE_DIRECTION,	MEDICINE_DOSE,	MEDICINE_TIMING,chamber_id, doc_id) 
-select PRESCRIPTION_ID,	MEDICINE_NAME,	MEDICINE_DIRECTION,	MEDICINE_DOSE,	MEDICINE_TIMING, chamber_id, doc_id from myepresc_sroy.precribed_medicine;
+insert into myepresc_prescription.precribed_medicine(MEDICINE_ID,PRESCRIPTION_ID,	MEDICINE_NAME,	MEDICINE_DIRECTION,	MEDICINE_DOSE,	MEDICINE_TIMING,chamber_id, doc_id) 
+select MEDICINE_ID,PRESCRIPTION_ID,	MEDICINE_NAME,	MEDICINE_DIRECTION,	MEDICINE_DOSE,	MEDICINE_TIMING, chamber_id, doc_id from myepresc_sroy.precribed_medicine;
 
 insert into myepresc_prescription.prescribed_cf(clinical_impression_id,	prescription_id,chamber_id, doc_id) 
 select clinical_impression_id,	prescription_id,chamber_id, doc_id from myepresc_sroy.prescribed_cf;
