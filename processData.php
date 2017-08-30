@@ -16,7 +16,7 @@ if(isset($_GET['patient_id'])){
     
     $result = mysql_query("select * from visit where patient_id = '$patient_id' and doc_id =  '$doc_name' and chamber_id = '$chamber_name' and visited = 'no'");
     
-    echo $result;
+    //echo $result;
     
     
     /** START : BLOCK FOR GENERATING VISIT ID   **/

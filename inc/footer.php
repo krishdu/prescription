@@ -12,3 +12,20 @@
 	<script src ="js/makeprescription.js"></script>
 	
    <!-- Datatable -->
+   <script src="media/js/jquery.dataTables.js">
+	</script>
+	<script  src="media/js/dataTables.buttons.min.js">
+	</script>
+<script  src="media/js/buttons.flash.min.js">
+	</script>
+<script type="text/javascript" src="media/js/jszip.min.js">
+	</script>
+<script type="text/javascript" src="media/js/pdfmake.min.js">
+	</script>
+<script type="text/javascript" src="media/js/vfs_fonts.js">
+	</script>
+<script type="text/javascript" src="media/js/buttons.html5.min.js">
+	</script>
+<script type="text/javascript" src="media/js/buttons.print.min.js">
+	</script>
+<script src="ckeditor/ckeditor.js"></script>

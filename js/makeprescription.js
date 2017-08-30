@@ -526,6 +526,95 @@ $(document).ready(function(){
 	  	$(".plus").click(function(event){
 	  	    event.preventDefault();
 	  	});
+	  	$('#visit_list_table').DataTable( {
+			"ajax": "ajax/tables.php?MODE=DAILY",
+			dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+		} );
+	  	$('#visit_list_table_monthly').DataTable( {
+			"ajax": "ajax/tables.php?MODE=MONTHLY",
+			dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+		} );
+	  	$('#visit_list_all').DataTable( {
+			"ajax": "ajax/tables.php?MODE=ALL_PATIENT",
+			dom: 'Blfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+		} );
+	  	$('#docname').blur(function(){
+	  		var input_name= $(this).val();
+	  		var url = "ajax/generateuserName.php?username="+input_name;
+	  		$.ajax({url: url, success: function(result){
+		        $("#doc_user_id").val(result);
+		        $("#degree").focus();
+		    }});
+	  	});
+	  	
+	  	//var check = $("#signup_doc_form").validate();
+	  	
+	  	$("#signup").click(function (){
+	  		var url = "./ajax/add_doctor.php"; // the script where you handle the form input.
+	  		//alert(check);
+	  		$("#signup_doc_form").submit(function(e){
+	  			$.ajax({
+	 	           type: "POST",
+	 	           url: url,
+	 	           data: $("#signup_doc_form").serialize(), // serializes the form's elements.
+	 	           success: function(data)
+	 	           {
+	 	        	   
+	 	        	  //$myObj = JSON.parse(data)
+ 	        		  $('#signup_doc_form').hide();
+ 	        		  $("#signup_doc_form_result").show();
+	 	        	  $("#signup_doc_form_result").html("Successfully created doctor record. Kindly login now. <a href='./index_login.php'>Login Here</a>");
+	 	        	  
+	 	        	   
+	 			       //$("#signup_alert_2").hide();
+	 			       //$('#signup_doc_form').hide();
+	 	           }
+	 	         });
+	  			e.preventDefault();
+	  		});
+	  		
+	  		
+	  	});
+	  	
+	  	$("#add_chamber").click(function (){
+	  		var url = "./ajax/add_chamber.php"; // the script where you handle the form input.
+	  		//alert(check);
+	  		$("#create_chamber_form").submit(function(e){
+	  			$.ajax({
+	 	           type: "POST",
+	 	           url: url,
+	 	           data: $("#create_chamber_form").serialize(), // serializes the form's elements.
+	 	           success: function(data)
+	 	           {
+	 	        	   
+	 	        	  var myObj = JSON.parse(data);
+	 	        	  var chamber_name = myObj.chamber_name;
+	 	        	  var status = myObj.status;
+	 	        	  alert(status);
+	 	        	  alert("Created Chamber ->"+chamber_name);
+ 	        		  $('#create_chamber_form').hide();
+ 	        		  $("#add_chamber_form_result").show();
+	 	        	  $("#add_chamber_form_result").html("Chamber Created successfully.  <a href='./visit_list.php?chamber_name="+chamber_name+"' >Goto Visit</a>");
+ 	        		 //$("#add_chamber_form_result").html(myObj);
+ 	        		 
+	 			       //$("#signup_alert_2").hide();
+	 			       //$('#signup_doc_form').hide();
+	 	           }
+	 	         });
+	  			e.preventDefault();
+	  		});
+	  		
+	  		
+	  	});
 	  	
 });
 

@@ -463,7 +463,8 @@ class admin{
                         c.patient_cell_num, c.patient_alt_cell_num, c.patient_email , b.VISIT_DATE
                         from prescription a, visit b, patient c
                         where a.visit_id = b.visit_id
-                        and b.patient_id=c.patient_id and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id
+                        and b.patient_id=c.patient_id and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id and 
+						b.chamber_id=c.chamber_id and b.doc_id = c.doc_id
                         and a.prescription_id = '".$prescription_id."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."'";
     	$result = mysql_query($_QUERY) or die(mysql_error());
     	$obj = mysql_fetch_object($result);
@@ -491,8 +492,8 @@ class admin{
         return $obj->max_id;
     }
     
-    function getMaxPatientId($chamber_name, $doc_name){
-        $_QUERY = "SELECT MAX( visit_id ) +1 as max_id FROM visit WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name' and visited = 'yes' ";
+    function getMaxPrescriptionId($chamber_name, $doc_name){
+        $_QUERY = "SELECT MAX( PRESCRIPTION_ID ) +1 as max_id FROM prescription WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name' and STATUS = 'SAVE' ";
         $result = mysql_query($_QUERY) or die(mysql_error());
         $obj = mysql_fetch_object($result);
         
@@ -571,6 +572,18 @@ class admin{
     
     function getMaxMedicineID($chamber_name, $doc_name){
     	$_QUERY = "select max(MEDICINE_ID)+1 as max_id from medicine_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
+    	
+    	$result = mysql_query($_QUERY) or die(mysql_error());
+    	$obj = mysql_fetch_object($result);
+    	
+    	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
+    	$max_id = $obj->max_id;
+    	
+    	return $max_id;
+    }
+    
+    function getTestID($chamber_name, $doc_name){
+    	$_QUERY = "select max(ID)+1 as max_id from test ";
     	
     	$result = mysql_query($_QUERY) or die(mysql_error());
     	$obj = mysql_fetch_object($result);

@@ -75,7 +75,7 @@ while ($row = mysql_fetch_array($result)) {
 	?>
                 <tr >
                     <td><?php echo $count;?></td>
-                    <td><a href="create_prescription.php?patient_id=<?php echo $row['patient_id'] ?>&VISIT_ID=<?php echo $row['visit_id']; ?>&VISIT_ID=<?php echo $row['visit_id']; ?>">
+                    <td><a href="create_prescription.php?patient_id=<?php echo $row['patient_id'] ?>&VISIT_ID=<?php echo $row['visit_id']; ?>">
                         <?php if($row['patient_name'] == null || $row['patient_name'] == ""){
                          echo $row['patient_first_name'] . " " . $row['patient_last_name']; } else { echo $row['patient_name']; }?></a></td>
                     <td><?php echo $row['patient_cell_num']; ?></td>
