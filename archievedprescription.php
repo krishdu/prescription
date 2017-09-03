@@ -14,6 +14,8 @@ if($_SESSION['doc_name'] == 'dsanyal'){
     include_once ("./inc/header_print_dsanyal.php") ;
 } else if ($_SESSION['doc_name'] == 'sroy'){
 include_once "./inc/header_print_sroy.php";
+} else {
+	include_once "./inc/header_print.php";
 }
 ?>
 <body>
@@ -350,6 +352,7 @@ include_once "./inc/header_print_sroy.php";
             <div class="content" align="center">
         
 		        <input class="btn btn-success" type="button" id="print_arch_pres" value="Print" onclick="return func_print('<?php echo $header->doctor_full_name;?>');">
+		        <a class="btn btn-success" href="./visit_list.php" >Go to Visit List</a>
 			</div>
            <?php 
 }  

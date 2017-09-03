@@ -8,7 +8,7 @@
 <div class="form-group"> 
 	<label for="exampleInputEmail1">Addictions</label>  
 	<div class="checkbox">
-	    <label><input type="checkbox" name="addictions" value="Nicotine"> Father</label><label><input type="checkbox" name="addictions" value="Alcohol"> Mother</label>
+	    <label><input type="checkbox" name="addictions" value="Nicotine"> Nicotine</label><label><input type="checkbox" name="addictions" value="Alcohol"> Alcohol</label>
 	 </div> 
 	<label for="exampleInputEmail1">Diabetic history</label>  
 	<div class="checkbox">

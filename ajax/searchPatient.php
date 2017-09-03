@@ -17,15 +17,16 @@ if(isset($_SESSION['user_type']) &&  isset($_SESSION['chamber_name']) && isset($
 $where = "";
 if($patient_id != ""){
         
-        $where .= "and patient_id = '$patient_id'  and chamber_id = '$chamber_name' and doc_id = '$doc_name' ";
+        $where .= "and patient_id = '$patient_id' ";
 } 
 if($strPatientName != ""){
         
-        $where .= "and patient_first_name like '$strPatientName%' OR patient_name like '$strPatientName%'  and chamber_id = '$chamber_name' and doc_id = '$doc_name' ";
+        $where .= "and patient_first_name like '$strPatientName%'  ";
 } 
 
-
+$where .= "and chamber_id = '$chamber_name' and doc_id = '$doc_name' ";
 $sql1 = "select * from patient where patient_id != ''".$where. "order by patient_id asc";
+//echo $sql1;
 $result1 = mysql_query($sql1)or die(mysql_error());
 $no = mysql_num_rows($result1);
  

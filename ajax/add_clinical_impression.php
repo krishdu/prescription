@@ -34,5 +34,7 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 	
 	        }
 	}
+} else {
+	echo "Session Expired !!";
 }
 ?>

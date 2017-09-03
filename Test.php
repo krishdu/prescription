@@ -68,7 +68,39 @@ This is my textarea to be replaced with CKEditor.
 // instance, using default configuration.
 CKEDITOR.replace( 'editor1' );
 </script>
+
 </form>
+
+<?php
+
+$result = $admin->preparepatientDatails("Biswarup Kumar Ghoshal");
+//echo $result[0].fname;
+//echo $result.fname;
+echo $result->fname;
+
+echo $admin->getMaxPatientId('rainbow', 'bghos');
+
+/* class Foo {
+	public $aMemberVar = 'aMemberVar Member Variable';
+	public $aFuncName = 'aMemberFunc';
+	
+	
+	function aMemberFunc() {
+		print 'Inside `aMemberFunc()`';
+	}
+}
+
+$foo = new Foo; 
+$element = 'aMemberVar';
+print $foo->$element; */
+
+echo $admin->calcBMI(84, 178);
+echo "ideal body weight ->".$admin->calIdealBodyWeight('Male', 178);
+
+$admin->insertUpdatePatientInvestigation('CREATININE', '', '', '1.2', '1', '1','rainbow','bghos');
+
+?>
+
 <?php include_once './inc/footer.php';?>
 </body>
 </html>

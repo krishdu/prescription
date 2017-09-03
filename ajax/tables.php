@@ -15,8 +15,8 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 				
 	} else if ($mode == 'MONTHLY'){
 		$query = "SELECT COUNT( * ) as total, DATE_FORMAT(visit_date, '%M %Y') as that_day from visit
-					WHERE chamber_id =  'sos'
-					AND doc_id =  'sroy'
+					WHERE chamber_id =  '$chamber_name'
+					AND doc_id =  '$doc_name'
 					group by that_day
 					ORDER BY visit_date DESC ";
 	} else if ($mode == 'ALL_PATIENT'){

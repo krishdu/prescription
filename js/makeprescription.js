@@ -381,7 +381,8 @@ $(document).ready(function(){
 				  $("#search_alert_1").show();
 				  $("#create_result").hide();
 		    } else {
-		    	var url = "./ajax/add_patient.php?patient_name="+$("#patient_name").val()+"&sex="+$("#sex").val()+"&age="+$("#age").val()+"&cell="+$("#cell").val()+$("#chamber_id").val()+"&age="+$("#doc_id").val()+"&cell="+$("#logged_in_user_id").val();
+		    	var url = "./ajax/add_patient.php?patient_name="+$("#patient_name").val()+"&sex="+$("#sex").val()+"&age="+$("#age").val()+"&cell="+$("#cell").val();
+		    	alert(url);
 		    	$.ajax({url: url, success: function(result){
 		    		$("#create_result").show();
 		    		
@@ -467,7 +468,7 @@ $(document).ready(function(){
 	  	  var VISIT_ID = document.getElementById('VISIT_ID').value;
 	  	  var prescribe_medicine_id = document.getElementById('hidden_prescribed_medicine_id').value;
 	  	  //alert(prescribe_medicine_id);
-	  	  if(medicine_name == "" || prescribe_medicine_id == ""){
+	  	  if(medicine_name == "" ){
 	  		  alert("Name should not be Blank");
 	  	          document.getElementById("course").focus();
 	  		  return false;

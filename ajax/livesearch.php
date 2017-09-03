@@ -37,9 +37,10 @@ $sql0 = "select * from medicine_master a where a.MEDICINE_NAME = '$medicine_name
 //echo $sql0;
 $result0 = mysql_query($sql0) or die(mysql_error());
 if(mysql_num_rows($result0) == 0){
-	$query = "insert into medicine_master(MEDICINE_ID, MEDICINE_NAME,  MEDICINE_ENTRY_DATE_TIME, , chamber_id, doc_id)
-	values('$max_medicine_id','$medicine_name', NOW(), ,'$chamber_name','$doc_name')";
+	$query = "insert into medicine_master(MEDICINE_ID, MEDICINE_NAME,  MEDICINE_ENTRY_DATE_TIME,  chamber_id, doc_id)
+	values('$max_medicine_id','$medicine_name', NOW(), '$chamber_name','$doc_name')";
 	//echo $query;
+	$precribed_medicine_id = $max_medicine_id;
 	mysql_query($query) or die(mysql_error());
 }
 

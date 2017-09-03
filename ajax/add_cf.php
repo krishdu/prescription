@@ -11,6 +11,7 @@ $visit_id = $_GET['visit_id'];
 //GET ID of the TYPE
 $admin = new admin();
 
+
 if($cfname !=''){
    
    $admin->insertUpdateCF($cfname, $cfvalue, $visit_id, $chamber_name, $doc_name);    

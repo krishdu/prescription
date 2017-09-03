@@ -70,8 +70,8 @@ if(mysql_num_rows($result) > 0){
     echo $query_pres_history;
     $r3 = mysql_query($query_pres_history) or die(mysql_error());
     while($row = mysql_fetch_array($r3)) {
-    	$q3 = "insert into precribed_medicine (PRESCRIPTION_ID, MEDICINE_NAME, MEDICINE_DIRECTION, MEDICINE_DOSE, MEDICINE_TIMING, chamber_id, doc_id, created_by_user_id)
-                    values('".$max_prescription_id."','".$row['MEDICINE_NAME']."', '".$row['MEDICINE_DIRECTION']."', '".$row['MEDICINE_DOSE']."', '".$row['MEDICINE_TIMING']."','".$chamber_name."','".$doc_name."', '". $logged_in_user."')";
+    	$q3 = "insert into precribed_medicine (MEDICINE_ID, PRESCRIPTION_ID, MEDICINE_NAME, MEDICINE_DIRECTION, MEDICINE_DOSE, MEDICINE_TIMING, chamber_id, doc_id, created_by_user_id)
+                    values('".$row['MEDICINE_ID']."','".$max_prescription_id."','".$row['MEDICINE_NAME']."', '".$row['MEDICINE_DIRECTION']."', '".$row['MEDICINE_DOSE']."', '".$row['MEDICINE_TIMING']."','".$chamber_name."','".$doc_name."', '". $logged_in_user."')";
         mysql_query($q3)or die(mysql_error());
     }
     header("location:prescription2.php?VISIT_ID=$VISIT_ID&patient_id=$patient_id&PRESCRIPTION_ID=$max_prescription_id"); 
