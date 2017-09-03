@@ -97,7 +97,9 @@ print $foo->$element; */
 echo $admin->calcBMI(84, 178);
 echo "ideal body weight ->".$admin->calIdealBodyWeight('Male', 178);
 
-$admin->insertUpdatePatientInvestigation('CREATININE', '', '', '1.2', '1', '1','rainbow','bghos');
+//$admin->insertUpdatePatientInvestigation('CREATININE', '', '', '1.2', '1', '1','rainbow','bghos');]
+
+echo "<a href='./visit_list.php'>Link</a>";
 
 ?>
 
