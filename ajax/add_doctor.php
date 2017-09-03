@@ -32,6 +32,8 @@ if(($user_name == '') || ($doctor_full_name == '') || ($doctor_address == '') ||
 	
 	$myObj->status = "success";
 	$myObj->message = $insert_doc_master;
+	
+	
 }
 $myJSON = json_encode($myObj);
 

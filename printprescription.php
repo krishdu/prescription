@@ -1,5 +1,7 @@
 <?php include_once "./inc/datacon.php"; 
 include_once "classes/admin_class.php";?>
+<?php include_once "./inc/header.php"; ?>
+<body>
 <?php
 if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset($_SESSION['VISIT_ID']) && isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name']) ){
 	$VISIT_ID = $_SESSION['VISIT_ID'];
@@ -8,12 +10,12 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
 	$doc_name= $_SESSION['doc_name'];
 	$admin= new admin(); 
 ?>
-
- 
-<?php include_once "./inc/header_print.php";
-include_once "classes/admin_class.php"; ?>
-<body >
-
+<div class="container"><!-- Begin container -->
+       
+    <!--BEGIN header-->
+            <?php include("banner.php");?>
+            
+    <!--END of header-->
 <?php
     
     if(isset($_POST['MAKE_PRESCIPTION'])){ 
@@ -101,8 +103,24 @@ include_once "classes/admin_class.php"; ?>
         //echo "<div class='b_success'>PRESCRIPTION created successfully<br><h2><a href='visit_list.php'>OK</a></h2></div>";
         //echo "<div class='b_success'>PRESCRIPTION created successfully<br><h2><a href='print.php?patient_id=$_GET[patient_id]&prescription_id=$PRESCRIPTION_ID&visit_id=$VISIT_ID'>OK</a></h2></div>";
         
-        echo "Prescription Created Successfully.<a href='http://localhost/prescription/archievedprescription.php?PRESCRIPTION_ID=".$PRESCRIPTION_ID."&visit_id=".$VISIT_ID."&patient_id=".$patient_id."' >Click here to view and print. </a>";
-    } else { 
+        ?>
+        <div class="alert alert-warning" role="alert" >
+        <?php echo "Prescription Created Successfully.<a href='http://localhost/prescription/archievedprescription.php?PRESCRIPTION_ID=".$PRESCRIPTION_ID."&visit_id=".$VISIT_ID."&patient_id=".$patient_id."' target='_blank' >Click here to view and print. </a>";?>
+        </div>
+        
+        <div class="alert alert-success" role="alert" >
+        <?php echo "<a href='./visit_list.php'>Click here to go to Visit List </a>";?>
+        </div>
+        <?php 
+        
+    
+       include "footer_pg.php";
+        
+        ?>
+    <!--END of footer-->
+   </div> <!-- End container -->
+    
+    <?php } else { 
     	$admin= new admin(); 
     	$patient_id = $admin->getPatientDetailsFromVisit($VISIT_ID, $chamber_id,$doc_name)->patient_id;
     	echo "<script>location.href='http://localhost/prescription/archievedprescription.php?PRESCRIPTION_ID=$PRESCRIPTION_ID&visit_id=$VISIT_ID&patient_id=$patient_id'</script>";

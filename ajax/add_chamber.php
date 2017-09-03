@@ -32,7 +32,16 @@ if(isset($_SESSION['user_name']) && isset($_SESSION['user_type'])) {
 			'message' => "Successfully added. Click here to Login ",
 			'chamber_name' => $chamber_id);
 			
+			//insert into parient health details
 			
+			$insert_query_for_patient_inv = "INSERT INTO `patient_health_details_master` (`ID`, `NAME`, `STATUS`, `chamber_id`, `create_date`, `doc_id`) VALUES
+								(1, 'HEIGHT (CM)', 'ACTIVE', '$chamber_id', NOW(),  '$related_doc_name'),
+								(2, 'WEIGHT (KG)', 'ACTIVE', '$chamber_id',  NOW(),  '$related_doc_name'),
+								(3, 'BMI', 'ACTIVE', '$chamber_id',  NOW(),  '$related_doc_name'),
+								( 4, 'Ideal Body Weight (KG)', 'ACTIVE', '$chamber_id',  NOW(), '$related_doc_name'),
+								( 5, 'eGFR', 'ACTIVE', '$chamber_id', NOW(),  '$related_doc_name')";
+			
+			mysql_query($insert_query_for_patient_inv) or die(mysql_error());
 			
 			$myJSON = json_encode($post_data);
 		}

@@ -720,13 +720,14 @@ function updateDeleteCF(cf_id, visit_id, mode){
 }
 
 function del(k,pid){
-	alert("Medicine ID="+k);
-    alert("pRESCRIPTION id = "+pid);
+	//alert("Medicine ID="+k);
+    //alert("pRESCRIPTION id = "+pid);
  
- /* str = "ajax/delete_precribed_medicine.php?mode=DELETE_MEDICINE&MEDICINE_ID="+k+"&PRES_ID="+pid;*/
+
 	var url = "ajax/delete_precribed_medicine.php?mode=DELETE_MEDICINE&MEDICINE_ID="+k+"&PRES_ID="+pid;
+	//alert(url);
 	$.ajax({url: url, success: function(result){
-		  
+		//alert(result);
     	$("#medicine").html(result);
     	document.getElementById("course").focus();
     }});

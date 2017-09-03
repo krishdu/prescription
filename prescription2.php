@@ -142,10 +142,8 @@ $d1 = $update->getPatientInformationForPrescription($patient_id, $chamber_name, 
                                     <img src="images/arrow-right.png" />
                                         <i><?php echo $rs['MEDICINE_DOSE'] ?></i><input type="hidden" class="input_box_small" name="dose" value="<?php echo $rs['MEDICINE_DOSE'];?>" /></td>
                                 <td  align="center" width="90"    >
-
-                                    <button id="remove_<?php echo $rs['MEDICINE_ID'] ?>" class="btn btn-warning" onclick="del(<?php echo $rs['MEDICINE_ID'] ?>,<?php echo $PRESCRIPTION_ID ?>);">Remove</button> 
-
-
+									<input id="remove_<?php echo $rs['MEDICINE_ID'] ?>" class="btn btn-warning" type="button" value="Remove" onclick="del('<?php echo $rs['MEDICINE_ID'] ?>','<?php echo $PRESCRIPTION_ID ?>');">
+                                    
                                 </td>
 
                             </tr>

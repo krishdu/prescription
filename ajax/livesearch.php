@@ -64,7 +64,7 @@ while($d = mysql_fetch_object($result)){
 	//echo "<td class='odd_tb'  align='center'><a href=''>Edit</a></td>";
         
 	echo "<td align='center' width='90'>
-          <button class='btn btn-warning' id='remove_$d->MEDICINE_ID' href='#' onclick='del($d->MEDICINE_ID ,$PRESCRIPTION_ID )'>Remove<button> </td> ";
+          <input class='btn btn-warning' id='remove_$d->MEDICINE_ID' href='#' onclick='del($d->MEDICINE_ID ,$PRESCRIPTION_ID )' value='Remove'> </td> ";
 	echo "</tr>";
 }
 

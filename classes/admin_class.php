@@ -566,6 +566,19 @@ class admin{
     	}
     	return $max_id;
     }
+    function getMaxInvestigationIdfromMaster($chamber_name, $doc_name){
+    	$_QUERY = "select max(ID)+1 as max_id from investigation_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
+    	
+    	$result = mysql_query($_QUERY) or die(mysql_error());
+    	$obj = mysql_fetch_object($result);
+    	
+    	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
+    	$max_id = $obj->max_id;
+    	if($max_id == NULL){
+    		$max_id=1;
+    	}
+    	return $max_id;
+    }
     
     function getMaxDoseDetailsMasterID($chamber_name, $doc_name){
     	$_QUERY = "select max(DOSE_DETAILS_MASTER_ID)+1 as max_id from dose_details_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
@@ -587,14 +600,14 @@ class admin{
     	$admin = new admin();
     	//echo "2";
     	$query_search = "select * from dose_details_master a where a.DOSE_DETAILS = '".$dose."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
-    	echo $query_search;
+    	//echo $query_search;
     	$id = $admin->getMaxDoseDetailsMasterID($chamber_name, $doc_name);
     	//echo "Id ==>>".$id;
     	$query_insert = "insert into dose_details_master(DOSE_DETAILS_MASTER_ID, DOSE_DETAILS, chamber_id, doc_id) values ('".$id."','".$dose."','".$chamber_name."','".$doc_name."')";
     	//echo $query_insert;
     	$result = mysql_query($query_search) or die(mysql_error());
     	$num_res = mysql_num_rows($result);
-    	echo "num_res=".$num_res;
+    	//echo "num_res=".$num_res;
     	 if ($num_res<= 0){
     		//Insert into dose_details_master
     		//echo "Exceuted the query";
