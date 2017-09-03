@@ -105,7 +105,7 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
         
         ?>
         <div class="alert alert-warning" role="alert" >
-        <?php echo "Prescription Created Successfully.<a href='http://localhost/prescription/archievedprescription.php?PRESCRIPTION_ID=".$PRESCRIPTION_ID."&visit_id=".$VISIT_ID."&patient_id=".$patient_id."' target='_blank' >Click here to view and print. </a>";?>
+        <?php echo "Prescription Created Successfully.<a href='./archievedprescription.php?PRESCRIPTION_ID=".$PRESCRIPTION_ID."&visit_id=".$VISIT_ID."&patient_id=".$patient_id."' target='_blank' >Click here to view and print. </a>";?>
         </div>
         
         <div class="alert alert-success" role="alert" >
@@ -123,7 +123,7 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
     <?php } else { 
     	$admin= new admin(); 
     	$patient_id = $admin->getPatientDetailsFromVisit($VISIT_ID, $chamber_id,$doc_name)->patient_id;
-    	echo "<script>location.href='http://localhost/prescription/archievedprescription.php?PRESCRIPTION_ID=$PRESCRIPTION_ID&visit_id=$VISIT_ID&patient_id=$patient_id'</script>";
+    	echo "<script>location.href='./archievedprescription.php?PRESCRIPTION_ID=$PRESCRIPTION_ID&visit_id=$VISIT_ID&patient_id=$patient_id'</script>";
     	
     	echo "<script>location.href='/visit_list.php'</script>";
     }

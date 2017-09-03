@@ -13,7 +13,7 @@ GRANT ALL PRIVILEGES ON  `myepresc_prescription` . * TO  'myepresc_pres'@'localh
 
 Click on WampServer Icon -> MySQL -> MySQL Consol
 Enter your database password like root in popup
-Select database name for insert data by writing command USE DATABASENAME
+Select database name for insert data by writing command USE myepresc_prescription
 Then load source sql file as SOURCE C:\FOLDER\database.sql
 Press enter for insert data.
 
