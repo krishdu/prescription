@@ -29,7 +29,7 @@ if(isset($_REQUEST['action'])){
             
             if($user_role== 'DOCTOR'){
                     echo "<script>location.href='select_chamber.php'</script>";
-            } else if ($user_role== 'RECEPTIONIST'){
+            } else if ($user_role== 'RECEPTIONIST' || $user_role== 'CHEMIST'){
                     echo "<script>location.href='select_chamber.php'</script>";
             } else {
             	echo "You are not authorize to perform any operation !!";

@@ -1,10 +1,24 @@
 <?php
 include 'datacon.php';
 include 'classes/admin_class.php';
+include_once 'inc/header.php';
 include_once 'classes/prescription_header.php';
 $admin = new admin();
 ?>
 <script src="ckeditor/ckeditor.js"></script>
+
+<style>
+    label, input { display:block; }
+    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    fieldset { padding:0; border:0; margin-top:25px; }
+    h1 { font-size: 1.2em; margin: .6em 0; }
+    div#users-contain { width: 350px; margin: 20px 0; }
+    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; }
+  </style>
+
 <?php 
 //echo $eg = $admin->calcEGFR("Male", 1.23, "30");
 //echo $admin->deriveClinicalImpressionFromEGFR($eg);
@@ -99,11 +113,56 @@ echo "ideal body weight ->".$admin->calIdealBodyWeight('Male', 178);
 
 //$admin->insertUpdatePatientInvestigation('CREATININE', '', '', '1.2', '1', '1','rainbow','bghos');]
 
-echo "<a href='./visit_list.php'>Link</a>";
-
+/* $JSONObject= json_decode($admin->getListOfChambersbyOwners('sroy'));
+foreach ($JSONObject as $value){
+	echo $value.'chamber_name';
+	foreach ($value as $key=>$value){
+		echo $value;
+	}
+} */
+$result = $admin->getListOfChambersbyOwners('sroy');
+while($row = mysql_fetch_array($result)){
+	echo $row['chamber_name'];
+}
 ?>
+<a class="link-edit-chamber" href="#">Click here</a>
+<button id="create-user">Create new user</button>
 
+<div id="dialog-form-edit-chamber" title="Create new user">
+	  <p class="validateTips">All form fields are required.</p>
+	 
+	  <form>
+	    <fieldset>
+	      <label for="name">Name</label>
+	      <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+	      <label for="email">Email</label>
+	      <input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all">
+	      <label for="password">Password</label>
+	      <input type="password" name="password" id="password" value="xxxxxxx" class="text ui-widget-content ui-corner-all">
+	 
+	      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+	      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+	    </fieldset>
+	  </form>
+	</div>
 <?php include_once './inc/footer.php';?>
+<script type="text/javascript">
+$(document).ready(function(){
+	var dialog;
+	dialog = $( "#dialog-form-edit-chamber" ).dialog({
+	      autoOpen: false,
+	      height: 400,
+	      width: 350,
+	      modal: true
+	      
+	    });
+	
+	$( "#create-user" ).button().on( "click", function() {
+	      dialog.dialog( "open" );
+	    });
+	  
+});
+</script>
 </body>
 </html>
 

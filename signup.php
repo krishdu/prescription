@@ -1,12 +1,18 @@
 <?php
 include_once "./inc/datacon.php";
-include_once './inc/header.php';;
+
+include_once './inc/header.php';
 
 ?>
 
   <body>
-
+	
     <div class="container">
+    <?php if(isset($_GET['role'])){
+    	$role = $_GET['role'];
+    	
+    	if($role == 'DOCTOR'){
+    ?>
 	<h1>Doctor registration</h1>
       <form id="signup_doc_form" class="form-horizontal" >
                     <input type="hidden" name = "role" value="DOCTOR">
@@ -27,7 +33,7 @@ include_once './inc/header.php';;
 					  <div class="form-group">
 					    <label for="doctor_full_name" class="col-sm-2 control-label">Name</label>
 					    <div class="col-sm-6">
-					      <input type="text" class="form-control" name="doctor_full_name" id="doctor_full_name" placeholder="Enter Name" required >
+					      <input type="text" class="form-control" name="doctor_full_name" id="doctor_full_name" placeholder="Enter Name" required value="">
 					    </div>
 					  </div>
 					 <div class="form-group">
@@ -106,7 +112,12 @@ include_once './inc/header.php';;
                    <div class="alert alert-info" role="alert" id="signup_doc_form_result" hidden="true">
 				        
 				   </div>
-
+				   <?php } else if($role == 'CHEMIST') {
+				   	include_once './makeprescription/signup_user.php';
+				   } else if($role == 'USER') {
+				   	include_once './makeprescription/signup_user.php';
+				   } else { echo "You are not authorize to perform any operation on this page.";}?>
+<?php } else { echo "Please select your role first. <a href='./select_role.php' >select role</a>";}?>
     </div> <!-- /container -->
     <?php include_once './inc/footer.php';?>
   </body>

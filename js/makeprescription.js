@@ -424,6 +424,34 @@ $(document).ready(function(){
 		         });
 		    }
 	  	});
+	  	$("#add_by_user").click(function(){
+			  
+		    var url = "./ajax/add_user_record.php"; // the script where you handle the form input.
+		    if(empty($("#fname").val()) || empty($("#lname").val()) || empty($("#gender").val()) || empty($("#theDate").val()) ){
+		    	$("#search_alert_2").html("First Name, Last Name, Sex and DOB is mandatory");
+		    	$("#search_alert_2").show();
+		    	$("#create_r_result").hide();
+		    	
+		    } else {
+		    	var url = "./ajax/add_user_record.php"; // the script where you handle the form input.
+
+			    
+		    	//alert("Submitting the form");
+			    $.ajax({
+		           type: "POST",
+		           url: url,
+		           data: $("#create_user_form").serialize(), // serializes the form's elements.
+		           success: function(data)
+		           {
+		        	   $("#create_u_result").show();
+			    		$("#create_u_result").html(data);
+				        $("#search_alert_u").hide();
+				        $('#create_user_form').hide();
+		           }
+		         });
+		    }
+	  	});
+	  	
 	  	
 	  	$("#add_medicine_for_prescription").click(function(){
 	  		//alert("Inside save result");
@@ -562,6 +590,7 @@ $(document).ready(function(){
 	  	$("#signup").click(function (){
 	  		var url = "./ajax/add_doctor.php"; // the script where you handle the form input.
 	  		//alert(check);
+	  		
 	  		$("#signup_doc_form").submit(function(e){
 	  			$.ajax({
 	 	           type: "POST",
@@ -586,6 +615,43 @@ $(document).ready(function(){
 	  		
 	  	});
 	  	
+	  	$("#update_doc_record").click(function (){
+	  		//alert("update");
+	  		var url = "./ajax/update_doctor.php"; // the script where you handle the form input.
+	  		//alert(url);
+	  		/*$("#update_doc_form1").submit(function(e){
+	  			alert("form submitted");
+	  			
+	  			e.preventDefault();
+	  		});*/
+	  		var affiliation = CKEDITOR.instances['doctor_affiliation'].getData();
+	  		var degree = CKEDITOR.instances['doctor_degree'].getData();
+	  		//alert(affiliation);
+	  		//alert(degree)
+	  		$("#doctor_degree").val(degree);
+	  		$("#doctor_affiliation").val(affiliation);
+	  		
+	  		//alert($("#doctor_affiliation").val());
+	  		$.ajax({
+	 	           type: "POST",
+	 	           url: url,
+	 	           data: $("#update_doc_form").serialize(), // serializes the form's elements.
+	 	           success: function(data)
+	 	           {
+	 	        	   //alert(data);
+	 	        	  //$myObj = JSON.parse(data)
+	        		  //$('#update_doc_form').hide();
+	        		  $("#update_doc_form_result").show();
+	 	        	  $("#update_doc_form_result").html(data);
+	 	        	  
+	 	        	   
+	 			       //$("#signup_alert_2").hide();
+	 			       //$('#signup_doc_form').hide();
+	 	           }
+	 	         });
+	  		
+	  		
+	  	});
 	  	$("#add_chamber").click(function (){
 	  		var url = "./ajax/add_chamber.php"; // the script where you handle the form input.
 	  		//alert(check);
@@ -617,6 +683,28 @@ $(document).ready(function(){
 	  		
 	  	});
 	  	
+	  	$( "#dialog-form-edit-chambe" ).dialog({
+	        autoOpen: false,
+	        height: 400,
+	        width: 350,
+	        modal: true
+	        
+	      });
+	  	
+	  	$( "#accordion" ).accordion({
+	        collapsible: true
+	      });
+	  	
+	  	$(".link-edit-chamber").click(function(e){
+	  		alert('edit link is cliked');
+	  		$( "#dialog-form-edit-chambe" ).dialog("Open");
+	  		e.preventDefault();
+	  	});
+	  	$("#theDate").datepicker({
+	  		changeMonth: true,
+	        changeYear: true,
+	        yearRange: "-99:+0"
+	  	});
 });
 
 function removeVisit(visit_id){

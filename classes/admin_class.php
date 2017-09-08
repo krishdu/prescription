@@ -691,5 +691,27 @@ class admin{
     	
     	return  $obj;
     }
+    function getListOfChambersbyOwners($doc_name){
+    	$query = "select a.chamber_id, b.chamber_name, b.chamber_address from chamber_owner a, chamber_master b where a.doc_id= '".$doc_name."' and a.chamber_id=b.chamber_id";
+    	echo $query;
+    	$result = mysql_query($query)or die(mysql_error());
+    	
+    	/* $result_array = array();
+    	
+    	
+    	
+    	while ($row = mysql_fetch_array($result))
+    	{
+    		$data['chamber_id'] = $row['chamber_id'];
+    		$data['chamber_name'] = $row['chamber_name'];
+    		$data['chamber_address'] = $row['chamber_address'];
+    		array_push($result_array, $data);
+    	} 
+    	
+    	echo json_encode($result_array);
+    	return json_encode($result_array); */
+    	
+    	return $result;
+    }
 }
 ?>
