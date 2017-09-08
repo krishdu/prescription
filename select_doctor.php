@@ -37,12 +37,14 @@ if( isset($_SESSION['user_type'])  && isset($_GET['chamber_name']) || (isset($_S
 	  <ul class="dropdown-menu">
 	     <?php 
           
-	     $_QUERY= "select a.doctor_full_name, b.related_doc_name from doctor_master a, chamber_master b where a.user_name = b.related_doc_name and b.chamber_id=".$chamber_id;
-          	$result = mysql_query($_QUERY) or die(mysql_error()); 
+	     $_QUERY= "select a.doctor_full_name, b.related_doc_name from doctor_master a, chamber_master b where a.user_name = b.related_doc_name and b.chamber_id='".$chamber_id."'";
+	     
+	     $result = mysql_query($_QUERY) or die(mysql_error()); 
 	          	while($rows = mysql_fetch_array($result)) {
 	          		echo "<li><a href='visit_list.php?doc_name=".$rows['related_doc_name']."'>". $rows['doctor_full_name']."</a></li>";
 	          	} ?>
 	  </ul>
+	  
 	</div>
 </div>
 

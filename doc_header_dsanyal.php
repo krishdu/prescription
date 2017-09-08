@@ -14,6 +14,7 @@
 
 <div class="row">
         <div class="col-md-8"> 
+        
         <div id='prescription_doc_name'><?php echo $header->doctor_full_name;?></div>
             <?php echo $header->doctor_degree;?></div>
         <div class="col-md-4">

@@ -1,17 +1,20 @@
 <?php
-include "../datacon.php";
+include_once"../inc/datacon.php";
 include '../classes/admin_class.php';
 $admin = new admin();
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
 $INVESTIGATION_ID = $_GET['INVESTIGATION_ID'];
 $VISIT_ID = $_GET['VISIT_ID'];
 //$PATIENT_ID = $_GET['PATIENT_ID'];
 
-$admin->deletePatientInvestigation($INVESTIGATION_ID,$VISIT_ID );
+$admin->deletePatientInvestigation($INVESTIGATION_ID,$VISIT_ID,$chamber_name,$doc_name);
 
 $result = mysql_query("select b.investigation_name, a.investigation_id,  b.unit, a.value, b.investigation_type
                             from patient_investigation a, investigation_master b
-                            where a.investigation_id = b.ID 
-                            and a.visit_id = '$VISIT_ID'" );
+                            where a.investigation_id = b.ID and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id
+                            and a.visit_id = '$VISIT_ID' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'" );
 
 while($d = mysql_fetch_object($result)){
     echo "<table width='100%'>";
@@ -188,4 +191,5 @@ $result=$result."</td>
 //CF ENDS
 
 echo $result; */
+}
 ?>

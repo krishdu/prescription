@@ -13,6 +13,32 @@ GRANT ALL PRIVILEGES ON  `myepresc_prescription` . * TO  'myepresc_pres'@'localh
 
 Click on WampServer Icon -> MySQL -> MySQL Consol
 Enter your database password like root in popup
-Select database name for insert data by writing command USE DATABASENAME
+Select database name for insert data by writing command USE myepresc_prescription
 Then load source sql file as SOURCE C:\FOLDER\database.sql
 Press enter for insert data.
+
+Get the repository
+
+git branh -a
+git pull origin
+git fetch origin
+git checkout <name of the branch> (e.g. feature/initial-project-setup)
+git status (to chekc the changes)
+git add test.txt / git add .
+git commit -m "testing.."
+git push origin
+
+
+Done with the changes, now need to commit the changres in development.
+Compare the code..
+new pull request -> 
+
+POint to the branch (develop)
+
+
+Merge code 
+New pull request.
+
+Merge Pull Request
+
+

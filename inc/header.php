@@ -16,10 +16,12 @@
     <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
     <link href="bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="jquery/themes/base/jquery-ui.css" rel="stylesheet">
     
-    <link href="jquery/themes/base/jquery.ui.autocomplete.css" rel="stylesheet">
+    <!--  <link href="jquery/themes/base/jquery.ui.autocomplete.css" rel="stylesheet">
     <link href="jquery/themes/base/jquery.ui.datepicker.css" rel="stylesheet">
-
+	<link href="jquery/themes/base/jquery.ui.accordion.css" rel="stylesheet">
+	<link href="jquery/themes/base/jquery.ui.dialog.css" rel="stylesheet">-->
     <!-- Custom styles for this template -->
     <link href="css/theme.css" rel="stylesheet">
 	
@@ -32,6 +34,7 @@
     <link href="css/carousel.css" rel="stylesheet">
     <link href="css/signin.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
+	<link href="css/dashboard.css" rel="stylesheet">
 	
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -42,6 +45,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+	<script src="ckeditor/ckeditor.js"></script>
     
   </head>

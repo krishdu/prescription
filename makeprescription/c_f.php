@@ -7,7 +7,8 @@
                                 patient_health_details a , patient_health_details_master b
                                 where
                                 a.ID = b.ID
-                                and a.VISIT_ID = '$visit_id'";
+                                and a.VISIT_ID = '$visit_id' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id and
+            					a.chamber_id='".$chamber_name."' AND a.doc_id='".$doc_name."'";
                             $rsd1 = mysql_query($q15);
 
                             while($rs = mysql_fetch_array($rsd1)) {

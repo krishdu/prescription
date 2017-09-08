@@ -1,15 +1,14 @@
-<div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->History </div>
-    <div class="inner_history">
-
-    <!-- Get In Touch Starts -->
-    <?php
+<?php
+    if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])){
+    	$chamber_name = $_SESSION['chamber_name'];
+    	$doc_name= $_SESSION['doc_name'];
     $lastPrescription = 0;
     
     $query = "SELECT a.VISIT_ID, a.PATIENT_ID, a.VISIT_DATE, b.prescription_id, a.visit_id 
                 FROM visit a, prescription b
                 WHERE a.patient_id = '$patient_id'
                 AND a.visited = 'YES'
-                AND a.visit_id = b.visit_id
+                AND a.visit_id = b.visit_id and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id
                 AND b.STATUS = 'SAVE' order by VISIT_DATE desc LIMIT 0 , 5";
 
 
@@ -32,10 +31,8 @@
 
     ?>
 
+<?php }else {echo "Session expired"; } ?>
 
-
-<!-- Get In Touch Ends -->					
-    </div>
     
 
     

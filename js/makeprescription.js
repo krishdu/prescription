@@ -1,29 +1,6 @@
 /* THIS IS A CUSTOM JAVASCRIPT FILE */
 
 
-function deleteClinicalImpression(ci_id, pres_id){
-    //alert("ID -> "+ci_id);
-    //alert("Prescription Id -> "+pres_id);
-    if (window.XMLHttpRequest){
-  		xmlhttp=new XMLHttpRequest();
-    }else{
-            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-            xmlhttp.onreadystatechange=function(){
-            if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                
-                document.getElementById("CI").innerHTML=xmlhttp.responseText;
-        }
-    }
-    str = "ajax/delete_clinical_impression.php?mode=DELETE_CLINICAL_IMPRESSION&ID="+ci_id+"&PRESCRIPTION_ID="+pres_id;
-
-    xmlhttp.open("GET",str,true);
-    xmlhttp.send();
-    return false;
-}
-
-
 
 function addPatient(){
        
@@ -71,201 +48,6 @@ function addPatient(){
     }
 }
    
-function addCF(visit_id){
-    //alert("visit_id -> "+visit_id);
-    //alert("Prescription Id -> "+prescriptionid);
-    var cfname = document.getElementById("txtCFName").value;
-    var cfvalue = document.getElementById("txtCFValue").value;
-    //alert("TYPE ->"+ citype);
-    if(cfname == "" || cfname == null) {
-        alert ("C/F Name cannot be blank")
-    } else if(cfvalue == "" || cfvalue == null)  {
-        alert ("C/F Value cannot be blank")
-    }else {
-        if(cfvalue == '+'){
-            cfvalue = 'PLUS';
-        }
-        if (window.XMLHttpRequest){
-                    xmlhttp=new XMLHttpRequest();
-        }else{
-                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-
-                xmlhttp.onreadystatechange=function(){
-                if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                    //document.getElementById("CI").innerHTML = "";
-                    //alert(xmlhttp.responseText);
-                    document.getElementById("CF").innerHTML=xmlhttp.responseText;
-                    document.getElementById("txtCFName").value = "";
-                    document.getElementById("txtCFValue").value = "";
-                    
-            }
-        }
-        
-        
-        str = "ajax/add_cf.php?mode=ADD_CF&cfname="+cfname+"&cfvalue="+cfvalue+"&visit_id="+visit_id;
-
-        xmlhttp.open("GET",str,true);
-        xmlhttp.send();
-    }
-    document.getElementById("txtCFName").focus();
-    return false;
-}
-
-function updateDeleteCF(cf_id, visit_id, mode){
-    //alert("ID -> "+ci_id);
-    //alert("Prescription Id -> "+pres_id);
-    //alert(thisObj.parentNode.parentNode.childNodes[0].innerText);
-    
-    var cfvalue = document.getElementById("CF_"+cf_id).value;
-    //alert(cf_id +" "+visit_id+"  "+mode);
-    //alert(cfvalue);
-    if(cfvalue == "" || cfvalue == null)  {
-        alert ("C/F Value cannot be blank")
-    } else {
-        if(cfvalue == '+'){
-            cfvalue = 'PLUS';
-        }
-        if (window.XMLHttpRequest){
-                    xmlhttp=new XMLHttpRequest();
-        }else{
-                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-
-                xmlhttp.onreadystatechange=function(){
-                if (xmlhttp.readyState==4 && xmlhttp.status==200){
-
-                    document.getElementById("CF").innerHTML=xmlhttp.responseText;
-            }
-        }
-        str = "ajax/delete_cf.php?mode=ADD_CF&ID="+cf_id+"&visit_id="+visit_id+"&mode="+mode+"&cfvalue="+cfvalue;
-
-        xmlhttp.open("GET",str,true);
-        xmlhttp.send();
-    }
-    return false;
-}
-
-
-function saveResult()
-{
-/*if (str.length==0)
-  {
-  document.getElementById("medicine").innerHTML="";
-  document.getElementById("medicine").style.border="0px";
-  return;
-  }*/
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  ///////////////////////////////////////
-  var medicine_name = document.getElementById("course").value;
-  var dose1 = document.getElementById("dose1").value;
-  
-  var dose1dir = getCheckedRadio("bfradio");
-  var dose2 = document.getElementById("dose2").value;
-  var dose2dir = getCheckedRadio("lradio");
-  var dose3 = document.getElementById("dose3").value;
-  var dose3dir = getCheckedRadio("dradio");
-  var dose4 = document.getElementById("dose4").value;
-  var dose4dir = getCheckedRadio("bdradio");
-  
-  
-  var dosage = "";
-  
-  if(dose1dir != ""){
-      dosage = dosage +dose1+ " "+ dose1dir+" breakfast. ";
-  }
-  if(dose2dir != ""){
-      dosage = dosage +dose2+ " "+ dose2dir+" lunch. ";
-  }
-  if(dose3dir != ""){
-      dosage = dosage +dose3+ " "+ dose3dir+" dinner. ";
-  }
-  if(dose4dir != ""){
-      dosage = dosage +dose4+ " "+ dose4dir+" bedtime. ";
-  }
-  
-  alert(dosage);
- 
- 
-  var patient_id = document.getElementById("patient_id").value;
-  var PRESCRIPTION_ID = document.getElementById("PRESCRIPTION_ID").value;
-  var VISIT_ID = document.getElementById('VISIT_ID').value;
-  
-  if(medicine_name == ""){
-	  alert("Name should not be Blank");
-          document.getElementById("course").focus();
-	  return false;
-  }else if(dosage == ""){
-	  alert("Dosage Should not be blank");
-          document.getElementById("dose1").focus();
-	  return false;
-  }
-  
- // alert(medicine_name + dose + direction + timing + patient_id);
-  //////////////////////////////////////
-  
-
-
-  
-xmlhttp.onreadystatechange=function() {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-        document.getElementById("medicine").innerHTML=xmlhttp.responseText;
-      	
-        document.getElementById("course").value = "";
-        document.getElementById("dose1").value = "";
-        document.getElementById("dose2").value = "";
-        document.getElementById("dose3").value = "";
-        //Clear All Radio Button
-        clearAllRadioButton();
-        document.getElementById("course").focus();
-        
-    }
-  }
-  str = "ajax/livesearch.php?mode=ADD_MEDICINDE&medicine_name="+medicine_name+"&dose="
-            +dosage+"&patient_id="+patient_id+"&PRESCRIPTION_ID="
-            +PRESCRIPTION_ID+"&VISIT_ID="+VISIT_ID+"&dose1="+dose1+"&dose2="+dose2+"&dose3="+dose3;
-  //alert(str);
-  
-  
-  
-  
-  xmlhttp.open("GET",str,true);
-  xmlhttp.send();
-  
-  
-  return false;
-}
-
-function del(k,pid){
-	alert("Medicine ID="+k);
-        alert("pRESCRIPTION id = "+pid);
-  if (window.XMLHttpRequest){
-  		xmlhttp=new XMLHttpRequest();
-  }else{
-  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  
-	xmlhttp.onreadystatechange=function(){
-  	if (xmlhttp.readyState==4 && xmlhttp.status==200){
-            document.getElementById("medicine").innerHTML=xmlhttp.responseText;
-            document.getElementById("course").focus();
-    }
-  }
-  str = "ajax/delete_precribed_medicine.php?mode=DELETE_MEDICINE&MEDICINE_ID="+k+"&PRES_ID="+pid;
-  
-  xmlhttp.open("GET",str,true);
-  xmlhttp.send();
-  
-  return false;
-  
-}
 
 
 function addInvestigation(type){
@@ -460,7 +242,7 @@ function deletePatientInvestigation(visit_id, investigation_id){
         
         str = "ajax/delete_patient_investigation.php?mode=DELETE_PATIENT_INVESTIGATION"+
             "&INVESTIGATION_ID="+investigation_id+"&VISIT_ID="+visit_id;
-        
+        /*alert(str);*/
         xmlhttp.open("GET",str,true);
         xmlhttp.send();
     
@@ -486,6 +268,8 @@ $(document).ready(function(){
 	      select: function( event, ui ) {
 	    	  
 	        console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	       
+	        $("#hidden_prescribed_medicine_id").val(ui.item.id);
 	      }
 	    });
     
@@ -495,6 +279,7 @@ $(document).ready(function(){
 	      select: function( event, ui ) {
 	    	  
 	        console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	        
 	      }
 	    });
 	$( "#dose2" ).autocomplete({
@@ -597,6 +382,7 @@ $(document).ready(function(){
 				  $("#create_result").hide();
 		    } else {
 		    	var url = "./ajax/add_patient.php?patient_name="+$("#patient_name").val()+"&sex="+$("#sex").val()+"&age="+$("#age").val()+"&cell="+$("#cell").val();
+		    	alert(url);
 		    	$.ajax({url: url, success: function(result){
 		    		$("#create_result").show();
 		    		
@@ -638,6 +424,130 @@ $(document).ready(function(){
 		         });
 		    }
 	  	});
+	  	$("#add_by_user").click(function(){
+			  
+		    var url = "./ajax/add_user_record.php"; // the script where you handle the form input.
+		    if(empty($("#fname").val()) || empty($("#lname").val()) || empty($("#gender").val()) || empty($("#theDate").val()) ){
+		    	$("#search_alert_2").html("First Name, Last Name, Sex and DOB is mandatory");
+		    	$("#search_alert_2").show();
+		    	$("#create_r_result").hide();
+		    	
+		    } else {
+		    	var url = "./ajax/add_user_record.php"; // the script where you handle the form input.
+
+			    
+		    	//alert("Submitting the form");
+			    $.ajax({
+		           type: "POST",
+		           url: url,
+		           data: $("#create_user_form").serialize(), // serializes the form's elements.
+		           success: function(data)
+		           {
+		        	   $("#create_u_result").show();
+			    		$("#create_u_result").html(data);
+				        $("#search_alert_u").hide();
+				        $('#create_user_form').hide();
+		           }
+		         });
+		    }
+	  	});
+	  	
+	  	
+	  	$("#add_medicine_for_prescription").click(function(){
+	  		//alert("Inside save result");
+
+	  	  var medicine_name = document.getElementById("course").value;
+	  	  //alert(medicine_name);
+	  	  
+	  	  var dose1 = document.getElementById("dose1").value;
+	  	  
+	  	  var dose1dir = getCheckedRadio("bfradio");
+	  	  var dose2 = document.getElementById("dose2").value;
+	  	  var dose2dir = getCheckedRadio("lradio");
+	  	  var dose3 = document.getElementById("dose3").value;
+	  	  //alert(dose3);
+	  	  var dose3dir = getCheckedRadio("dradio");
+	  	  var dose4 = document.getElementById("dose4").value;
+	  	  
+	  	  //alert(dose4);
+	  	  var dose4dir = getCheckedRadio("bdradio");
+	  	  //alert(dose4dir);
+	  	  
+	  	  var dosage = "";
+	  	  
+	  	  if(dose1dir != ""){
+	  	      dosage = dosage +dose1+ " "+ dose1dir+" breakfast. ";
+	  	  }
+	  	  if(dose2dir != ""){
+	  	      dosage = dosage +dose2+ " "+ dose2dir+" lunch. ";
+	  	  }
+	  	  if(dose3dir != ""){
+	  	      dosage = dosage +dose3+ " "+ dose3dir+" dinner. ";
+	  	  }
+	  	  if(dose4dir != ""){
+	  	      dosage = dosage +dose4+ " "+ dose4dir+" bedtime. ";
+	  	  }
+	  	  
+	  	  //alert(dosage);
+	  	 
+	  	 
+	  	  var patient_id = document.getElementById("patient_id").value;
+	  	  var PRESCRIPTION_ID = document.getElementById("PRESCRIPTION_ID").value;
+	  	  var VISIT_ID = document.getElementById('VISIT_ID').value;
+	  	  var prescribe_medicine_id = document.getElementById('hidden_prescribed_medicine_id').value;
+	  	  //alert(prescribe_medicine_id);
+	  	  if(medicine_name == "" ){
+	  		  alert("Name should not be Blank");
+	  	          document.getElementById("course").focus();
+	  		  return false;
+	  	  }else if(dosage == ""){
+	  		  alert("Dosage Should not be blank");
+	  	          document.getElementById("dose1").focus();
+	  		  return false;
+	  	  }
+	  	  
+	  	 // alert(medicine_name + dose + direction + timing + patient_id);
+	  	  //////////////////////////////////////
+	  	  
+
+	  		  if (window.XMLHttpRequest)
+	  		  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  		  xmlhttp=new XMLHttpRequest();
+	  		  }
+	  		  else
+	  		  {// code for IE6, IE5
+	  		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  		  }
+	  	  
+	  		xmlhttp.onreadystatechange=function() {
+	  		  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	  		        document.getElementById("medicine").innerHTML=xmlhttp.responseText;
+	  		      	
+	  		        document.getElementById("course").value = "";
+	  		        document.getElementById("dose1").value = "";
+	  		        document.getElementById("dose2").value = "";
+	  		        document.getElementById("dose3").value = "";
+	  		        document.getElementById("dose4").value = "";
+	  		        //Clear All Radio Button
+	  		        clearAllRadioButton();
+	  		        document.getElementById("course").focus();
+	  		        
+	  		    }
+	  	  }
+	  	  str = "ajax/livesearch.php?mode=ADD_MEDICINDE&medicine_name="+medicine_name+"&dose="
+	  	            +dosage+"&patient_id="+patient_id+"&PRESCRIPTION_ID="
+	  	            +PRESCRIPTION_ID+"&prescribe_medicine_id="+prescribe_medicine_id+"&VISIT_ID="+VISIT_ID+"&dose1="+dose1+"&dose2="+dose2+"&dose3="+dose3;
+	  	  //alert(str);
+	  	  //console.log(str);
+	  	  
+	  	  
+	  	  
+	  	  xmlhttp.open("GET",str,true);
+	  	  xmlhttp.send();
+	  	  
+	  	  
+	  	  return false;
+	  	});
 	  	
 	  	$(".minus").click(function(event){
 	  	    event.preventDefault();
@@ -645,7 +555,156 @@ $(document).ready(function(){
 	  	$(".plus").click(function(event){
 	  	    event.preventDefault();
 	  	});
+	  	$('#visit_list_table').DataTable( {
+			"ajax": "ajax/tables.php?MODE=DAILY",
+			dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+		} );
+	  	$('#visit_list_table_monthly').DataTable( {
+			"ajax": "ajax/tables.php?MODE=MONTHLY",
+			dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+		} );
+	  	$('#visit_list_all').DataTable( {
+			"ajax": "ajax/tables.php?MODE=ALL_PATIENT",
+			dom: 'Blfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+		} );
+	  	$('#docname').blur(function(){
+	  		var input_name= $(this).val();
+	  		var url = "ajax/generateuserName.php?username="+input_name;
+	  		$.ajax({url: url, success: function(result){
+		        $("#doc_user_id").val(result);
+		        $("#degree").focus();
+		    }});
+	  	});
 	  	
+	  	//var check = $("#signup_doc_form").validate();
+	  	
+	  	$("#signup").click(function (){
+	  		var url = "./ajax/add_doctor.php"; // the script where you handle the form input.
+	  		//alert(check);
+	  		
+	  		$("#signup_doc_form").submit(function(e){
+	  			$.ajax({
+	 	           type: "POST",
+	 	           url: url,
+	 	           data: $("#signup_doc_form").serialize(), // serializes the form's elements.
+	 	           success: function(data)
+	 	           {
+	 	        	   
+	 	        	  //$myObj = JSON.parse(data)
+ 	        		  $('#signup_doc_form').hide();
+ 	        		  $("#signup_doc_form_result").show();
+	 	        	  $("#signup_doc_form_result").html("Successfully created doctor record. Kindly login now. <a href='./index_login.php'>Login Here</a>");
+	 	        	  
+	 	        	   
+	 			       //$("#signup_alert_2").hide();
+	 			       //$('#signup_doc_form').hide();
+	 	           }
+	 	         });
+	  			e.preventDefault();
+	  		});
+	  		
+	  		
+	  	});
+	  	
+	  	$("#update_doc_record").click(function (){
+	  		//alert("update");
+	  		var url = "./ajax/update_doctor.php"; // the script where you handle the form input.
+	  		//alert(url);
+	  		/*$("#update_doc_form1").submit(function(e){
+	  			alert("form submitted");
+	  			
+	  			e.preventDefault();
+	  		});*/
+	  		var affiliation = CKEDITOR.instances['doctor_affiliation'].getData();
+	  		var degree = CKEDITOR.instances['doctor_degree'].getData();
+	  		//alert(affiliation);
+	  		//alert(degree)
+	  		$("#doctor_degree").val(degree);
+	  		$("#doctor_affiliation").val(affiliation);
+	  		
+	  		//alert($("#doctor_affiliation").val());
+	  		$.ajax({
+	 	           type: "POST",
+	 	           url: url,
+	 	           data: $("#update_doc_form").serialize(), // serializes the form's elements.
+	 	           success: function(data)
+	 	           {
+	 	        	   //alert(data);
+	 	        	  //$myObj = JSON.parse(data)
+	        		  //$('#update_doc_form').hide();
+	        		  $("#update_doc_form_result").show();
+	 	        	  $("#update_doc_form_result").html(data);
+	 	        	  
+	 	        	   
+	 			       //$("#signup_alert_2").hide();
+	 			       //$('#signup_doc_form').hide();
+	 	           }
+	 	         });
+	  		
+	  		
+	  	});
+	  	$("#add_chamber").click(function (){
+	  		var url = "./ajax/add_chamber.php"; // the script where you handle the form input.
+	  		//alert(check);
+	  		$("#create_chamber_form").submit(function(e){
+	  			$.ajax({
+	 	           type: "POST",
+	 	           url: url,
+	 	           data: $("#create_chamber_form").serialize(), // serializes the form's elements.
+	 	           success: function(data)
+	 	           {
+	 	        	   
+	 	        	  var myObj = JSON.parse(data);
+	 	        	  var chamber_name = myObj.chamber_name;
+	 	        	  var status = myObj.status;
+	 	        	  alert(status);
+	 	        	  alert("Created Chamber ->"+chamber_name);
+ 	        		  $('#create_chamber_form').hide();
+ 	        		  $("#add_chamber_form_result").show();
+	 	        	  $("#add_chamber_form_result").html("Chamber Created successfully.  <a href='./visit_list.php?chamber_name="+chamber_name+"' >Goto Visit</a>");
+ 	        		 //$("#add_chamber_form_result").html(myObj);
+ 	        		 
+	 			       //$("#signup_alert_2").hide();
+	 			       //$('#signup_doc_form').hide();
+	 	           }
+	 	         });
+	  			e.preventDefault();
+	  		});
+	  		
+	  		
+	  	});
+	  	
+	  	$( "#dialog-form-edit-chambe" ).dialog({
+	        autoOpen: false,
+	        height: 400,
+	        width: 350,
+	        modal: true
+	        
+	      });
+	  	
+	  	$( "#accordion" ).accordion({
+	        collapsible: true
+	      });
+	  	
+	  	$(".link-edit-chamber").click(function(e){
+	  		alert('edit link is cliked');
+	  		$( "#dialog-form-edit-chambe" ).dialog("Open");
+	  		e.preventDefault();
+	  	});
+	  	$("#theDate").datepicker({
+	  		changeMonth: true,
+	        changeYear: true,
+	        yearRange: "-99:+0"
+	  	});
 });
 
 function removeVisit(visit_id){
@@ -679,6 +738,91 @@ function addClinicalImpression(prescriptionid){
     }
     document.getElementById("txtCI").focus();
     return false;
+}
+
+function deleteClinicalImpression(ci_id, pres_id){
+   
+    var url = "ajax/delete_clinical_impression.php?mode=DELETE_CLINICAL_IMPRESSION&ID="+ci_id+"&PRESCRIPTION_ID="+pres_id;        
+    $.ajax({url: url, success: function(result){
+		  
+    	$("#CI").html(result);
+    }});
+  
+    return false;
+}
+
+function addCF(visit_id){
+    //alert("visit_id -> "+visit_id);
+    //alert("Prescription Id -> "+prescriptionid);
+    var cfname = document.getElementById("txtCFName").value;
+    var cfvalue = document.getElementById("txtCFValue").value;
+    //alert("TYPE ->"+ citype);
+    if(cfname == "" || cfname == null) {
+        alert ("C/F Name cannot be blank")
+    } else if(cfvalue == "" || cfvalue == null)  {
+        alert ("C/F Value cannot be blank")
+    }else {
+        if(cfvalue == '+'){
+            cfvalue = 'PLUS';
+        }
+        
+        var url = "ajax/add_cf.php?mode=ADD_CF&cfname="+cfname+"&cfvalue="+cfvalue+"&visit_id="+visit_id;
+        
+        $.ajax({url: url, success: function(result){
+  		  
+        	$("#CF").html(result);
+        	$("#txtCFName").val("");
+        	$("#txtCFValue").val("");
+        	$("#txtCFName").focus();
+        }});
+
+       
+    }
+    document.getElementById("txtCFName").focus();
+    return false;
+}
+
+function updateDeleteCF(cf_id, visit_id, mode){
+    //alert("ID -> "+ci_id);
+    //alert("Prescription Id -> "+pres_id);
+    //alert(thisObj.parentNode.parentNode.childNodes[0].innerText);
+    
+    var cfvalue = document.getElementById("CF_"+cf_id).value;
+    //alert(cf_id +" "+visit_id+"  "+mode);
+    //alert(cfvalue);
+    if(cfvalue == "" || cfvalue == null)  {
+        alert ("C/F Value cannot be blank")
+    } else {
+        if(cfvalue == '+'){
+            cfvalue = 'PLUS';
+        }
+       
+        var url = "ajax/delete_cf.php?ID="+cf_id+"&visit_id="+visit_id+"&mode="+mode+"&cfvalue="+cfvalue;
+
+        $.ajax({url: url, success: function(result){
+    		  
+        	$("#CF").html(result);
+        }});
+    }
+    return false;
+}
+
+function del(k,pid){
+	//alert("Medicine ID="+k);
+    //alert("pRESCRIPTION id = "+pid);
+ 
+
+	var url = "ajax/delete_precribed_medicine.php?mode=DELETE_MEDICINE&MEDICINE_ID="+k+"&PRES_ID="+pid;
+	//alert(url);
+	$.ajax({url: url, success: function(result){
+		//alert(result);
+    	$("#medicine").html(result);
+    	document.getElementById("course").focus();
+    }});
+	
+
+  return false;
+  
 }
 
 function empty( val ) {

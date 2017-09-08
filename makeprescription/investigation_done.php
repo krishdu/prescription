@@ -1,13 +1,20 @@
 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Investigation Done</div>
 <div class="inner">
+<?php if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name']) && ($_SESSION['user_type'] == "DOCTOR") ){ 
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
+	?>
     <div id="INV">
 
             <?php
-                $result = mysql_query( "SELECT b.investigation_name, a.value, b.unit, investigation_id
-                    FROM patient_investigation a, investigation_master b
-                    WHERE a.patient_id = '$patient_id'
-                    AND a.visit_id = '$visit_id'
-                    AND a.investigation_id = b.ID");
+            $query = "SELECT b.investigation_name, a.value, b.unit, investigation_id
+            FROM patient_investigation a, investigation_master b
+            WHERE a.patient_id = '$patient_id'
+            AND a.visit_id = '$visit_id'
+            AND a.investigation_id = b.ID and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id and
+            a.chamber_id='".$chamber_name."' AND a.doc_id='".$doc_name."'";
+            //echo $query;
+            $result = mysql_query( $query) or die(mysql_error());
                 //$rsd1 = mysql_query($q15);
 
                 while($rows = mysql_fetch_array($result) ){
@@ -29,6 +36,7 @@
                 <div class="col-md-2" ><a href='#' onclick="addPatientInvestigation('<?php echo $patient_id ; ?>','<?php echo $visit_id ; ?>')">[+]</a></div> 
 
     	</div>   
+    	<?php } else { echo "You are not authorize to perform this operation"; } ?>
  </div>
 
    

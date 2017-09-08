@@ -1,5 +1,8 @@
 <?php include_once "./inc/datacon.php"; ?>
 <?php
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])){
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
 if(isset($_SESSION['user_type']) ){
 if(isset($_GET['PRESCRIPTION_ID'])){
 
@@ -9,8 +12,10 @@ if(isset($_GET['PRESCRIPTION_ID'])){
 <?php 
 if($_SESSION['doc_name'] == 'dsanyal'){
     include_once ("./inc/header_print_dsanyal.php") ;
+} else if ($_SESSION['doc_name'] == 'sroy'){
+include_once "./inc/header_print_sroy.php";
 } else {
-include_once "./inc/header_print.php";
+	include_once "./inc/header_print.php";
 }
 ?>
 <body>
@@ -23,7 +28,7 @@ include_once "./inc/header_print.php";
             include_once 'classes/prescription_header.php';
 	            $update= new admin();
 	            $prescription_id = $_GET['PRESCRIPTION_ID'];
-	            $d1 = $update->getPatientInformationforArchievePrescription($prescription_id);
+	            $d1 = $update->getPatientInformationforArchievePrescription($prescription_id, $chamber_name, $doc_name);
 	            $_SESSION['visit_date'] = $d1->VISIT_DATE;
 	            $chamber_id = $_SESSION['chamber_name'];
 	            
@@ -53,7 +58,7 @@ include_once "./inc/header_print.php";
                     
                   </div>
             <?php } else { ?><!-- ELSE -->
-		        <div class="col-md-8-print-print"> 
+		        <div class="col-md-8-print"> 
 			        <div id='prescription_doc_name'><?php echo $header->doctor_full_name;?></div>
 			            <?php echo $header->doctor_degree;?>
 			    </div>
@@ -96,7 +101,7 @@ include_once "./inc/header_print.php";
                             $q15 = "SELECT b.type
                                     FROM prescribed_cf a, clinical_impression b
                                     WHERE a.clinical_impression_id = b.id
-                                    AND a.prescription_id = '".$_GET['PRESCRIPTION_ID']."'";
+                                    AND a.prescription_id = '".$_GET['PRESCRIPTION_ID']."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id";
                             $rsd1 = mysql_query($q15)  or die(mysql_error()); 
                             while($rs = mysql_fetch_array($rsd1) ) {
                                 $result = $rs['type'];
@@ -119,7 +124,7 @@ include_once "./inc/header_print.php";
                             FROM patient_investigation a, investigation_master b
                             WHERE a.patient_id = '".$_GET['patient_id']."'
                             AND a.visit_id = '".$_GET['visit_id']."'
-                            AND a.investigation_id = b.ID ");
+                            AND a.investigation_id = b.ID and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id");
     
     while($rows = mysql_fetch_array($result) ){
     
@@ -155,7 +160,7 @@ include_once "./inc/header_print.php";
                                 patient_health_details a , patient_health_details_master b
                                 where
                                 a.ID = b.ID
-                                and a.VISIT_ID = '".$_GET['visit_id']."' ";
+                                and a.VISIT_ID = '".$_GET['visit_id']."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id";
 					 $rsd1 = mysql_query($q15);
 
                             while($rs = mysql_fetch_array($rsd1)) {
@@ -191,7 +196,7 @@ include_once "./inc/header_print.php";
                 <div class="col-xs-12 .col-sm-6 .col-lg-8">      
                 
                     <?php
-                        $q11 = "SELECT * FROM precribed_medicine WHERE PRESCRIPTION_ID = '".$_GET['PRESCRIPTION_ID']."'";
+                        $q11 = "SELECT * FROM precribed_medicine a WHERE a.PRESCRIPTION_ID = '".$_GET['PRESCRIPTION_ID']."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' ";
                             //echo $q5;
                 
                             $result = mysql_query($q11) or die(mysql_error()); 
@@ -238,8 +243,8 @@ include_once "./inc/header_print.php";
                 <?php 
                     $prescriptionid = $_GET['PRESCRIPTION_ID'] ;
                     
-                    $query = "select * from prescription where PRESCRIPTION_ID = 
-                        '".$prescriptionid."' and VISIT_ID = '".$visit_id."'";
+                    $query = "select * from prescription a where a.PRESCRIPTION_ID = 
+                        '".$prescriptionid."' and a.VISIT_ID = '".$visit_id."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' ";
                     $result = mysql_query($query);
                     $diet1 = "";
                     $nextvisit1 = "";
@@ -271,7 +276,7 @@ include_once "./inc/header_print.php";
                                 $query = "SELECT b.investigation_name
                                         FROM prescribed_investigation a, investigation_master b
                                         WHERE a.investigation_id = b.ID
-                                        AND prescription_id = '".$_GET['PRESCRIPTION_ID']."'";
+                                        AND prescription_id = '".$_GET['PRESCRIPTION_ID']."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id";
                                 $result = mysql_query($query);
                                     while($rs = mysql_fetch_array($result)) {
                                             $cname = $rs['investigation_name'];
@@ -347,12 +352,16 @@ include_once "./inc/header_print.php";
             <div class="content" align="center">
         
 		        <input class="btn btn-success" type="button" id="print_arch_pres" value="Print" onclick="return func_print('<?php echo $header->doctor_full_name;?>');">
+		        <a class="btn btn-success" href="./visit_list.php" >Go to Visit List</a>
 			</div>
            <?php 
 }  
 
 }else {
 echo "Please logout and login again.";
+}
+} else {
+echo "Session expired. Login again.";
 }?> 
             
             

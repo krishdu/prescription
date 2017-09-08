@@ -11,7 +11,7 @@ if(isset($_REQUEST['action'])){
         $uname=stripslashes(trim($_POST['user_name']));
         $pass=stripslashes($_POST['password']);
 
-        $sql = "select * from user where user_name = '$uname' and user_password = '$pass'";
+        $sql = "select * from user where user_name = '$uname' and user_password = '".md5($pass)."'";
         $r = mysql_query($sql) or die(mysql_error());
         $d = mysql_fetch_object($r) ;
 
@@ -23,11 +23,13 @@ if(isset($_REQUEST['action'])){
             
             $_SESSION['user_type'] = $user_role;
             $_SESSION['user_id'] = $user_id;
+            
             $_SESSION['user_name'] = $user_name;
+            $_SESSION['logged_in_user_id'] = $user_name;
             
             if($user_role== 'DOCTOR'){
                     echo "<script>location.href='select_chamber.php'</script>";
-            } else if ($user_role== 'RECEPTIONIST'){
+            } else if ($user_role== 'RECEPTIONIST' || $user_role== 'CHEMIST'){
                     echo "<script>location.href='select_chamber.php'</script>";
             } else {
             	echo "You are not authorize to perform any operation !!";

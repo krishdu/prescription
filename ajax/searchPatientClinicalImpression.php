@@ -1,7 +1,9 @@
 <?php
-include "../datacon.php";
+include "../inc/datacon.php";
 include "../classes/admin_class.php";
-
+if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
 $ci = $_GET["CI"];
 
 
@@ -13,7 +15,7 @@ WHERE e.TYPE ='".$ci."'
 and e.ID = a.clinical_impression_id
 and a.prescription_id=b.prescription_id
 and b.visit_id = c.visit_id
-and c.patient_id = d.patient_id
+and c.patient_id = d.patient_id AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'
 ORDER BY d.patient_first_name ASC";
 
 //echo $sql1;
@@ -84,5 +86,7 @@ if($no > 0){
        </td>
     </tr>
 </table>";
-
+}else {
+	echo "Session expired";
+}
 ?>

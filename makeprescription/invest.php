@@ -1,3 +1,7 @@
+<?php if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name']) && ($_SESSION['user_type'] == "DOCTOR") ){ 
+	$chamber_name = $_SESSION['chamber_name'];
+	$doc_name= $_SESSION['doc_name'];
+	?>
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#tab1">Diabetes</a></li>
   <li><a data-toggle="tab" href="#tab2">Thyroid</a></li>
@@ -18,7 +22,7 @@
   <div id="tab1" class="tab-pane fade in active">
     <div id="tab111" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE1' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE1' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -36,7 +40,7 @@
   <div id="tab2" class="tab-pane fade">
     <div id="tab112" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE2' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE2' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -55,7 +59,7 @@
   <div id="tab3" class="tab-pane fade">
     <div id="tab113" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE3' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE3' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -74,7 +78,7 @@
   <div id="tab4" class="tab-pane fade">
     <div id="tab114" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE4' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE4' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -93,7 +97,7 @@
   <div id="tab5" class="tab-pane fade">
     <div id="tab115" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE5' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE5' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -112,7 +116,7 @@
   <div id="tab6" class="tab-pane fade">
     <div id="tab116" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE6' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE6' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -131,7 +135,7 @@
   <div id="tab7" class="tab-pane fade">
     <div id="tab117" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE7' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE7' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -150,7 +154,7 @@
   <div id="tab8" class="tab-pane fade">
     <div id="tab118" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE8' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE8' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -169,7 +173,7 @@
   <div id="tab9" class="tab-pane fade">
     <div id="tab119" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE9' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE9' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -188,7 +192,7 @@
   <div id="tab10" class="tab-pane fade">
     <div id="tab1110" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE10' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE10' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -207,7 +211,7 @@
   <div id="tab11" class="tab-pane fade">
      <div id="tab1111" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE11' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE11' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -226,7 +230,7 @@
   <div id="tab12" class="tab-pane fade">
     <div id="tab1112" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE12' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE12' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -245,7 +249,7 @@
   <div id="tab13" class="tab-pane fade">
     <div id="tab1113" class="check_fields" >
                     <?php
-                    $query = "select * from investigation_master where investigation_type = 'TYPE13' and STATUS = 'ACTIVE'";
+                    $query = "select * from investigation_master where investigation_type = 'TYPE13' and STATUS = 'ACTIVE' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
                     $result = mysql_query($query);
                         while($rs = mysql_fetch_array($result)) {
                                 $cname = $rs['investigation_name'];
@@ -262,3 +266,4 @@
                 
   </div>
 </div>
+<?php } else { echo "You are not authorize to perform this operation"; } ?>

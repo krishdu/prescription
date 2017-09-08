@@ -1,9 +1,12 @@
 <?php include_once "./inc/datacon.php";
 include_once 'classes/admin_class.php';
-if(isset($_SESSION['user_id'])) {
+if(isset($_SESSION['user_type']) && isset($_SESSION['user_id']) && (isset($_GET['chamber_name']) ||   isset($_SESSION['chamber_name'])) && (isset($_GET['doc_name']) ||   isset($_SESSION['doc_name']))) {
     $user_id = $_SESSION['user_id'];
     $adminObj = new admin();
     $resultObj = $adminObj->getUserDetails($user_id);
+    $user_type = $_SESSION['user_type'];
+    
+    
 
 ?>
 <!-- Static navbar -->
@@ -23,6 +26,12 @@ if(isset($_SESSION['user_id'])) {
               <li class="active"><a href="visit_list.php">Visit List</a></li>
               <li><a href="master.php">Master Data Management</a></li>
               <li><a href="reports.php">Reports</a></li>
+              <?php if($user_type == "DOCTOR"){ ?>
+    	<li><a href="dashboard_doctor.php">My dashboard</a></li>
+	    <?php } else if($user_type == "RECEPTIONIST"){ ?>
+	    	<li><a href="dashboard_receptionist.php">My dashboard</a></li>
+		<?php }?>
+             
             </ul>
             <ul class="nav navbar-nav navbar-right">
               
