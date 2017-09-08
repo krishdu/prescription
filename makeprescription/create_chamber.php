@@ -2,9 +2,9 @@
 include_once "./inc/header.php"; 
 
 if(isset($_SESSION['user_type']) ){
-	if(isset($_SESSION['doc_name'])  && $_SESSION['user_type'] == "DOCTOR") { 
-		include './classes/admin_class.php';
-	$doc_name= $_SESSION['doc_name'];
+	if(isset($_SESSION['user_name'])  && $_SESSION['user_type'] == "DOCTOR") { 
+		//include './classes/admin_class.php';
+	$doc_name= $_SESSION['user_name'];
 	
 ?>
 <h1>Chamber registration</h1>

@@ -153,7 +153,7 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
  		echo "<tr>";
  		echo "<td>".$row['chamber_name']."</td>";
  		echo "<td>".$row['chamber_address']."</td>";
- 		echo "<td><a class='link-edit-chamber' href='./makeprescription/add_chamber.php?mode=UPDATE&input_chamber_id=".$row['chamber_id']."'>Edit</a></td>";
+ 		echo "<td><a  href='./makeprescription/create_chamber.php?mode=UPDATE&input_chamber_id=".$row['chamber_id']."'>Edit</a></td>";
  		echo "</tr>";
 } 
 ?>

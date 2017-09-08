@@ -339,6 +339,27 @@ $(document).ready(function(){
 	        //console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
 	      }
 	  }); 
+	  $("#txtPastMedical").autocomplete( {
+		  source: "./ajax/get_past_medical_history.php",
+		  minLength: 1,
+	      select: function( event, ui ) {
+	        //console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	      }
+	  });
+	  $("#txtSocialHistory").autocomplete({
+		  source: "./ajax/get_social_history.php",
+		  minLength: 1,
+	      select: function( event, ui ) {
+	        //console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	      }
+	  });
+	  $("#txtAllergy").autocomplete({
+		  source: "./ajax/get_allergy_list.php",
+		  minLength: 1,
+	      select: function( event, ui ) {
+	        //console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	      }
+		});
 	  $( "#tabs" ).tabs();
 	  $("#search").click(function(){     
 		  if(!$("#s_p_id").val() && !$("#s_p_name")){
@@ -373,15 +394,15 @@ $(document).ready(function(){
 		  
 		    var patient_name = document.getElementById("patient_name").value;
 		    var sex = document.getElementById("sex").value;
-		    var age = document.getElementById("age").value;
+		    var age = document.getElementById("theDate").value;
 		    var cell = document.getElementById("cell").value;
 		    
-		    if(!$("#patient_name").val() || !$("#sex").val() || !$("#age").val() || !$("#cell").val() ){
+		    if(!$("#patient_name").val() || !$("#sex").val() || !$("#theDate").val() || !$("#cell").val() ){
 		    	$("#search_alert_1").html("All fields are mandatory");
 				  $("#search_alert_1").show();
 				  $("#create_result").hide();
 		    } else {
-		    	var url = "./ajax/add_patient.php?patient_name="+$("#patient_name").val()+"&sex="+$("#sex").val()+"&age="+$("#age").val()+"&cell="+$("#cell").val();
+		    	var url = "./ajax/add_patient.php?patient_name="+$("#patient_name").val()+"&sex="+$("#sex").val()+"&dob="+$("#theDate").val()+"&cell="+$("#cell").val();
 		    	alert(url);
 		    	$.ajax({url: url, success: function(result){
 		    		$("#create_result").show();
@@ -460,19 +481,18 @@ $(document).ready(function(){
 	  	  //alert(medicine_name);
 	  	  
 	  	  var dose1 = document.getElementById("dose1").value;
-	  	  
 	  	  var dose1dir = getCheckedRadio("bfradio");
+	  	  
 	  	  var dose2 = document.getElementById("dose2").value;
 	  	  var dose2dir = getCheckedRadio("lradio");
+	  	  
 	  	  var dose3 = document.getElementById("dose3").value;
-	  	  //alert(dose3);
 	  	  var dose3dir = getCheckedRadio("dradio");
+	  	  
 	  	  var dose4 = document.getElementById("dose4").value;
-	  	  
-	  	  //alert(dose4);
 	  	  var dose4dir = getCheckedRadio("bdradio");
-	  	  //alert(dose4dir);
 	  	  
+	  	var duration = document.getElementById("duration_count").value + " "+document.getElementById("duration_type").value
 	  	  var dosage = "";
 	  	  
 	  	  if(dose1dir != ""){
@@ -487,10 +507,10 @@ $(document).ready(function(){
 	  	  if(dose4dir != ""){
 	  	      dosage = dosage +dose4+ " "+ dose4dir+" bedtime. ";
 	  	  }
-	  	  
-	  	  //alert(dosage);
-	  	 
-	  	 
+	  	  if(dosage != ""){
+	  		  dosage = dosage + "for "+duration;
+	  	  }
+	  	  alert(dosage);
 	  	  var patient_id = document.getElementById("patient_id").value;
 	  	  var PRESCRIPTION_ID = document.getElementById("PRESCRIPTION_ID").value;
 	  	  var VISIT_ID = document.getElementById('VISIT_ID').value;
@@ -717,10 +737,21 @@ function removeVisit(visit_id){
 	    }});
 }
 
+function getCheckedRadio(elementName) {
+    var radioButtons = document.getElementsByName(elementName);
+    var result = "";
+    for (var x = 0; x < radioButtons.length; x ++) {
+        if (radioButtons[x].checked) {
+            result = radioButtons[x].value;
+        }
+    }
+    return result;
+}
+
 function addClinicalImpression(prescriptionid){
 	
     var citype = document.getElementById("txtCI").value;
-    
+    //alert(citype);
     var url = "ajax/add_clinical_impression.php?mode=ADD_CLINICAL_IMPRESSION&TYPE="+citype+"&prescription_id="+prescriptionid;
     
     if(citype == "" || citype == null)
@@ -864,16 +895,6 @@ function empty( val ) {
     return false;
 }
 
-function getCheckedRadio(elementName) {
-    var radioButtons = document.getElementsByName(elementName);
-    var result = "";
-    for (var x = 0; x < radioButtons.length; x ++) {
-        if (radioButtons[x].checked) {
-            result = radioButtons[x].value;
-        }
-    }
-    return result;
-}
 
 function clearAllRadioButton(){
     clearRadioButtonGroup("bfradio");
@@ -894,5 +915,184 @@ function clearRadioButtonGroup(elementName){
         radioButtons[x].checked = false;
     }
     
+    return false;
+}
+
+/*Hindol*/
+function addPastMedicalHistory(prescriptionid){
+    //alert("TYPE -> "+type);
+    //alert("Prescription Id -> "+prescriptionid);
+    var citype = document.getElementById("txtPastMedical").value;
+    //alert("TYPE ->"+ citype);
+    if(citype == "" || citype == null)
+    {
+        alert ("Past Medical History cannot be blank")
+    } else {
+        citype = citype.toUpperCase();
+        if (window.XMLHttpRequest){
+                    xmlhttp=new XMLHttpRequest();
+        }else{
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+                xmlhttp.onreadystatechange=function(){
+                if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                    //document.getElementById("CI").innerHTML = "";
+                    //alert(xmlhttp.responseText);
+                    document.getElementById("PastMedical").innerHTML=xmlhttp.responseText;
+                    document.getElementById("txtPastMedical").value = "";
+                    
+            }
+        }
+        
+        
+        str = "ajax/add_past_medical_history.php?mode=ADD_CLINICAL_IMPRESSION&TYPE="+citype+"&prescription_id="+prescriptionid;
+
+        xmlhttp.open("GET",str,true);
+        xmlhttp.send();
+    }
+    document.getElementById("txtPastMedical").focus();
+    return false;
+}
+function deleteSocialHistory(social_history_id, pres_id){
+    //alert("social_history_id -> "+social_history_id);
+    //alert("Prescription Id -> "+pres_id);
+    if (window.XMLHttpRequest){
+  		xmlhttp=new XMLHttpRequest();
+    }else{
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+            xmlhttp.onreadystatechange=function(){
+            if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                //alert(xmlhttp.responseText);
+                document.getElementById("SOCIAL_HISTORY").innerHTML=xmlhttp.responseText;
+        }
+    }
+    str = "ajax/delete_social_history.php?mode=DELETE_SOCIAL_HISTORY&ID="+social_history_id+"&PRESCRIPTION_ID="+pres_id;
+
+    xmlhttp.open("GET",str,true);
+    xmlhttp.send();
+    //document.getElementById("txtSocialHistory").focus();
+    return false;
+}
+
+function deletePastMedicalHistory(ci_id, pres_id){
+    //alert("ID -> "+ci_id);
+    //alert("Prescription Id -> "+pres_id);
+    if (window.XMLHttpRequest){
+  		xmlhttp=new XMLHttpRequest();
+    }else{
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+            xmlhttp.onreadystatechange=function(){
+            if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                
+                document.getElementById("PastMedical").innerHTML=xmlhttp.responseText;
+        }
+    }
+
+	str = "ajax/delete_past_medical_history.php?mode=DELETE_CLINICAL_IMPRESSION&ID="+ci_id+"&PRESCRIPTION_ID="+pres_id;
+    xmlhttp.open("GET",str,true);
+    xmlhttp.send();
+    document.getElementById("PastMedical").focus()
+    return false;
+}
+
+function addSocialHistory(prescriptionid){
+    //alert("TYPE -> "+type);
+    //alert("Prescription Id -> "+prescriptionid);
+    var socialHistory = document.getElementById("txtSocialHistory").value;
+    alert("TYPE ->"+ socialHistory);
+    
+    if(socialHistory == "" || socialHistory == null)
+    {
+        alert ("Social History Cannot be blank")
+    } else {
+
+        if (window.XMLHttpRequest){
+                    xmlhttp=new XMLHttpRequest();
+        }else{
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+                xmlhttp.onreadystatechange=function(){
+                if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                    //document.getElementById("CI").innerHTML = "";
+                    //alert(xmlhttp.responseText);
+                    document.getElementById("SOCIAL_HISTORY").innerHTML=xmlhttp.responseText;
+                    document.getElementById("txtSocialHistory").value = "";
+                    
+            }
+        }
+        
+        
+        str = "ajax/add_social_history.php?mode=ADD_SOCIAL_HISTORY&TYPE="+socialHistory+"&prescription_id="+prescriptionid;
+
+        xmlhttp.open("GET",str,true);
+        xmlhttp.send();
+        
+    }
+    document.getElementById("txtSocialHistory").focus(); 
+    return false;
+}
+function addAllergy(prescriptionid){
+    //alert("TYPE -> "+type);
+    //alert("Prescription Id -> "+prescriptionid);
+    var allergy = document.getElementById("txtAllergy").value;
+    //alert("Allergy ->"+ allergy);
+    
+    if(allergy === "" || allergy === null)
+    {
+        alert ("Allergy Cannot be blank");
+    } else {
+
+        if (window.XMLHttpRequest){
+                    xmlhttp=new XMLHttpRequest();
+        }else{
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+                xmlhttp.onreadystatechange=function(){
+                if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                    //document.getElementById("CI").innerHTML = "";
+                    //alert(xmlhttp.responseText);
+                    document.getElementById("ALLERGY").innerHTML=xmlhttp.responseText;
+                    document.getElementById("txtAllergy").value = "";
+                    
+            }
+        }
+        
+        
+        str = "ajax/add_allergy.php?mode=ADD_ALLERGY&TYPE="+allergy+"&prescription_id="+prescriptionid;
+
+        xmlhttp.open("GET",str,true);
+        xmlhttp.send();
+    }
+    document.getElementById("txtAllergy").focus();
+    return false;
+}
+
+function deleteAllergy(allergy_id, pres_id){
+    //alert("social_history_id -> "+social_history_id);
+    //alert("Prescription Id -> "+pres_id);
+    if (window.XMLHttpRequest){
+  		xmlhttp=new XMLHttpRequest();
+    }else{
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+            xmlhttp.onreadystatechange=function(){
+            if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                
+                document.getElementById("ALLERGY").innerHTML=xmlhttp.responseText;
+        }
+    }
+    str = "ajax/delete_allergy.php?mode=DELETE_ALLERGY&ID="+allergy_id+"&PRESCRIPTION_ID="+pres_id;
+
+    xmlhttp.open("GET",str,true);
+    xmlhttp.send();
+    document.getElementById("ALLERGY").focus();
     return false;
 }

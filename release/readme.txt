@@ -24,7 +24,7 @@ git pull origin
 git fetch origin
 git checkout <name of the branch> (e.g. feature/initial-project-setup)
 git status (to chekc the changes)
-git add test.txt / git add .
+git add .
 git commit -m "testing.."
 git push origin
 
@@ -40,5 +40,3 @@ Merge code
 New pull request.
 
 Merge Pull Request
-
-

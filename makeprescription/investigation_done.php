@@ -1,9 +1,6 @@
 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Investigation Done</div>
 <div class="inner">
-<?php if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name']) && ($_SESSION['user_type'] == "DOCTOR") ){ 
-	$chamber_name = $_SESSION['chamber_name'];
-	$doc_name= $_SESSION['doc_name'];
-	?>
+
     <div id="INV">
 
             <?php
@@ -36,7 +33,6 @@
                 <div class="col-md-2" ><a href='#' onclick="addPatientInvestigation('<?php echo $patient_id ; ?>','<?php echo $visit_id ; ?>')">[+]</a></div> 
 
     	</div>   
-    	<?php } else { echo "You are not authorize to perform this operation"; } ?>
  </div>
 
    
