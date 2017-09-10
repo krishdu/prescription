@@ -24,7 +24,7 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['PRESCRIPTION_ID']) && isset
     $diet = $_POST['diet'];
     
     //$nextvist = date("Y-m-d", strtotime($_POST['nextvisit']));
-    $next_visit = "After ".$_POST['nextvisit']." Weeks";
+    $next_visit = "After ".$_POST['nextvisit']." Months / Weeks";
     //$comments = $_POST['comments'];
     
     $patient_id = $_POST['patient_id'];

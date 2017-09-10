@@ -51,11 +51,10 @@ include_once "./inc/header_print_sroy.php";
                         <?php echo $header->doctor_degree;?></div>
                     <div class="col-md-4-print">
                     <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
-                        <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/>
-                        <b><?php echo $header->chamber_name;?></b><br/>
+                        <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/><br/>
                         <?php echo $header->chamber_address;?><br/>
                         Phone : <?php echo $header->primary_phone_number;?> / <?php echo $header->secondary_phone_number;?><br/>
-                        <b>Residence (By Appointment)</b><br/>
+                        <b>Residence</b><br/>
                         <?php echo $header->doctor_address;?>
                     
                   </div>
@@ -187,7 +186,7 @@ include_once "./inc/header_print_sroy.php";
               </div>
               <!--END of block three-->
 
-              <div class='block_lungs'><img src="images/lnc.jpg"  /></div>
+              <?php if($doc_name == "hindol") {?><div class='block_lungs'><img src="images/lnc.jpg"  /></div> <?php }?>
             
             </div>
             <!--END of content-->

@@ -105,7 +105,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id, $chamber_name, 
                 
               <!--END of block three-->
                <!--BEGIN block FOUR-->
-              <div class="col-md-3"><?php include("makeprescription/addiction.php");?></div>
+              <div class="col-md-3"><?php include("makeprescription/addiction_hindol.php");?></div>
                
               <!--END of block FOUR-->
             </div>
@@ -143,6 +143,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id, $chamber_name, 
               <div class="col-md-3"><?php include("makeprescription/investigation_done.php");?></div>
               <div class="col-md-3"><?php include("makeprescription/c_f.php");?></div>
               <div class="col-md-3"><?php include("makeprescription/addiction.php");?></div>
+              
             </div>
             <?php }?>
             
@@ -157,7 +158,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id, $chamber_name, 
             <!--BEGIN diet section-->
             <div class="diet" >    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Diet & Lifestyle Recommendation</div>
-                <textarea class="form-control" name="diet" rows="3">Diet 1600 Kcal/day, Cholesterol < 200 gm /day , Saturated Fat < 7%, Walking at recommended speed for atleast 30 mins/day, Alerted to hypoglycaemia (CBG < 70 y/dl)</textarea>       
+                <textarea class="form-control" name="diet" rows="3">Diet   Kcal/day, Cholesterol < 200 gm /day , Saturated Fat < 7%, Walking at recommended speed for atleast 30 mins/day, Alerted to hypoglycaemia (CBG < 70 mg/dl/SMBG)</textarea>       
                 
             </div>
             
@@ -255,7 +256,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id, $chamber_name, 
             <div class="diet">    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Patient's Next Visit</div>
                 <div class="row">        
-                    <div class="col-md-1">After</div><div class="col-md-1"><input name="nextvisit" type="text" class="form-control" value="2" onfocus="myFocus(this);" onblur="myBlur(this);"/> </div><div class="col-md-8">Weeks</div>
+                    <div class="col-md-1">After</div><div class="col-md-1"><input name="nextvisit" type="text" class="form-control" value="2" onfocus="myFocus(this);" onblur="myBlur(this);"/> </div><div class="col-md-8">Months/Weeks</div>
                 
                 </div>
             

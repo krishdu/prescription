@@ -539,7 +539,7 @@ class admin{
     }
     
     function getMaxPrescriptionId($chamber_name, $doc_name){
-        $_QUERY = "SELECT MAX( PRESCRIPTION_ID ) +1 as max_id FROM prescription WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name' and STATUS = 'SAVE' ";
+        $_QUERY = "SELECT MAX( PRESCRIPTION_ID ) +1 as max_id FROM prescription WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name' ";
         $result = mysql_query($_QUERY) or die(mysql_error());
         $obj = mysql_fetch_object($result);
         $max_id = $obj->max_id;

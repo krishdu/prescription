@@ -20,10 +20,10 @@
         <div class="col-md-4">
         <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
             <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/>
-            <b><?php echo $header->chamber_name;?></b><br/>
+            <br/>
             <?php echo $header->chamber_address;?><br/>
             Phone : <?php echo $header->primary_phone_number;?> / <?php echo $header->secondary_phone_number;?><br/>
-            <b>Residence (By Appointment)</b><br/>
+            <b>Residence</b><br/>
             <?php echo $header->doctor_address;?>
             
             </div>
