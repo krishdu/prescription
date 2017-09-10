@@ -158,9 +158,9 @@ if(isset($_SESSION['user_type'])) {
 					    </div>
 					  </div>
 					  <div class="form-group">
-					    <label for="age" class="col-sm-2 control-label">Age</label>
+					    <label for="theDate" class="col-sm-2 control-label">Date of Birth</label>
 					    <div class="col-sm-2">
-					      <input type="number" class="form-control" name="age" id="age" placeholder="Age">
+					      <input type="date" class="form-control" name="theDate" id="theDate" placeholder="DOB">
 					    </div>
 					  </div>
 					  <div class="form-group">

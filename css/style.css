@@ -890,3 +890,53 @@ body{
 .add {
     background-image: url("../images/add_note.png")
 }
+.footer {
+	margin:20px 0 0;
+}
+.footer-top{
+	padding:0;
+}
+.footer-top hr{
+	margin: 0 20px 10px;
+	border: none;
+    height: 3px;
+	background:#000;
+}
+.footer-top h6{
+	float: left;
+        width: 320px;
+	padding:0 40px;
+        margin-top: 0px;
+}
+.footer-bottom p {
+	font-size:10px;
+	font-weight:bold;
+	margin:10px 0;
+}
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+.tl {
+	text-align:left;
+}
+.tr {
+	text-align:right;
+}
+.tc {
+	text-align:center;
+}
+.input_box_very_small{
+	border:1px solid #bebebe;
+	background:#fff;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#555;
+	font-size:12px;
+	font-weight:normal;
+	width:60px;
+	height:15px;
+	padding-top:1px;
+	padding-left:2px;
+}

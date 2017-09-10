@@ -409,6 +409,30 @@ class admin{
         
         
     }
+    
+    function deleteSocialHistory($prescription_id,$ci_id, $chamber_name, $doc_name){
+        //$message = "";
+        
+        mysql_query("delete from prescribed_social_history
+             where prescription_id = '$prescription_id'
+             and social_history_id  ='$ci_id' and chamber_id='$chamber_name' AND doc_id='$doc_name'") or die(mysql_error());
+        
+    }
+    function deleteAllergy($prescription_id,$allergy_id, $chamber_name, $doc_name){
+        //$message = "";
+        mysql_query("delete from prescribed_allergy
+             where prescription_id = '$prescription_id'
+             and ALLERGY_ID  ='$allergy_id' and chamber_id='$chamber_name' AND doc_id='$doc_name'") or die(mysql_error());
+    }
+    
+    function deletePastMedicalHistory($prescription_id,$ci_id, $chamber_name, $doc_name){
+        //$message = "";
+        mysql_query("delete from prescribed_past_med_history
+             where prescription_id = '$prescription_id'
+             and clinical_impression_id  ='$ci_id' and chamber_id='$chamber_name' AND doc_id='$doc_name'") or die(mysql_error());
+        
+        
+    }
     function getPrescriptionFromVisitId($visitid,$chamber_name,$doc_name){
         $_QUERY="select * from prescription a where a.VISIT_ID = '".$visitid."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         
@@ -692,8 +716,8 @@ class admin{
     	return  $obj;
     }
     function getListOfChambersbyOwners($doc_name){
-    	$query = "select a.chamber_id, b.chamber_name, b.chamber_address from chamber_owner a, chamber_master b where a.doc_id= '".$doc_name."' and a.chamber_id=b.chamber_id";
-    	echo $query;
+    	$query = "select a.chamber_id, b.chamber_name, b.chamber_address from chamber_owner a, chamber_master b where a.owner_id= '$doc_name' and a.chamber_id=b.chamber_id";
+    	//echo $query;
     	$result = mysql_query($query)or die(mysql_error());
     	
     	/* $result_array = array();
@@ -712,6 +736,115 @@ class admin{
     	return json_encode($result_array); */
     	
     	return $result;
+    }
+    
+    function insertUpdatepastMedicalHistory($prescription_id, $type, $chamber_name, $doc_name){
+        $admin = new admin();
+        $query = "select a.ID from past_medical_history_master a where a.TYPE = '$type' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
+        $result = mysql_query($query) or die(mysql_error());
+        $id = "";
+        if(mysql_num_rows($result) > 0){
+            //Clinical Impression Type exists in the Database. Get the ID
+            while($rs = mysql_fetch_array($result)){
+                $id = $rs['ID'];
+            }
+        } else {
+            //Insert into master and then add. Get maximum master id
+            $max_id = $admin->getmaxPastMedicalHistory($chamber_name, $doc_name);
+            $query = "insert into past_medical_history_master (ID, TYPE, DESCRIPTION, chamber_id, doc_id) values('$max_id','$type','$type','$chamber_name','$doc_name')";
+            mysql_query($query) or die(mysql_error());
+            $id = $max_id;
+        }
+        $query = "insert into prescribed_past_med_history(clinical_impression_id, prescription_id,chamber_id, doc_id)
+                    values('$id' , '$prescription_id','$chamber_name','$doc_name' )";
+        mysql_query($query) or die(mysql_error());
+        
+    }
+    
+    function getmaxPastMedicalHistory($chamber_name, $doc_name){
+        $_QUERY = "select max(ID)+1 as max_id from past_medical_history_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
+        
+        
+        $result = mysql_query($_QUERY) or die(mysql_error());
+        $obj = mysql_fetch_object($result);
+        
+        //echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
+        $max_id = $obj->max_id;
+        if($max_id == NULL){
+            $max_id=1;
+        }
+        return $max_id;
+    }
+    
+    function insertUpdateSocialHistory($prescription_id, $type,$chamber_name, $doc_name){
+        
+        $query = "select ID from social_history_master where TYPE = '$type' and chamber_id = '$chamber_name' and doc_id='$doc_name'";
+        $admin = new admin();
+        $result = mysql_query($query) or die(mysql_error());
+        $id = "";
+        if(mysql_num_rows($result) > 0){
+            //Clinical Impression Type exists in the Database. Get the ID
+            while($rs = mysql_fetch_array($result)){
+                $id = $rs['ID'];
+            }
+        } else {
+            //Insert into master and then add
+            $max_id = $admin->getMaxSocialHistoryID($chamber_name, $doc_name);
+            $query = "insert into social_history_master (ID, TYPE, DESCRIPTION,chamber_id,doc_id) values('$max_id','$type','$type','$chamber_name','$doc_name')";
+            mysql_query($query) or die(mysql_error());
+            $id = $max_id;
+        }
+        $query = "insert into prescribed_social_history(social_history_id, prescription_id, chamber_id,doc_id)
+                    values('$id' , '$prescription_id','$chamber_name','$doc_name')";
+        mysql_query($query) or die(mysql_error());
+    }
+    function getMaxSocialHistoryID($chamber_name, $doc_name){
+        $_QUERY = "select max(ID)+1 as max_id from social_history_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
+        
+        
+        $result = mysql_query($_QUERY) or die(mysql_error());
+        $obj = mysql_fetch_object($result);
+        
+        //echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
+        $max_id = $obj->max_id;
+        if($max_id == NULL){
+            $max_id=1;
+        }
+        return $max_id;
+    }
+    function insertUpdateAllergy($PRESCRIPTION_ID, $ALLERGY,$chamber_name,$doc_name){
+        $query = "select ALLERGY_ID from allergy_master where allergy_name = '$ALLERGY' and chamber_id = '$chamber_name' and doc_id='$doc_name'";
+        $result = mysql_query($query);
+        $id = "";
+        if(mysql_num_rows($result) > 0){
+            //Clinical Impression Type exists in the Database. Get the ID
+            while($rs = mysql_fetch_array($result)){
+                $id = $rs['ALLERGY_ID'];
+            }
+        } else {
+            //Insert into master and then add
+            $max_id = $admin->getMaxAllergyId($chamber_name,$doc_name);
+            $query = "insert into allergy_master (ALLERGY_ID, ALLERGY_NAME, chamber_id, doc_id) values('$max_id','$allergy','$chamber_name','$doc_name')";
+            mysql_query($query) or die(mysql_error());
+            $id = $max_id;
+        }
+        $query1 = "insert into prescribed_allergy(allergy_id, prescription_id,chamber_id, doc_id)
+                    values('$id' , '$PRESCRIPTION_ID','$chamber_name','$doc_name')";
+        mysql_query($query1) or die(mysql_error());
+    }
+    function getMaxAllergyId($chamber_name, $doc_name){
+        $_QUERY = "select max(ALLERGY_ID)+1 as max_id from allergy_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
+        
+        
+        $result = mysql_query($_QUERY) or die(mysql_error());
+        $obj = mysql_fetch_object($result);
+        
+        //echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
+        $max_id = $obj->max_id;
+        if($max_id == NULL){
+            $max_id=1;
+        }
+        return $max_id;
     }
 }
 ?>

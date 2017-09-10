@@ -14,12 +14,14 @@ if($_SESSION['doc_name'] == 'dsanyal'){
     include_once ("./inc/header_print_dsanyal.php") ;
 } else if ($_SESSION['doc_name'] == 'sroy'){
 include_once "./inc/header_print_sroy.php";
+} else if ($_SESSION['doc_name'] == 'hindol'){
+    include_once "./inc/header_print_hindol.php";
 } else {
 	include_once "./inc/header_print.php";
 }
 ?>
 <body>
-            <div class="container" id="printArea">
+            <div class="print_container" id="printArea">
         
             <!--BEGIN header-->
             <?php 
@@ -57,18 +59,19 @@ include_once "./inc/header_print_sroy.php";
                         <?php echo $header->doctor_address;?>
                     
                   </div>
-            <?php } else { ?><!-- ELSE -->
-		        <div class="col-md-8-print"> 
-			        <div id='prescription_doc_name'><?php echo $header->doctor_full_name;?></div>
-			            <?php echo $header->doctor_degree;?>
-			    </div>
-				<div class="col-md-4-print"><b>Membership & Affiliations</b>:<br> <?php echo $header->doctor_affiliation;?>
-				
-					<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
-					<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->primary_phone_number;?> (Chamber)</b><br/>
-					<img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/>
-					
-				</div>
+            <?php } else if($doc_name == 'hindol') { ?><!-- ELSE -->
+		        <div class="wrapper"><!-- wrapper start -->
+    	<div class="header-top">
+        	<div class="left">
+            	<h1><?php echo $header->doctor_full_name;?></h1>
+                <h6><strong><?php echo $header->doctor_degree;?></strong></h6>
+            </div>
+        	<div class="right tr">
+            	<h1><?php echo $header->chamber_name;?></h1>
+                <h6><strong><?php echo $header->chamber_address;?>,<br><?php echo $header->primary_phone_number;?> / <?php echo $header->secondary_phone_number;?></strong></h6>
+                <h6><strong>By Appointment : 6 pm to 8 pm<br>Monday to Friday</strong></h6>
+            </div>
+        </div>     </div>
 				<?php }?>
 			
 			
@@ -114,7 +117,7 @@ include_once "./inc/header_print_sroy.php";
                 </div>
                 
                 <!--BEGIN block two-->
-                <div class="block" style="margin-right:12px; margin-left:12px;">
+                <div class="block" >
                     <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Investigation Done</div>
                     <div class="inner">
                         <table>
@@ -184,7 +187,7 @@ include_once "./inc/header_print_sroy.php";
               </div>
               <!--END of block three-->
 
-              
+              <div class='block_lungs'><img src="images/lnc.jpg"  /></div>
             
             </div>
             <!--END of content-->
@@ -266,11 +269,8 @@ include_once "./inc/header_print_sroy.php";
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Prescribed Investigation</div>
                 <div class="invest_inner">        
                 
-                    <div id="tabvanilla" class="widget">            
                         
                     
-                        <!--BEGIN tab1-->
-                        <div id="tab1" class="tabdiv">
                             <div class="check_fields" >
                                 <?php
                                 $query = "SELECT b.investigation_name
@@ -286,10 +286,7 @@ include_once "./inc/header_print_sroy.php";
                                 ?>
                             </div>      
                                        
-                        </div>
-                        <!--END of tab1-->
                         
-                    </div>   
                 </div>
                 
                 
@@ -339,6 +336,7 @@ include_once "./inc/header_print_sroy.php";
         <div class="col-md-8-print"> Date : <?php echo $visit_date; ?><br>Ref # ( <?php echo $_GET['PRESCRIPTION_ID']; ?> / <?php echo $_GET['visit_id']; ?> / <?php echo $_GET['patient_id']?>) </div>
         <div class="col-reg-num" align="right"><b>(<?php echo $header->doctor_full_name;?>) </b><br>Reg. No. # <?php echo $header->doc_reg_num;?></div>
 </div>	
+
 <div class="row">
       
       <div class="alert alert-info" role="alert">

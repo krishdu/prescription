@@ -42,6 +42,7 @@ if(isset($_SESSION['user_type'])) {
 		          </ul>
 				</div>
 	          	<?php } else { 
+	          	    
 	          		 include("makeprescription/create_chamber.php");
 	          	 } ?>
 	          	

@@ -1,7 +1,4 @@
-<?php if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name']) && ($_SESSION['user_type'] == "DOCTOR") ){ 
-	$chamber_name = $_SESSION['chamber_name'];
-	$doc_name= $_SESSION['doc_name'];
-	?>
+
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#tab1">Diabetes</a></li>
   <li><a data-toggle="tab" href="#tab2">Thyroid</a></li>
@@ -266,4 +263,3 @@
                 
   </div>
 </div>
-<?php } else { echo "You are not authorize to perform this operation"; } ?>

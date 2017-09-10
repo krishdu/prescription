@@ -50,7 +50,7 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 		} else {
 			$patient_name = $_GET['patient_name'];
 			$sex = $_GET['sex'];
-			$age = $_GET['age'];
+			$dob = $_GET['dob'];
 			$cell = $_GET['cell'];
 			$patient = $admin->preparepatientDatails($patient_name);
 			$fname = $patient->fname;
@@ -59,9 +59,9 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 			//$doc_name= $_GET['doc_id'];
 			$user_name= $_SESSION['logged_in_user_id'];
 			$max_patient_id = $admin->getMaxPatientId($chamber_name, $doc_name);
-			$sql1 = "insert into patient (patient_id, GENDER,patient_first_name, patient_last_name , age,patient_cell_num,
+			$sql1 = "insert into patient (patient_id, GENDER,patient_first_name, patient_last_name , patient_dob ,patient_cell_num,
 			        data_entry_date, chamber_id, created_by_user_id, create_date, doc_id) 
-			        values('$max_patient_id', '$sex','$fname','$lname', '$age' ,'$cell', NOW(),  '$chamber_name', '$user_name',  NOW() ,'$doc_name')";
+			        values('$max_patient_id', '$sex','$fname','$lname', '$dob' ,'$cell', NOW(),  '$chamber_name', '$user_name',  NOW() ,'$doc_name')";
 			//echo $sql1;
 			mysql_query($sql1) or die(mysql_error());
 			

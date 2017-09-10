@@ -30,8 +30,8 @@ if( $_SESSION['NAVIGATION'] == 'visit_list'){
     
     if(isset($_GET['VISIT_ID'])  && isset($_GET['patient_id']) && isset($_GET['PRESCRIPTION_ID']) ) {
     
-$user_type = $_SESSION['user_type'] == 'DOCTOR';
-
+$user_type = $_SESSION['user_type'] ;
+//echo "user_type ==>".$user_type;
 $patient_id = $_GET['patient_id'];
 $visit_id = $_GET['VISIT_ID'];
 
@@ -83,19 +83,68 @@ $d1 = $update->getPatientInformationForPrescription($patient_id, $chamber_name, 
             <!--END of patient details-->
             
             <form id="form1" name="form1" method="post" action="printprescription.php" onsubmit="return validate();" >
-            <!--BEGIN content-->
-            
-            
            
-            <!--END of content-->
+           <?php if($doc_name == "hindol"){?>
+           		<div class="row">
+            
+                <!--BEGIN block one-->
+                <?php /* include("makeprescription/clinical_impression.php"); */?>
+                <div class="col-md-3"><?php include("makeprescription/symptoms.php"); ?></div>
+                
+                <!--END of block one-->
+
+				<!--BEGIN block two-->
+                <?php /* include("makeprescription/investigation_done.php"); */?>
+                <div class="col-md-3"><?php include("makeprescription/past_medical_history.php"); ?></div>
+
+                <!--END of block two-->
+
+				 <!--BEGIN block three-->
+                <div class="col-md-3"><?php include("makeprescription/social_history.php");?></div>
+                
+                
+              <!--END of block three-->
+               <!--BEGIN block FOUR-->
+              <div class="col-md-3"><?php include("makeprescription/addiction.php");?></div>
+               
+              <!--END of block FOUR-->
+            </div>
             <div class="row">
-  <div class="col-md-3"><?php include("makeprescription/clinical_impression.php");?></div>
-  
-  
-  <div class="col-md-3"><?php include("makeprescription/investigation_done.php");?></div>
-  <div class="col-md-3"><?php include("makeprescription/c_f.php");?></div>
-  <div class="col-md-3"><?php include("makeprescription/addiction.php");?></div>
-</div>
+               
+              <!--BEGIN block FOUR-->
+              <div class="col-md-3"><?php include("makeprescription/allergy.php"); ?></div>
+               
+              <!--END of block FOUR-->
+              
+			    
+
+				<!--BEGIN block two-->
+                <div class="col-md-3"><?php include("makeprescription/investigation_done.php");?></div>
+                
+                <!--END of block two-->
+
+				 <!--BEGIN block three-->
+                <div class="col-md-3"><?php include("makeprescription/c_f.php");?></div>
+                
+                
+              <!--END of block three-->
+               <!--BEGIN block FOUR-->
+              <div class="col-md-3"><?php include("makeprescription/lmp.php"); ?></div>
+                
+              <!--END of block FOUR-->
+
+            
+            </div>
+           <?php } else {?>
+            <div class="row">
+              <div class="col-md-3"><?php include("makeprescription/clinical_impression.php");?></div>
+              
+              
+              <div class="col-md-3"><?php include("makeprescription/investigation_done.php");?></div>
+              <div class="col-md-3"><?php include("makeprescription/c_f.php");?></div>
+              <div class="col-md-3"><?php include("makeprescription/addiction.php");?></div>
+            </div>
+            <?php }?>
             
             <!--BEGIN doctor comment/advice section-->
             <div class="diet" style="margin-top: 5px;">    
@@ -153,20 +202,34 @@ $d1 = $update->getPatientInformationForPrescription($patient_id, $chamber_name, 
                     </div>
                     
                     <div class="row">
-						<div class="col-md-3">Medicine Names</div>
-						<div class="col-md-2">Breakfast</div>
-						<div class="col-md-2">Lunch</div>
-						<div class="col-md-2">Dinner</div>
-						<div class="col-md-2">Bedtime</div>
-						<div class="col-md-1">Action</div>
+						<div class="col-md-4">Medicine Names</div>
+						<div class="col-md-1">Breakfast</div>
+						<div class="col-md-1">Lunch</div>
+						<div class="col-md-1">Dinner</div>
+						<div class="col-md-1">Bedtime</div>
+						<div class="col-md-2">Duration</div>
+						<div class="col-md-2">Action</div>
 					</div>
                     <div class="row">
-						<div class="col-md-3"><input type="text" name="medicine_name" id="course" class="form-control" placeholder="Enter Medicine name" /></div>
-						<div class="col-md-2"><input name="dose1" id="dose1" type="text"  class="form-control" placeholder="Breakfast"/><input type="radio" name="bfradio" value ="before"/> before <input type="radio" name="bfradio" value ="after"/> after</div>
-						<div class="col-md-2"><input name="dose2" id="dose2" type="text" class="form-control" placeholder="Lunch"/><input type="radio" name="lradio" value ="before"/> before <input type="radio" name="lradio" value ="after"/> after</div>
-						<div class="col-md-2"><input name="dose3" id="dose3" type="text" class="form-control" placeholder="Dinner"/><input type="radio" name="dradio" value ="before"/> before <input type="radio" name="dradio" value ="after"/> after</div>
-						<div class="col-md-2"><input name="dose4" id="dose4" type="text" class="form-control" placeholder="Bedtime"/><input type="radio" name="bdradio" value ="before"/> before <input type="radio" name="bdradio" value ="after"/> after</div>
-						<div class="col-md-1"><input type="hidden" name="PRESCRIPTION_ID" value="<?php echo $_GET['PRESCRIPTION_ID']; ?>" id="PRESCRIPTION_ID" />
+						<div class="col-md-4"><input type="text" name="medicine_name" id="course" class="form-control" placeholder="Enter Medicine name" /></div>
+						<div class="col-md-1"><input name="dose1" id="dose1" type="text"  class="form-control" placeholder="Breakfast"/><input type="radio" name="bfradio" value ="before"/> before <input type="radio" name="bfradio" value ="after"/> after</div>
+						<div class="col-md-1"><input name="dose2" id="dose2" type="text" class="form-control" placeholder="Lunch"/><input type="radio" name="lradio" value ="before"/> before <input type="radio" name="lradio" value ="after"/> after</div>
+						<div class="col-md-1"><input name="dose3" id="dose3" type="text" class="form-control" placeholder="Dinner"/><input type="radio" name="dradio" value ="before"/> before <input type="radio" name="dradio" value ="after"/> after</div>
+						<div class="col-md-1"><input name="dose4" id="dose4" type="text" class="form-control" placeholder="Bedtime"/><input type="radio" name="bdradio" value ="before"/> before <input type="radio" name="bdradio" value ="after"/> after</div>
+						
+						<div class="col-md-2">
+                               
+                                        <input name="duration_count" id="duration_count" type="text" class="input_box_very_small"/>
+                                        <select name="duration_type" id="duration_type">
+                                                <option value="Days">Days</option>
+                                                <option value="Weeks">Weeks</option>
+                                                <option value="Months">Months</option>
+                                            </select>
+                                            
+                                   
+                            </div>
+						
+						<div class="col-md-2"><input type="hidden" name="PRESCRIPTION_ID" value="<?php echo $_GET['PRESCRIPTION_ID']; ?>" id="PRESCRIPTION_ID" />
 						<input type="hidden" name="hidden_prescribed_medicine_id" value="" id="hidden_prescribed_medicine_id" />
 								<input type="hidden" name="patient_id" value="<?php echo $_GET['patient_id']; ?>" id="patient_id" />
 								<input type="hidden" name="VISIT_ID" value="<?php echo $_GET['VISIT_ID']; ?>" id="VISIT_ID" /><button class="btn btn-primary" id="add_medicine_for_prescription" >Add</button> </div>
