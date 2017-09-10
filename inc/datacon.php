@@ -4,9 +4,9 @@ session_start();
 /* script to connect fo Mandir Database and pick up neccesary Information to display on screen */
       /* declare some relevant variables */
       $hostname = "localhost";
-      $username = "myepresc_pres";
-      $passwordsc = "KTHUsQI(xaCy";
-      $dbName = "myepresc_prescription_1";
+      $username = "root";
+      $passwordsc = "";
+      $dbName = "myepresc_dsanyal";
 
       $con = mysql_connect($hostname,$username,$passwordsc);
 		if (!$con)

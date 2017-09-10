@@ -147,7 +147,7 @@ if(isset($_SESSION['user_type'])) {
                             <option value="0">--SELECT--</option>
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
-                            
+                            <option value="Transgender">Transgender</option>
                         </select>
 					    </div>
 					  </div>
@@ -201,7 +201,7 @@ if(isset($_SESSION['user_type'])) {
                             <option value="0">--SELECT--</option>
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
-                            
+                            <option value="Transgender">Transgender</option>
                         </select>
 					    </div>
 					  </div>
