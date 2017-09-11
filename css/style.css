@@ -475,7 +475,11 @@ body{
 .ui-autocomplete-loading {
     background: white url("../jquery-ui/images/ui-anim_basic_16x16.gif") right center no-repeat;
   }
-  
+.loading {
+	background: white url(../images/loading.gif) center center no-repeat;
+    height: 497px;
+    width: 100%;
+}
 .input_box_small{
 	border:1px solid #bebebe;
 	background:#fff;

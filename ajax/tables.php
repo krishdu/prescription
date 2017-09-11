@@ -31,7 +31,7 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 	//echo $query;
 	
 	$result = mysql_query($query)or die(mysql_error());
-	$rowObject = mysql_fetch_assoc($result) ;
+	//$rowObject = mysql_fetch_assoc($result) ;
 	
 	$data = array();
 	

@@ -7,39 +7,26 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 	
 $invest_name = $_GET["invest_name"];
 
+$sql1 = "select a.investigation_name, b.value, TIMESTAMPDIFF(YEAR,d.patient_dob,c.visit_date) as age
+        from investigation_master a , patient_investigation b , patient d, visit c
+        where a.investigation_name like '".$invest_name."%' 
+        AND a.ID = b.investigation_id 
+        AND b.patient_id = d.patient_id
+        AND b.visit_id = c.visit_id
+        AND a.chamber_id = b.chamber_id
+        AND a.doc_id=b.doc_id
+        AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' 
+        order by b.value desc";
+$result = mysql_query($sql1)or die(mysql_error());
 
 
-
-$sql1 = "select * from investigation_master a where a.investigation_name like '".$invest_name."%' 
-        and a.STATUS = 'ACTIVE' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' ";
-$result1 = mysql_query($sql1)or die(mysql_error());
-$no = mysql_num_rows($result1);
-
-/* if($no > 0){
-        
-        echo "<table class='table'><thead><tr>
-        <th class='head_tbl'>Investigation Name</td>
-       
-        <th class='head_tbl'>ACTION</td>
-        </tr></thead><tbody>";
-        
-        
-        while($d1 = mysql_fetch_array($result1)){
-           echo "<tr>
-                <td>".$d1['investigation_name']."</td>
-                
-                <td><button class='btn btn-info' onclick='editInvest(".$d1['ID'].") ' class='vlink'>EDIT</button>
-                    <button class='btn btn-warning' onclick='deleteInvest(".$d1['ID'].") ' class='vlink'>DELETE</button>
-                </td>
-            </tr>";
-            
-        }
-        echo "</tbody></table>";
-    }else{
-            echo "No Result found.";
-    } */
-    
-echo "Functionality is not added.";
+$data = array();
+	
+	while ($row = mysql_fetch_array($result))
+	{
+		$data[] = $row;
+	}
+	echo json_encode(array("data"=>$data));
 }else {
 	echo "Session expired";
 }

@@ -46,5 +46,8 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 	<script src="ckeditor/ckeditor.js"></script>
-    
+    <link rel="stylesheet" type="text/css" href="media/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="media/css/buttons.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="media/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="media/css/buttons.dataTables.min.css">
   </head>

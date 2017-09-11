@@ -260,7 +260,34 @@ $(document).ready(function(){
 	        console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
 	      }
 	    });
-   
+	
+	$( "#invest_name" ).autocomplete({
+	      source: "./ajax/get_investigation_list.php",
+	      minLength: 2,
+	      select: function( event, ui ) {
+	    	  
+	        console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	        
+	      }
+	    });
+	$("#lower_range").autocomplete({
+	      source: "./ajax/get_investigation_range_list.php",
+	      minLength: 1,
+	      select: function( event, ui ) {
+	    	  
+	        console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	        $("#upper_range_div").show();
+	      }
+	    });
+	$("#upper_range").autocomplete({
+	      source: "./ajax/get_investigation_range_list.php",
+	      minLength: 1,
+	      select: function( event, ui ) {
+	    	  
+	        console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	        $("#search_div").show();
+	      }
+	    });
     //#course : Medicaine List Start
 	$( "#course" ).autocomplete({
 	      source: "./ajax/get_course_list.php",
@@ -1095,4 +1122,107 @@ function deleteAllergy(allergy_id, pres_id){
     xmlhttp.send();
     document.getElementById("ALLERGY").focus();
     return false;
+}
+
+function searchPatient(){
+    //alert(document.getElementById("s_p_id").value);
+    //alert(document.getElementById("patient_id").value);
+    if(document.getElementById("patient_id").value == ""){
+        alert("Please Give some Input");
+        return false;
+    } else {
+        
+        var patient_id = document.getElementById("patient_id").value;
+
+        /*if (window.XMLHttpRequest){
+            xmlhttp=new XMLHttpRequest();
+        }else{
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange=function(){
+            if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                //alert(xmlhttp.responseText);
+                document.getElementById("searchPatientDiv").innerHTML=xmlhttp.responseText;
+            }
+        }
+        //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
+*/        var url = "ajax/searchPatientDataById.php?PATIENT_ID="+patient_id;   
+ $("#wait1").show();
+        $.ajax({url: url, success: function(result){
+        	 $("#wait1").hide();
+        	$("#searchPatientDiv").html(result);
+        }});
+       /* xmlhttp.open("GET",url,true);
+        xmlhttp.send();*/
+    }
+
+}
+
+function search1(){
+    //alert(document.getElementById("s_p_id").value);
+    //alert(document.getElementById("s_p_name").value);
+    if(document.getElementById("txtCI").value == ""){
+        alert("Please Give some Input");
+        return false;
+    } else {
+        
+        var p_cl_imprssn = document.getElementById("txtCI").value;
+
+        /*if (window.XMLHttpRequest){
+            xmlhttp=new XMLHttpRequest();
+        }else{
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange=function(){
+            if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                document.getElementById("searchDiv").innerHTML=xmlhttp.responseText;
+            }
+        }*/
+        //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
+        var url = "ajax/searchPatientClinicalImpression.php?mode=SEARCH_CI&CI="+p_cl_imprssn;   
+        $("#wait").show();
+        
+        $.ajax({url: url, success: function(result){
+        	$("#wait").hide();
+        	$("#searchDiv").html(result);
+        }});
+        
+        
+       /* xmlhttp.open("GET",url,true);
+        xmlhttp.send();*/
+    }
+
+}
+
+function searchInvestigation(){
+    //alert(document.getElementById("s_p_id").value);
+    //alert(document.getElementById("patient_id").value);
+    if(document.getElementById("invest_name").value == ""){
+        alert("Please Give some Input");
+        return false;
+    } else {
+        
+        var patient_id = document.getElementById("invest_name").value;
+
+        var url = "ajax/searchPatientInvestigation.php?invest_name="+$("#invest_name").val();
+    	/*$.ajax({url: url, success: function(result){
+    		//$("#create_result").show();
+    		
+    		$("#searchInvestDiv").html(result);
+	       // $("#search_alert_1").hide();
+	        //$('#doc_create_form').hide();
+	    }});*/
+		
+    	$('#report_by_patient_inv').DataTable( {
+			"ajax": url,
+			dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+		} );
+        
+    }
+
 }

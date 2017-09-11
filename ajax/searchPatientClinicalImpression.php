@@ -9,12 +9,14 @@ $ci = $_GET["CI"];
 
 $sql1 = "SELECT a.clinical_impression_id, a.prescription_id, b.visit_id, c.patient_id,
 d.GENDER, d.patient_first_name, d.patient_last_name, d.patient_name, d.patient_city, d.patient_dob, 
-d.age, d.patient_cell_num, d.data_entry_date, d.patient_address, d.patient_email, c.visit_date
+TIMESTAMPDIFF(YEAR,d.patient_dob,c.visit_date) as patient_age, d.age, d.patient_cell_num, d.data_entry_date, d.patient_address, d.patient_email, c.visit_date
 FROM prescribed_cf a, prescription b, visit c, patient d, clinical_impression e
 WHERE e.TYPE ='".$ci."'
 and e.ID = a.clinical_impression_id
 and a.prescription_id=b.prescription_id
 and b.visit_id = c.visit_id
+AND a.doc_id = e.doc_id
+AND a.chamber_id = e.chamber_id
 and c.patient_id = d.patient_id AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'
 ORDER BY d.patient_first_name ASC";
 
@@ -23,69 +25,59 @@ ORDER BY d.patient_first_name ASC";
 //$sql1 = "select * from patient where patient_id != ''".$where;
 $result1 = mysql_query($sql1)or die(mysql_error());
 $no = mysql_num_rows($result1);
-echo "<table width='888' border='0' cellspacing='0' cellpadding='0'>
-        <tr>
-        <td class='bg_tble'>                    
-            <table width='100%' border='0' cellspacing='1' cellpadding='0'>";    
+   
 if($no > 0){
         
-        echo "
-        <tr colspan='7'><td><a href='./util/excelDownloader.php?CI=".$ci."'>Export to Excel</a></td><tr>    
+        echo "<table class='table table-striped'>
+        <tr><th colspan='8'><a href='./util/excelDownloader.php?CI=".$ci."'>Export to Excel</a></th><tr>    
         <tr>
-        <td class='head_tbl'>#</td>
-        <!--<td class='head_tbl'>Patient ID</td>-->
-        <td class='head_tbl'>First Name</td>
-        <td class='head_tbl'>Last Name</td>
-        <td class='head_tbl'>Date of Birth</td>
-        <td class='head_tbl'>Mobile No</td>
-        
-        <!--<td class='head_tbl'>Street Address</td>-->
-        
-        <td class='head_tbl'>City / Town</td>
-        <td class='head_tbl'>Visit Date</td>
-        
-        <!--<td class='head_tbl'>ACTION</td>-->
+        <th>#</th>
+        <th>Prescription ID</th>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Mobile No</th>
+        <th>City / Town</th>
+        <th>Visit Date</th>
+
         </tr>";
         
         
         while($d1 = mysql_fetch_array($result1)){
            echo "<tr>
-                <td class='odd'>".$d1['patient_id']."</td>
-                <!--<td class='odd'><a href='processData.php?patient_id=".$d1['patient_id']."' class='vlink'>".$d1['patient_id']."</a></td> -->
-                <td class='odd'>".$d1['patient_first_name']."</td>
-                <td class='odd'>".$d1['patient_last_name']."</td>
-                    
+                <td>".$d1['patient_id']."</td>
+                <td>".$d1['prescription_id']."</td>
+                <!--<td><a href='processData.php?patient_id=".$d1['patient_id']."' class='vlink'>".$d1['patient_id']."</a></td> -->
+                <td>"; if($d1['patient_first_name'] == '') { echo $d1['patient_name']; }else{ echo $d1['patient_first_name']. " ".$d1['patient_first_name'];} 
+                echo "</td>
+                
 
                         
-                <td class='odd'>";
-           $update= new admin(); 
+                <td>";
+           
                         if($d1['age'] == 0){
-                            print $update->calcAge1($d1['patient_dob'], $d1['visit_date']) ;
+                            echo $d1['patient_age'];
                         }else {
                             echo $d1['age'];
                         }
                         
                 echo "</td>
-                <td class='odd'>".$d1['patient_cell_num']."</td>
-                <!--<td class='odd'>".$d1['patient_address']."</td> --> 
+                <td>".$d1['patient_cell_num']."</td>
+                <!--<td>".$d1['patient_address']."</td> --> 
                 
-                <td class='odd'>".$d1['patient_city']."</td>
+                <td>".$d1['patient_city']."</td>
                
                 
-                <td class='odd'><a target='_blank' 
+                <td><a target='_blank' class='btn btn-info' role='button'
                 href='archievedprescription.php?PRESCRIPTION_ID=".$d1['prescription_id']."&visit_id=".$d1['visit_id']."&patient_id=".$d1['patient_id']."'>".date("d-m-y", strtotime($d1['visit_date']))."</a>
             </td>
 
             </tr>";
             
         }
+        echo "</table>";
     }else{
-            echo "<tr><td colspan='10' align='center' style='color:red'> No Result found.</td></tr>";
+            echo "<div class='alert alert-danger' role='alert' >No Result found !!    </div>";
     }
-    echo "</table>
-       </td>
-    </tr>
-</table>";
 }else {
 	echo "Session expired";
 }
