@@ -6,7 +6,7 @@ session_start();
       $hostname = "localhost";
       $username = "root";
       $passwordsc = "";
-      $dbName = "myepresc_dsanyal";
+      $dbName = "myepresc_prescription1";
 
       $con = mysql_connect($hostname,$username,$passwordsc);
 		if (!$con)

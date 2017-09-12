@@ -36,96 +36,10 @@
                     return false;
                 }
             }
-            function search1(){
-                //alert(document.getElementById("s_p_id").value);
-                //alert(document.getElementById("s_p_name").value);
-                if(document.getElementById("s_p_id").value == "" && document.getElementById("s_p_name").value == ""){
-                    alert("Please Give some Input");
-                    return false;
-                } else {
-                    var patient_id = document.getElementById("s_p_id").value;
-                    var patient_name = document.getElementById("s_p_name").value;
             
-                    if (window.XMLHttpRequest){
-                        xmlhttp=new XMLHttpRequest();
-                    }else{
-                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-
-                    xmlhttp.onreadystatechange=function(){
-                        if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                            document.getElementById("searchDiv").innerHTML=xmlhttp.responseText;
-                        }
-                    }
-                    //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
-                    var url = "ajax/searchPatient.php?mode=SEARCH_PATIENT&patient_id="+patient_id+"&patient_name="+patient_name;   
-                    xmlhttp.open("GET",url,true);
-                    xmlhttp.send();
-                }
-        
-            }
             
-            function searchMedicine(){
-                //alert(document.getElementById("s_p_id").value);
-                //alert(document.getElementById("s_p_name").value);
-                if(document.getElementById("course").value == "" ){
-                    alert("Please Give some Input");
-                    return false;
-                } else {
-                    
-                    var medicine_name = document.getElementById("course").value;
-                    var url = "ajax/searchMedicine.php?medicine_name="+$("#course").val();
-    		    	$.ajax({url: url, success: function(result){
-    		    		//$("#create_result").show();
-    		    		
-    		    		$("#searchMedicineDiv").html(result);
-    			       // $("#search_alert_1").hide();
-    			        //$('#doc_create_form').hide();
-    			    }});
-                    /* if (window.XMLHttpRequest){
-                        xmlhttp=new XMLHttpRequest();
-                    }else{
-                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-
-                    xmlhttp.onreadystatechange=function(){
-                        if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                            document.getElementById("searchMedicineDiv").innerHTML=xmlhttp.responseText;
-                        }
-                    }
-                    //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
-                    var url = "ajax/searchMedicine.php?medicine_name="+medicine_name;   
-                    xmlhttp.open("GET",url,true);
-                    xmlhttp.send(); */
-                }
-        
-            }
-        function searchInvestigation()
-        {
-                //alert(document.getElementById("s_p_id").value);
-                //alert(document.getElementById("s_p_name").value);
-                
-                    
-                    var invest_name = document.getElementById("invest_name").value;
             
-                    if (window.XMLHttpRequest){
-                        xmlhttp=new XMLHttpRequest();
-                    }else{
-                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-
-                    xmlhttp.onreadystatechange=function(){
-                        if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                            document.getElementById("searchInvestDiv").innerHTML=xmlhttp.responseText;
-                        }
-                    }
-                    //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
-                    var url = "ajax/searchInvestigation.php?invest_name="+invest_name;   
-                    xmlhttp.open("GET",url,true);
-                    xmlhttp.send();
-                
         
-            }
         
         
         function deleteInvest(investID){
@@ -151,28 +65,7 @@
                 
         }
         
-        function editInvest(investID){
-            
-            //alert(medincineID);
-            var invest_name = document.getElementById("invest_name").value;
-            if (window.XMLHttpRequest){
-                xmlhttp=new XMLHttpRequest();
-            }else{
-                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            xmlhttp.onreadystatechange=function(){
-                if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                    document.getElementById("searchInvestDiv").innerHTML=xmlhttp.responseText;
-                }
-            }
-            //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
-            var url = "ajax/editInvestigation.php?MODE=EDIT&investID="+investID+"&invest_name="+invest_name;   
-
-            xmlhttp.open("GET",url,true);
-            xmlhttp.send();
-                
-        }
+        
         
         function upDateInvest(investID){
             
@@ -298,20 +191,17 @@
                     <!--BEGIN header-->
                     <?php include("banner.php"); ?>
 
-                    <div class="content">
-                        <div class="invest">
 
                             <div class="headings"><img src="images/Briefcase-Medical.png" />&nbsp;Master Management</div>
 
-                            <div class="invest_inner">
 
-                                <div class="invest_inner">        
 
                                     <div id="tabs" >            
                                         <ul class="nav nav-tabs">
 										  <li class="active"><a data-toggle="tab" href="#tab1">Patient Master</a></li>
 										  <li><a data-toggle="tab" href="#tab2">Medicine Master</a></li>
 										  <li><a data-toggle="tab" href="#tab3">Investigation Master</a></li>
+										  <li><a data-toggle="tab" href="#tab4">Clinical Feature Master</a></li>
 										</ul>
 										<div class="tab-content">
                                         <!--BEGIN tab1-->
@@ -324,19 +214,27 @@
 
                                                 <span><p>Patient ID</p><input id="s_p_id" name="patient_id" type="text" class="form-control" placeholder="Enter patient Id" /></span>                
                                                 <span><p>Patient Name</p><input id="s_p_name" name="patient_name" type="text"class="form-control" placeholder="Enter patient name" /></span>               
-                                                <span><p>&nbsp;</p><input type="submit" value="Search" name="search" class="btn" onclick="search1();" /></span>
+                                                <span><p>&nbsp;</p><input type="submit" value="Search" name="search" class="btn" onclick="search_Patient_for_master();" /></span>
 
 
                                             </div>
                                             <!--END of search-->
 
                                             <!--BEGIN search results-->
-                                            <div class="row" id="searchDiv">
+                                            <div class="row">
+                                            
 
-                                                <!--RESULT OF SEARCH -->
+                                                <div class='loading' hidden='true' id='wait'>Please Wait.. untill system finds the result for you. Thank you......</div>
 
 
+	                                            <div class="col-xs-12 .col-sm-6 .col-lg-8" id="searchDiv">
+	
+	                                                <!--RESULT OF SEARCH -->
+	
+	
+	                                            </div>
                                             </div>
+                                           
                                             <!--END of results-->
 
                                         </div>
@@ -360,11 +258,20 @@
                                             <!--END of search-->
 
                                             <!--BEGIN search results-->
-                                            <div class="row" id="searchMedicineDiv">
+                                           
+                                            
+                                            <div class="row">
+                                            
 
-                                                <!--RESULT OF SEARCH -->
+                                                <div class='loading' hidden='true' id='wait1'>Please Wait.. untill system finds the result for you. Thank you......</div>
 
 
+	                                            <div class="col-xs-12 .col-sm-6 .col-lg-8" id="searchMedicineDiv">
+	
+	                                                <!--RESULT OF SEARCH -->
+	
+	
+	                                            </div>
                                             </div>
                                             <!--END of results-->
 
@@ -390,24 +297,65 @@
                                             <!--END of search-->
 
                                             <!--BEGIN search results-->
-                                            <div class="row" id="searchInvestDiv">
+                                                                                        
+                                            <div class="row">
+                                            
 
-                                                <!--RESULT OF SEARCH -->
+                                                <div class='loading' hidden='true' id='wait2'>Please Wait.. untill system finds the result for you. Thank you......</div>
 
 
+	                                            <div class="col-xs-12 .col-sm-6 .col-lg-8" id="searchInvestDiv">
+	
+	                                                <!--RESULT OF SEARCH -->
+	
+	
+	                                            </div>
                                             </div>
                                             <!--END of results-->
 
                                         </div>
                                         <!--END of tab3-->
+                                        
+                                        <!--BEGIN tab4-->
+                                        <div id="tab4" class="tab-pane fade">
+
+
+
+                                            <!--BEGIN search-->
+                                            <div id="tab114" class="check_fields">
+                                                <!--    
+                                                <span><p>Patient ID</p><input id="s_p_id" name="patient_id" type="text" class="input_box_add" value="" /></span>                
+                                                -->
+                                                <span><p>Clinical Feature Name</p><input id="cf_name" name="invest_name" type="text" class="form-control" placeholder="Enter Investigation name" /></span>               
+                                                <span><p>&nbsp;</p><input type="submit" value="Search" name="search" class="btn" onclick="searchClinicalFeature();" /></span>
+
+
+                                            </div>
+                                            <!--END of search-->
+
+                                            <!--BEGIN search results-->
+                                                                                        
+                                            <div class="row">
+                                            
+
+                                                <div class='loading' hidden='true' id='wait2'>Please Wait.. untill system finds the result for you. Thank you......</div>
+
+
+	                                            <div class="col-xs-12 .col-sm-6 .col-lg-8" id="searchCFDiv">
+	
+	                                                <!--RESULT OF SEARCH -->
+	
+	
+	                                            </div>
+                                            </div>
+                                            <!--END of results-->
+
+                                        </div>
+                                        <!--END of tab4-->
                                         </div>
                                         
                                     </div>
-                                </div>
-                            </div>
 
-                        </div>
-                    </div>
 			<!--BEGIN footer-->
                 <?php include "footer_pg.php"; ?> 
                 <!--END of footer-->

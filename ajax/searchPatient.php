@@ -7,11 +7,7 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 	$doc_name= $_SESSION['doc_name'];
 $patient_id = $_GET["patient_id"];
 $strPatientName = $_GET["patient_name"];
-if(isset($_SESSION['user_type']) &&  isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name']) && isset($_SESSION['logged_in_user_id'])) {
-    
-    $chamber_name = $_SESSION['chamber_name'];
-    $doc_name= $_SESSION['doc_name'];
-    $user_name= $_SESSION['logged_in_user_id'];
+
     
     
 $where = "";
@@ -41,9 +37,8 @@ if($no > 0){
 		<th>Last Name</th>
 		<th>Date of Birth</th>
 		<th>Mobile No</th>
-		<th>Street Address</th>
+		
 		<th>City / Town</th>
-		<th>Email Address</th>
 		<th>ACTION</th>
      </tr></thead>
 	  <tbody>";
@@ -59,9 +54,8 @@ if($no > 0){
                 <td>".$d1['patient_cell_num']."</td>
                 <td>".$d1['patient_address']."</td>
                 
-                <td>".$d1['patient_city']."</td>
-                <td>".$d1['patient_email']."</td>
-                <td><a href='editPatient.php?patient_id=".$d1['patient_id']."' class='vlink'>EDIT</a></td>
+                
+                <td><a href='editPatient.php?patient_id=".$d1['patient_id']."' class='btn btn-primary' role='button' >EDIT</a></td>
             </tr>";
             
         }
@@ -71,8 +65,5 @@ if($no > 0){
     }
 } else {
     echo "You are not allowed to perform this operation";
-}
-}else {
-	echo "Session expired";
 }
 ?>

@@ -1224,5 +1224,177 @@ function searchInvestigation(){
 		} );
         
     }
+}
 
+function search_Patient_for_master(){
+    //alert(document.getElementById("s_p_id").value);
+    //alert(document.getElementById("s_p_name").value);
+    if(document.getElementById("s_p_id").value == "" && document.getElementById("s_p_name").value == ""){
+        alert("Please Give some Input");
+        return false;
+    } else {
+        var patient_id = document.getElementById("s_p_id").value;
+        var patient_name = document.getElementById("s_p_name").value;
+
+        /*if (window.XMLHttpRequest){
+            xmlhttp=new XMLHttpRequest();
+        }else{
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange=function(){
+            if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                document.getElementById("searchDiv").innerHTML=xmlhttp.responseText;
+            }
+        }*/
+        //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
+        var url = "ajax/searchPatient.php?mode=SEARCH_PATIENT&patient_id="+patient_id+"&patient_name="+patient_name;   
+        $("#wait").show();
+        
+        $.ajax({url: url, success: function(result){
+        	$("#wait").hide();
+        	$("#searchDiv").html(result);
+        }});
+        
+       /* xmlhttp.open("GET",url,true);
+        xmlhttp.send();*/
+    }
+
+}
+function searchMedicine(){
+    //alert(document.getElementById("s_p_id").value);
+    //alert(document.getElementById("s_p_name").value);
+    if(document.getElementById("course").value == "" ){
+        alert("Please Give some Input");
+        return false;
+    } else {
+        
+        var medicine_name = document.getElementById("course").value;
+        var url = "ajax/searchMedicine.php?medicine_name="+$("#course").val();
+    	
+        $("#wait1").show();
+        
+        $.ajax({url: url, success: function(result){
+        	$("#wait1").hide();
+        	$("#searchMedicineDiv").html(result);
+        }});
+        
+        
+    }
+
+}
+
+function searchInvestigation() {
+        //alert(document.getElementById("s_p_id").value);
+        //alert(document.getElementById("s_p_name").value);
+        
+            
+    var invest_name = document.getElementById("invest_name").value;
+    if(document.getElementById("invest_name").value == "" ){
+        alert("Please Give some Input");
+        return false;
+    } else {
+    
+	    //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
+	    var url = "ajax/searchInvestigation.php?invest_name="+invest_name;   
+	    $("#wait2").show();
+	    
+	    $.ajax({url: url, success: function(result){
+	    	$("#wait2").hide();
+	    	$("#searchInvestDiv").html(result);
+	    }});
+	   
+    }
+        
+
+}
+
+function editInvest(investID){
+    
+    //alert(medincineID);
+    var invest_name = document.getElementById("invest_name").value;
+    
+    //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
+    var url = "ajax/editInvestigation.php?MODE=EDIT&investID="+investID+"&invest_name="+invest_name;   
+    $.ajax({url: url, success: function(result){
+    	$("#searchInvestDiv").html(result);
+    }});
+   
+        
+}
+
+function searchClinicalFeature() {
+    //alert(document.getElementById("s_p_id").value);
+    //alert(document.getElementById("s_p_name").value);
+    
+        
+	var cf_name = document.getElementById("cf_name").value;
+	if(document.getElementById("cf_name").value == "" ){
+	    alert("Please Give some Input");
+	    return false;
+	} else {
+	
+	    //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
+	    var url = "ajax/searchCF.php?cf_name="+cf_name;   
+	    $("#wait3").show();
+	    
+	    $.ajax({url: url, success: function(result){
+	    	$("#wait3").hide();
+	    	$("#searchCFDiv").html(result);
+	    }});
+	   
+	}
+    
+
+}
+
+function deleteCF(CFId){
+    
+    //alert(CFId);
+    var cf_name = document.getElementById("cf_name").value;
+    //var medicine_name = document.getElementById("course").value;
+    /*if (window.XMLHttpRequest){
+        xmlhttp=new XMLHttpRequest();
+    }else{
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange=function(){
+        if (xmlhttp.readyState==4 && xmlhttp.status==200){
+            document.getElementById("searchMedicineDiv").innerHTML=xmlhttp.responseText;
+        }
+    }*/
+    //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
+   // var url = "ajax/editCF.php?MODE=DELETE&CFId="+CFId+"&medicine_name="+medicine_name;   
+    var url = "ajax/editCF.php?MODE=DELETE&CFId="+CFId+"&cf_name="+cf_name;   
+    
+    $.ajax({url: url, success: function(result){
+    	
+    	$("#searchCFDiv").html(result);
+    }});
+   
+        
+}
+
+function editCF(CFId){
+    
+    //alert(medincineID);
+    var medicine_name = document.getElementById("course").value;
+    if (window.XMLHttpRequest){
+        xmlhttp=new XMLHttpRequest();
+    }else{
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange=function(){
+        if (xmlhttp.readyState==4 && xmlhttp.status==200){
+            document.getElementById("searchMedicineDiv").innerHTML=xmlhttp.responseText;
+        }
+    }
+    //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
+    var url = "ajax/editMedicine.php?MODE=EDIT&medincineID="+medincineID+"&medicine_name="+medicine_name;   
+
+    xmlhttp.open("GET",url,true);
+    xmlhttp.send();
+        
 }

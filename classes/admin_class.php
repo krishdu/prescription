@@ -388,7 +388,7 @@ class admin{
           
         } else {
         	
-        	echo "max id -> ".$id;
+        	//echo "max id -> ".$id;
             //Insert into master and then add
         	$query = "insert into clinical_impression (ID, TYPE, DESCRIPTION,create_date,chamber_id,doc_id ) values('$id','$type','$type', NOW(), '$chamber_name', '$doc_name')";
             //echo $query;
@@ -397,7 +397,7 @@ class admin{
         }
         $query = "insert into prescribed_cf(clinical_impression_id, prescription_id,create_date,chamber_id,doc_id) 
         values('$id' , '$prescription_id', NOW(), '$chamber_name', '$doc_name')";
-        echo $query;
+        //echo $query;
         mysql_query($query) or die(mysql_error());
     }
     function deleteClinicalImpression($prescription_id,$ci_id, $chamber_name, $doc_name){

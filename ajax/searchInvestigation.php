@@ -18,6 +18,7 @@ $no = mysql_num_rows($result1);
 if($no > 0){
         
         echo "<table class='table'><thead><tr>
+		<th class='head_tbl'>ID</td>
         <th class='head_tbl'>Investigation Name</td>
        
         <th class='head_tbl'>ACTION</td>
@@ -26,6 +27,7 @@ if($no > 0){
         
         while($d1 = mysql_fetch_array($result1)){
            echo "<tr>
+				<td>".$d1['ID']."</td>
                 <td>".$d1['investigation_name']."</td>
                 
                 <td><button class='btn btn-info' onclick='editInvest(".$d1['ID'].") ' class='vlink'>EDIT</button>
