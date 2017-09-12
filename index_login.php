@@ -32,11 +32,11 @@ if(isset($_REQUEST['action'])){
             } else if ($user_role== 'RECEPTIONIST' || $user_role== 'CHEMIST'){
                     echo "<script>location.href='select_chamber.php'</script>";
             } else {
-            	echo "You are not authorize to perform any operation !!";
+            	$msg = "You are not authorize to perform any operation !!";
             }
         } else{
-        $print="<font color='red'>Invalid User Name or Password</font>";
-
+        	$err = true;
+			$msg = "Enter a valid user id and/or password.Try Again";
         }
     }
 } 
@@ -45,7 +45,14 @@ if(isset($_REQUEST['action'])){
   <body>
 
     <div class="container">
-
+		<div class="row">
+		  <?php if($err){?>
+		  <div class="alert alert-danger" role="alert"> 
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> 
+			<span class="sr-only">Error:</span> <?php echo $msg;?>
+		 </div>
+		  <?php }?>
+	  </div>
       <form class="form-signin" action="index_login.php?action=login" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="user_name" class="sr-only">Login ID</label>
