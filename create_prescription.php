@@ -20,7 +20,8 @@ if(mysql_num_rows($result) > 0){
     while($rows = mysql_fetch_array($result)){
     	$max_prescription_id = $rows['PRESCRIPTION_ID'];
     }
-    header("location:prescription2.php?VISIT_ID=$VISIT_ID&patient_id=$patient_id&PRESCRIPTION_ID=$max_prescription_id"); 
+    /* header("location:prescription2.php?VISIT_ID=$VISIT_ID&patient_id=$patient_id&PRESCRIPTION_ID=$max_prescription_id");  */
+    echo "<script>location.href='prescription2.php?VISIT_ID=$VISIT_ID&patient_id=$patient_id&PRESCRIPTION_ID=$max_prescription_id'</script>";
 } else {
     $max_prescription_id = $admin->getMaxPrescriptionId($chamber_name, $doc_name);
     echo "Inside else ...max_prescription_id = ".$max_prescription_id;
@@ -74,7 +75,8 @@ if(mysql_num_rows($result) > 0){
                     values('".$row['MEDICINE_ID']."','".$max_prescription_id."','".$row['MEDICINE_NAME']."', '".$row['MEDICINE_DIRECTION']."', '".$row['MEDICINE_DOSE']."', '".$row['MEDICINE_TIMING']."','".$chamber_name."','".$doc_name."', '". $logged_in_user."')";
         mysql_query($q3)or die(mysql_error());
     }
-    header("location:prescription2.php?VISIT_ID=$VISIT_ID&patient_id=$patient_id&PRESCRIPTION_ID=$max_prescription_id"); 
+    /* header("location:prescription2.php?VISIT_ID=$VISIT_ID&patient_id=$patient_id&PRESCRIPTION_ID=$max_prescription_id");  */
+    echo "<script>location.href='prescription2.php?VISIT_ID=$VISIT_ID&patient_id=$patient_id&PRESCRIPTION_ID=$max_prescription_id'</script>";
 }
 
 

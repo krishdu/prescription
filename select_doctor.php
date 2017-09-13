@@ -55,7 +55,8 @@ include_once './inc/footer.php';
 	} else {echo "Your role is ".$_SESSION['user_type']."You are not authorize to open this page. Please login again";}
 	
 } else {
-    header("location:index_login.php");
+    /* header("location:index_login.php"); */
+    echo "<script>location.href='index_login.php'</script>";
 } ?>
 
 </body>

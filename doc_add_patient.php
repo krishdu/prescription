@@ -112,7 +112,8 @@ if(isset($_SESSION['user_type'])) {
 </div>
 <!--END of wrapper-->
 <?php } /*}*/ else {
-     header("location:index_login.php");
+     /* header("location:index_login.php"); */
+    echo "<script>location.href='index_login.php'</script>";
 }
 ?>
 </body>

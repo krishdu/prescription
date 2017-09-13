@@ -114,8 +114,8 @@ if(isset($_GET['patient_id'])){
     /** END : BLOCK FOR COPYING THE OLD INVESTIGATION REPORT FOR THE PATIENT **/
     
     //header("location:reception.php");
-    header("location:visit_list.php");
-    
+    /* header("location:visit_list.php"); */
+    echo "<script>location.href='visit_list.php'</script>";
     
 }
 } else {

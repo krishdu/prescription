@@ -106,7 +106,8 @@ if($_SESSION['user_type'] == 'DOCTOR' || $_SESSION['user_type'] == 'RECEPTIONIST
         </div>
         </div>
    <?php } }else {
-    header("location:visit_list.php");
+    /* header("location:visit_list.php"); */
+       echo "<script>location.href='visit_list.php'</script>";
 } ?>     
     </body>
 </html>
