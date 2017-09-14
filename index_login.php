@@ -57,10 +57,10 @@ if(isset($_REQUEST['action'])){
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="user_name" class="sr-only">Login ID</label>
         
-        <input type="text" name="user_name" class="form-control" placeholder="Email address" required autofocus />
+        <input type="text" name="user_name" class="form-control" placeholder="Enter user id" required autofocus />
         <label for="inputPassword" class="sr-only">Password</label>
        
-        <input type="password" name="password" class="form-control" placeholder="Password" required />
+        <input type="password" name="password" class="form-control" placeholder="Enter password" required />
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me

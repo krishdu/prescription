@@ -55,11 +55,6 @@ include_once './inc/header.php';
 																											Fellow, American College of Endocrinology (FACE)
 																											Consultant Endocrinologist & Diabetologist
 																											Member: Endocrine Society (USA), AACE (USA)" required></textarea>
-																<script>
-													                // Replace the <textarea id="editor1"> with a CKEditor
-													                // instance, using default configuration.
-													                CKEDITOR.replace( 'doctor_degree' );
-													            </script>
 					    </div>
 					  </div>
 					   <div class="form-group">
