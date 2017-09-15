@@ -289,10 +289,13 @@ $d1 = $update->getPatientInformationForPrescription($patient_id, $chamber_name, 
      
         <?php }else {
             header("location:blank_prescription.php");
+            echo "<script>location.href='blank_prescription.php'</script>";
         }
         
         }}else{ 
-    header("location:visit_list.php");
+    /* header("location:visit_list.php"); */
+            echo "<script>location.href='blank_prescription.php'</script>";
+            
         }} else {
             echo "Session expired. Please Login again. <a href='./index_login.php'></a>";
         }

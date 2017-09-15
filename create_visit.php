@@ -67,7 +67,7 @@ include_once "classes/admin_class.php";
     
 <!--BEGIN wrapper-->
 <?php 
-if(isset($_SESSION['user_type'])) {
+if(isset($_SESSION['user_type']) &&isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])) {
 /*if($_SESSION['user_type'] == 'DOCTOR'){
     header("location:visit_list.php");
 } else if($_SESSION['user_type'] == 'RECEPTIONIST'){*/
@@ -285,7 +285,8 @@ if(isset($_SESSION['user_type'])) {
 	</div><!-- End container-->
 
 <?php } /*}*/ else {
-     header("location:index_login.php");
+    /*  header("location:index_login.php"); */
+    echo "<script>location.href='index_login.php'</script>";
 }
 include_once './inc/footer.php';
 ?>

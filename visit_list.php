@@ -121,7 +121,8 @@ while ($row = mysql_fetch_array($result)) {
 
 
 <?php } else {
-    header("location:index_login.php");
+    /* header("location:index_login.php"); */
+    echo "<script>location.href='index_login.php'</script>";
 } ?>
 <?php include_once './inc/footer.php';?>
 </body>

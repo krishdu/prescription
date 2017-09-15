@@ -1,9 +1,18 @@
 <?php
-include "./inc/datacon.php";
+include_once "./inc/datacon.php";
+include_once './inc/header.php';
 if(isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name']) ){
     
 include_once 'classes/admin_class.php';
 $admin = new admin();
+?>
+<div class="container"><!-- Begin container -->
+
+<div class="row">
+                                            
+     <div class='loading' id='wait'>Please Wait.. System is preparing prescription..</div>
+</div>
+<?php 
 if(isset($_GET['patient_id'])){
     $chamber_name = $_SESSION['chamber_name'];
     $doc_name= $_SESSION['doc_name'];
@@ -26,17 +35,17 @@ if(isset($_GET['patient_id'])){
             $existing_visit_id = $rows['VISIT_ID'];
         }
         
-        echo "visit exists -> ".$existing_visit_id;
+        //echo "visit exists -> ".$existing_visit_id;
         
     } else {
-        echo "No stored visit";
+        //echo "No stored visit";
         $existing_visit_id = $admin->getMaxVisitId($chamber_name, $doc_name);
-        echo "System will create visit id = ".$existing_visit_id;
+        //echo "System will create visit id = ".$existing_visit_id;
         //No visit for the patient. So create a visit with respect to the patient id.
         mysql_query("insert into visit (VISIT_ID, patient_id,VISIT_DATE,chamber_id, created_by_user_id, doc_id ) 
             values( '".$existing_visit_id."', '".$patient_id."', NOW(),'".$chamber_name."','".$user_name."','".$doc_name."' )") or die(mysql_error());
         //$existing_visit_id = mysql_insert_id();
-        echo "System Creats visit id = ".$existing_visit_id;
+        //echo "System Creats visit id = ".$existing_visit_id;
     }
     /** END : BLOCK FOR GENERATING VISIT ID   **/
     
@@ -48,13 +57,13 @@ if(isset($_GET['patient_id'])){
     
     
     if(mysql_num_rows($result1) > 0){
-        echo "Already visited. So fetch the visit id (visited_id) for the last visit\n";
+        //echo "Already visited. So fetch the visit id (visited_id) for the last visit\n";
         //Already visited. So fetch the visit id (visited_id) for the last visit
         while($rows = mysql_fetch_array($result1)){
             $visited_id = $rows['visit_id'];
         }
         
-        echo "visit id of last visit is ".$visited_id."\n";
+        //echo "visit id of last visit is ".$visited_id."\n";
         //Populate patient investigation for old record.
         /** START INSERTING OLD PATIENT INVESTIGATION **/
         //INsert into patient_investigation
@@ -72,13 +81,13 @@ if(isset($_GET['patient_id'])){
             
             if(mysql_num_rows($result) <= 0) {
                 
-                echo "Populate patient investigation with old data\n";
+                //echo "Populate patient investigation with old data\n";
                 
                 $query_insert_into_patient_investigation = "insert into patient_investigation (patient_id, visit_id, investigation_id, value, chamber_id, doc_id, created_by_user_id)
                                                     values ('".$patient_id."','".$existing_visit_id."','".$inv_id."','".$VALUE."','".$chamber_name."','".$doc_name."','".$user_name."')";
                 
                 mysql_query($query_insert_into_patient_investigation) or die(mysql_error());
-                echo "patient investigation with old data is populated...\n";
+                //echo "patient investigation with old data is populated...\n";
             }
         }
         /** END: INSERTING OLD PATIENT INVESTIGATION **/
@@ -114,11 +123,16 @@ if(isset($_GET['patient_id'])){
     /** END : BLOCK FOR COPYING THE OLD INVESTIGATION REPORT FOR THE PATIENT **/
     
     //header("location:reception.php");
-    header("location:visit_list.php");
-    
+    /* header("location:visit_list.php"); */
+    echo "<script>location.href='visit_list.php'</script>";
     
 }
-} else {
+?>
+</div>
+<?php } else {
     echo "You are not authorize to perform this operation";
 }
 ?>
+<?php include_once './inc/footer.php';?>
+</body>
+</html>
