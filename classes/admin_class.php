@@ -88,7 +88,7 @@ class admin{
             $admin->insertUpdateClinicalImpression($prescription_id, $clinicalImpression,$chamber_name,$doc_name);
         }
         
-        $query_getinvestigation_details_from_master = "select * from investigation_master a where  a.investigation_name  = '".$investigation_name."' and a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'" ;
+        $query_getinvestigation_details_from_master = "select * from investigation_master a where  a.investigation_name  = '".$investigation_name."' and a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' and a.STATUS='ACTIVE'" ;
 
         $result = mysql_query($query_getinvestigation_details_from_master) or die(mysql_error());
         if (mysql_num_rows($result) > 0){

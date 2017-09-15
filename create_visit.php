@@ -67,7 +67,7 @@ include_once "classes/admin_class.php";
     
 <!--BEGIN wrapper-->
 <?php 
-if(isset($_SESSION['user_type'])) {
+if(isset($_SESSION['user_type']) &&isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])) {
 /*if($_SESSION['user_type'] == 'DOCTOR'){
     header("location:visit_list.php");
 } else if($_SESSION['user_type'] == 'RECEPTIONIST'){*/

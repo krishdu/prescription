@@ -21,7 +21,7 @@ if($strPatientName != ""){
 } 
 
 $where .= "and chamber_id = '$chamber_name' and doc_id = '$doc_name' ";
-$sql1 = "select * from patient where patient_id != ''".$where. "order by patient_id asc";
+$sql1 = "select patient_id, GENDER	,patient_first_name, patient_last_name, age, TIMESTAMPDIFF( YEAR, patient_dob, NOW( ) ) AS age1, patient_cell_num, patient_address from patient where patient_id != ''".$where. "order by patient_id asc";
 //echo $sql1;
 $result1 = mysql_query($sql1)or die(mysql_error());
 $no = mysql_num_rows($result1);
@@ -35,7 +35,7 @@ if($no > 0){
 		<th>Patient ID</th>
 		<th>First Name</th>
 		<th>Last Name</th>
-		<th>Date of Birth</th>
+		<th>Age</th>
 		<th>Mobile No</th>
 		
 		<th>City / Town</th>
@@ -47,10 +47,12 @@ if($no > 0){
         while($d1 = mysql_fetch_array($result1)){
            echo "<tr>
                 <td>".$d1['GENDER']."</td>
-                <td><a href='processData.php?patient_id=".$d1['patient_id']."' class='vlink'>".$d1['patient_id']."</a></td>
+                <td><a href='processData.php?patient_id=".$d1['patient_id']."' class='btn btn-warning' role='button'>CREATE VISIT(".$d1['patient_id'].")</a></td>
                 <td>".$d1['patient_first_name']."</td>
                 <td>".$d1['patient_last_name']."</td>
-                <td>".date('d / m / Y', strtotime($d1['patient_dob']))."</td>
+                 <td>";
+                if($d1['age']==0){echo $d1['age1'];}else{echo $d1['age'];}
+                 echo "</td> 
                 <td>".$d1['patient_cell_num']."</td>
                 <td>".$d1['patient_address']."</td>
                 

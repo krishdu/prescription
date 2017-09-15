@@ -1,14 +1,7 @@
-<html>
-   <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Prescription :: Dr.Soumyabrata Roy Choudhuri ::</title>
-<link href="css/style.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="jquery/themes/base/jquery.ui.all.css">
-<script src="jquery/jquery-1.7.2.js"></script>
-<script src="jquery/ui/jquery.ui.datepicker.js"></script>
-<link rel="stylesheet" href="jquery/demos/demos.css">
-<script src="jquery/ui/jquery.ui.core.js"></script>
-<script src="jquery/ui/jquery.ui.widget.js"></script>
+<?php include_once "./inc/datacon.php";
+include_once "./inc/header.php";
+include_once "classes/admin_class.php";
+?> 
 
 
 <script type="text/javascript">
@@ -22,124 +15,117 @@
        element.value = element.defaultValue;
      }
    }
-$(function() {
-		$( "#datepicker1" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			showOn: "button",
-			buttonImage: "images/calendar.gif",
-			buttonImageOnly: true,
-			dateFormat: "dd-mm-yy"
-		});
-	});
 
 </script>
 
 <?php 
-include "datacon.php"; 
 
-if(isset($_SESSION['user_type'])) {
+if(isset($_SESSION['user_type']) &&isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])) {
 if($_SESSION['user_type'] == 'DOCTOR' || $_SESSION['user_type'] == 'RECEPTIONIST'){
    $patientId = $_GET['patient_id'];
-    
-   modify();
+   $chamber_name = $_SESSION['chamber_name'];
+   $doc_name= $_SESSION['doc_name'];
+   $admin = new admin();
    
 ?>
     <body>
-        <div id="wrapper">
 	<div class="container">
             <?php include("banner.php"); ?>
-        <form id="form1" name="form1" method="post" action="<?php echo $_SERVER['REQUEST_URI'] . $_SERVER['QUERY_STRING'] ?>" >
                 
-            <div><?php echo @$_SESSION['form1']['message'] ?></div>
-            <input type="hidden" name="do" value="modify" />       
-            <input type="hidden" name="patientId" value="<?php echo $patientId ?>"/>
-                    <!--BEGIN form-->
-                    <div class="patientDetails">
-                    <?php 
-                    
-                    $sql1 = "select * from patient where patient_id = '".$patientId."'";
-    
-                    $result = mysql_query($sql1) or die(mysql_error());
-                    while( $rs = mysql_fetch_array($result)){ ?>
-                    	<span><p>Gender</p>
-                            <select name="gender" value="<?php echo $rs['GENDER']?>" class="drop_box_small" style="width:80px;" >
-                                <option>Male</option>
-                                <option>Female</option>
-                            </select>
-                        </span>                    
-                    	<span><p>First Name</p><input name="fname" type="text" class="input_box_big" value="<?php echo $rs['patient_first_name']?>" /></span>                
-                    	<span><p>Last Name</p><input name="lname" type="text" class="input_box_big" value="<?php echo $rs['patient_last_name']?>" /></span>                
-                    	<span><p>Date of Birth</p>
-                            <input id="datepicker1" name="theDate" type="text" class="input_box_add" value="<?php echo $rs['patient_dob']?>" onfocus="myFocus(this);" onblur="myBlur(this);" /></span>                
-                    	<span><p>Mobile No</p><input name="cellnum" type="text" class="input_box_add" value="<?php echo $rs['patient_cell_num']?>" /></span>                
-                    	<span><p>Landline No</p><input name="altcellnum" type="text" class="input_box_add" value="<?php echo $rs['patient_alt_cell_num']?>" /></span>                  
-                    	<span><p>Street Address</p><textarea name="addr" cols="" rows=""><?php echo $rs['patient_address']?></textarea></span>            
-                    	                        
-                    	<span><p>City / Town</p><input name="city" type="text" class="input_box_big" value="<?php echo $rs['patient_city']?>" /></span>                
-                    	<span><p>Email Address</p><input name="email" type="text" class="input_box_big" value="" /></span>           
-                    	<span><p>&nbsp;</p><input name="EDIT_PATIENT_DATA" id="EDIT" type="submit" class="btn" value="MODIFY" /></span>
-                    
-                    <?php }?>
-                        <span><p>&nbsp;</p><a href="index.php">BACK</a></span>
-                    </div>
-                    <!--END of form-->
-                    
-                 </form>
-        
-        <!--BEGIN footer-->
-    <div class="footer">
-    	
-        <!--BEGIN footer left-->
-        <div class="f_left">
-        &copy; 2012 <b>Prescription</b>
-        </div>
-        <!--END of footer left-->
-    	
-        <!--BEGIN footer right-->
-        <div class="f_right">
-        Developed by : <b>P.G.Infoservices</b>
-        </div>
-        <!--END of footer right-->
             
-    </div>
+                   <h2>Edit Patient Record</h2>
+                    <div class="row">
+                    <?php 
+                    $patientObj = $admin->getPatientDetailsPatientId($patientId, $chamber_name, $doc_name);
+                    ?>
+                    <form id="update_rec_form" class="form-horizontal" >
+                    <input type="hidden" name="chamber_id" value="<?php echo $_SESSION['chamber_name']; ?>">
+                    <input type="hidden" name="patientId" value="<?php echo $patientId ?>"/>
+                        <input type="hidden" name="doc_id" value="<?php echo $_SESSION['doc_name']; ?>">
+                            <input type="hidden" name="loged_in_user_id" value="<?php echo $_SESSION['user_name']; ?>">
+                                <div class="alert alert-danger" role="alert" id="search_alert_2" hidden="true">
+                                
+                                </div>
+                                <div class="form-group">
+                                <label class="col-sm-2 control-label">Gender</label>
+                                <div class="col-sm-2">
+                                <select class="form-control" name="gender" id="gender">
+                                <?php if($patientObj->GENDER == 'Female'){ ?><option value="Female" selected>Female</option><option value="Male">Male</option>
+                                <option value="Transgender">Transgender</option> <?php } else if ($patientObj->GENDER == 'Male') {?><option value="Female">Female</option><option value="Male" selected>Male</option>
+                                <option value="Transgender">Transgender</option><?php }else if ($patientObj->GENDER == 'Transgender') {?><option value="Female">Female</option><option value="Male">Male</option>
+                                <option value="Transgender" selected>Transgender</option><?php } ?> 
+                                
+                                </select>
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                <label for="fname" class="col-sm-2 control-label">First Name</label>
+                                <div class="col-sm-6">
+                                <input type="text" class="form-control" name="fname" id="fname" value="<?php echo $patientObj->patient_first_name; ?>" >
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                <label for="lname" class="col-sm-2 control-label">Last Name</label>
+                                <div class="col-sm-6">
+                                <input type="text" class="form-control" name="lname" id="lname" value="<?php echo $patientObj->patient_last_name; ?>" >
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                <label for="theDate" class="col-sm-2 control-label">Date of Birth</label>
+                                <div class="col-sm-2">
+                                <input type="date" class="form-control" name="theDate" id="theDate" value="<?php echo $patientObj->patient_dob; ?>">
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                <label for="cellnum" class="col-sm-2 control-label">Mobile number</label>
+                                <div class="col-sm-6">
+                                <input type="tel" class="form-control" name="cellnum" id="cellnum" value="<?php echo $patientObj->patient_cell_num; ?>">
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                <label for="altcellnum" class="col-sm-2 control-label">Landline number</label>
+                                <div class="col-sm-6">
+                                <input type="tel" class="form-control" name="altcellnum" value="<?php echo $patientObj->patient_alt_cell_num; ?>" >
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                <label for="lname" class="col-sm-2 control-label">Street Address</label>
+                                <div class="col-sm-6">
+                                
+                                <textarea class="form-control" name="addr" ><?php echo $patientObj->patient_address; ?></textarea>
+                                
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                <label for="lname" class="col-sm-2 control-label">City/Town</label>
+                                <div class="col-sm-6">
+                                <input type="text" class="form-control" name="city" value="<?php echo $patientObj->patient_city; ?>" >
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                <label for="lname" class="col-sm-2 control-label">E-Mail</label>
+                                <div class="col-sm-6">
+                                <input type="email" class="form-control" name="email" value="<?php echo $patientObj->patient_email; ?>" >
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                <input type="button" id="modify_patient_record" class="btn btn-default"  value="MODIFY" name="MODIFY" >
+                                </div>
+                                </div>
+                                </form>
         </div>
-        </div>
-   <?php } }else {
-    /* header("location:visit_list.php"); */
-       echo "<script>location.href='visit_list.php'</script>";
-} ?>     
-    </body>
-</html>
- 
-<?php
-function modify(){
-    $_SESSION['form1'] = array();
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['do'] == 'modify') {
-  	// if the form has been submitted
-        $gender = $_POST['gender'];
-        $fname = $_POST['fname'];
-        $lname = $_POST['lname'];
-        $dob = date("Y-m-d", strtotime($_POST['theDate']));
-        $addr = $_POST['addr'];
-        $city = $_POST['city'];
-        //$dob =  $_POST['theDate'];
-
-        $cellnum = $_POST['cellnum'];
-        $altcellnum = $_POST['altcellnum'];
-        $email = $_POST['email'];
-        $patient_id = $_POST['patientId'];
-        $sql1 = "UPDATE patient set GENDER = '$gender' , patient_first_name = '$fname' ,  	
-                    patient_last_name = '$lname' , patient_address = '$addr' , 
-                    patient_city = '$city' , patient_dob = '$dob' , patient_cell_num = '$cellnum' ,
-                    patient_alt_cell_num = '$altcellnum' , patient_email = '$email' where patient_id = '".$patient_id."'";
-        mysql_query($sql1) or die(mysql_error());
-        //echo $sql1;
-        $_SESSION['form1']['message'] = "Updated Successfully";
+        <!--BEGIN footer-->
+    <!--BEGIN footer-->
+                <?php include "footer_pg.php"; ?> 
+                <!--END of footer-->
+                </div><!-- End container -->
 
         
-    }
-}
-
-?>
-
+    <?php include_once './inc/footer.php';?>
+</body>
+<?php } 
+}else {
+echo "You are not authorize to view this page";
+}?>
+</html>

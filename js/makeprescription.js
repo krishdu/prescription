@@ -472,6 +472,37 @@ $(document).ready(function(){
 		         });
 		    }
 	  	});
+	  	
+	  	$("#modify_patient_record").click(function(){
+			  
+		   
+		    if(empty($("#fname").val()) || empty($("#lname").val()) || empty($("#gender").val()) || empty($("#theDate").val()) ){
+		    	$("#search_alert_2").html("First Name, Last Name, Sex and DOB is mandatory");
+		    	$("#search_alert_2").show();
+		    	$("#create_r_result").hide();
+		    	
+		    } else {
+		    	var url = "./ajax/edit_patient.php"; // the script where you handle the form input.
+
+			    
+		    	//alert("Submitting the form");
+			    $.ajax({
+		           type: "POST",
+		           url: url,
+		           data: $("#update_rec_form").serialize(), // serializes the form's elements.
+		           success: function(data)
+		           {
+		        	   $("#create_r_result").show();
+			    		
+			    		$("#create_r_result").html(data);
+				        $("#search_alert_2").hide();
+				        $('#create_rec_form').hide();
+		        	   
+		               
+		           }
+		         });
+		    }
+	  	});
 	  	$("#add_by_user").click(function(){
 			  
 		    var url = "./ajax/add_user_record.php"; // the script where you handle the form input.
