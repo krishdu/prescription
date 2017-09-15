@@ -71,7 +71,7 @@ class admin{
         $admin = new admin();
         if(strtoupper($investigation_name) == "CREATININE" ){
         	$patient = $admin->getPatientDetailsPatientId($patient_id,$chamber_name,$doc_name);
-            $age = $admin->calcAge($patient->patient_dob);
+        	$age = $admin->calcAge($patient->patient_dob);
             //echo $age;
             $sex = $patient->GENDER;
             $cr = $value;
@@ -96,11 +96,7 @@ class admin{
             $rowresult = mysql_fetch_object($result) or die(mysql_error());
             //Get the investigation Id
             $inv_id = $rowresult->ID;
-            //Update investigation_master with the updated value
-            /*$query_update_into_investigation_master = "update investigation_master set investigation_type = '".$TYPE."', unit = '".$UNIT."'
-                                                        where ID = '"+$inv_id+"'";
-
-            mysql_query($query_update_into_investigation_master) or die(mysql_error());*/
+            
             //update investigation master
             mysql_query("update investigation_master a set  a.unit = '$unit' where a.ID ='$inv_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'" ) or die(mysql_error());
 
@@ -114,7 +110,7 @@ class admin{
             //Insert into investigation_master 
             $query_insert_into_investigation_master = "insert into investigation_master (ID	, investigation_name , investigation_type, unit, chamber_id, doc_id)
                                                         values('".$inv_id."','".$investigation_name."','".$type."','".$unit."','".$chamber_name."','".$doc_name."')";
-            //echo $query_insert_into_investigation_master;
+            echo $query_insert_into_investigation_master;
             mysql_query($query_insert_into_investigation_master) or die(mysql_error());
             //Get the investigation Id
             //$inv_id = mysql_insert_id() or die(mysql_error());
@@ -123,7 +119,7 @@ class admin{
             
             $query_insert_into_patient_investigation = "insert into patient_investigation (patient_id, visit_id, investigation_id, value, chamber_id, doc_id) 
                                                     values ('".$patient_id."','".$visit_id."','".$inv_id."','".$value."','".$chamber_name."','".$doc_name."')";
-            //echo $query_insert_into_patient_investigation;
+            echo $query_insert_into_patient_investigation;
             mysql_query($query_insert_into_patient_investigation) or die(mysql_error());
 
         }
@@ -283,6 +279,7 @@ class admin{
         	$id = $admin->getMaxpatient_health_details_master_id($chamber_name,$doc_name);
             //Insert into master and then add
             $query = "insert into patient_health_details_master (ID, NAME, create_date, chamber_id, doc_id) values('$id', '$cfname', NOW(), '$chamber_name', '$doc_name')";
+            echo $query;
             mysql_query($query) or die(mysql_error());
             
         }
@@ -293,7 +290,7 @@ class admin{
 
         $result1 = mysql_query("select a.VALUE from patient_health_details a 
                 where a.ID = '1' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
-
+        
         if(mysql_num_rows($result1) > 0){
             $obj = mysql_fetch_object($result1);
             $height = $obj->VALUE;
@@ -305,7 +302,7 @@ class admin{
             $obj = mysql_fetch_object($result2);
             $weight = $obj->VALUE;
         }
-
+        
         if($height != "" && $weight != ""){
             $bmi = $admin->calcBMI($weight, $height);
             $result_id_f = mysql_query("select * from patient_health_details a where 
@@ -331,6 +328,7 @@ class admin{
 														a.ID = b.ID and a.chamber_id = b.chamber_id and a.doc_id = b.doc_id 
 														and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'
 														and a.VISIT_ID = '$visit_id' and b.NAME = 'Ideal Body Weight (KG)'") or die(mysql_error());
+            
             if(mysql_num_rows($result_ideal_body_weight) > 0 ){
             	$query_ideal_body_weight= "update patient_health_details b set b.VALUE = '$ideal_body_weight' where
             	b.ID = (select ID from patient_health_details_master a where a.name='Ideal Body Weight (KG)' and status='ACTIVE' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name') and b.VISIT_ID = '".$visit_id."'";
@@ -340,6 +338,7 @@ class admin{
             	values( (select b.ID from patient_health_details_master b where b.name='Ideal Body Weight (KG)' and b.status='ACTIVE' and b.chamber_id='$chamber_name' and b.doc_id='$doc_name' ) , '$ideal_body_weight', '$visit_id', '$chamber_name' , '$doc_name')";
             	//echo $query_ideal_body_weight;
             }
+            //echo $query_ideal_body_weight;
             mysql_query($query_ideal_body_weight) or die(mysql_error());
         }
         
