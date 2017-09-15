@@ -101,7 +101,7 @@ if(isset($_GET['patient_id'])){
             
             $id=$existingRows1['ID'] ;
             $value=$existingRows1['VALUE'];
-            if($id == 1 || $id == 2){
+            if($id == 1 ){
                 
                 $checkQuery2 = "select * from patient_health_details where ID = '".$id."'
                         and VISIT_ID = '".$existing_visit_id."' and doc_id =  '".$doc_name."' and chamber_id = '".$chamber_name."' ";
