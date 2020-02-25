@@ -3,7 +3,12 @@
 1. Go to your console git clone https://github.com/biswarup81/prescription.git
 2. For update go to cd prescription. then run either of the following
 git clone url --branch remote_branch_name
+
 git pull origin your_branch_name
+
+Then use (in case you're changing something in your code and try to refresh the local filesystem)
+git fetch
+git merge
 
 # Connecting MYSQL from GCP
 
