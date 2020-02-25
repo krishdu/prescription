@@ -29,8 +29,8 @@ if(isset($_SESSION['user_type'])) {
           	
               $_QUERY= "select * from chamber_master where related_doc_name='".$user_id."'";
              // echo $_QUERY;
-          	$result = mysql_query($_QUERY) or die(mysql_error()); 
-	          	if(mysql_num_rows($result)>0){ ?>
+          	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error()); 
+	          	if(mysqli_num_rows($result)>0){ ?>
 	          	<div class="page-header">
 			        <h1>Select Chamber Name</h1>
 			    </div>
@@ -51,8 +51,8 @@ if(isset($_SESSION['user_type'])) {
           <?php } else if ($user_type == 'RECEPTIONIST'){
           	$_QUERY= "select * from chamber_master where related_rec_name='".$user_name."'";
           	//echo $_QUERY;
-          	$result = mysql_query($_QUERY) or die(mysql_error()); 
-          	if(mysql_num_rows($result)>0){ ?>
+          	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error()); 
+          	if(mysqli_num_rows($result)>0){ ?>
           	<div class="page-header">
 			        <h1>Select Chamber Name</h1>
 			    </div>
@@ -71,8 +71,8 @@ if(isset($_SESSION['user_type'])) {
           } else if($user_type == 'CHEMIST' ){
           	
           	$_QUERY= "select a.chamber_id, a.chamber_name from chamber_master a, chamber_owner b where b.owner_id='".$user_name."' and a.chamber_id=b.chamber_id";
-          	$result = mysql_query($_QUERY) or die(mysql_error());
-	          	if(mysql_num_rows($result)>0){ ?>
+          	$result = mysqli_query($conn, $_QUERY) or die(mysqli_error());
+	          	if(mysqli_num_rows($result)>0){ ?>
 	          	<div class="page-header">
 			        <h1>Select Chamber Name</h1>
 			    </div>
