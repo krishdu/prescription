@@ -4,7 +4,7 @@ define("USER", "myepresc_pres");
 define("PASSWORD", "KTHUsQI(xaCy");
 define("DB_NAME", "myepresc_prescription");
 
-
+/* Not to be used */
 
 
 $con = mysql_connect(HOST, USER, PASSWORD) or die(mysql_error());
