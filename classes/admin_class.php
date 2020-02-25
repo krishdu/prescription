@@ -1,6 +1,7 @@
 <?php
 
 class admin{
+    
     function calcAge ($birthday){
 
 	 $birth = strtotime($birthday);
@@ -466,7 +467,7 @@ class admin{
     }
     function getUserDetails($user_id){
         $_QUERY="select * from user where user_id  = '".$user_id."'";
-        
+        echo $_QUERY;
         $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
