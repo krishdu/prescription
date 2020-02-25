@@ -8,7 +8,8 @@ $admin = new admin();
 
 $resultObj = $adminObj->getUserDetails('2');
 
-echo $resultObj->user_full_name;
+echo "user full name is ->".$resultObj->user_full_name;
+
 ?>
 <?php  include_once './inc/footer.php';
 ?>

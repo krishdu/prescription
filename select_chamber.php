@@ -29,7 +29,7 @@ if(isset($_SESSION['user_type'])) {
           	
               $_QUERY= "select * from chamber_master where related_doc_name='".$user_id."'";
              // echo $_QUERY;
-          	$result = mysqli_query($conn,$_QUERY)  or die(mysqli_error()); 
+          	$result = mysqli_query($conn,$_QUERY)  ; 
 	          	if(mysqli_num_rows($result)>0){ ?>
 	          	<div class="page-header">
 			        <h1>Select Chamber Name</h1>
@@ -38,7 +38,7 @@ if(isset($_SESSION['user_type'])) {
 				  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Chamber
 				  <span class="caret"></span></button>
 				  <ul class="dropdown-menu">
-		          <?php while($rows = mysql_fetch_array($result)) {
+		          <?php while($rows = mysqli_fetch_array($result)) {
 		          	echo "<li><a href='visit_list.php?chamber_name=".$rows['chamber_id']."&doc_name=".$user_name."'>". $rows['chamber_name']."</a></li>";  
 		          } ?>
 		          </ul>
@@ -60,7 +60,7 @@ if(isset($_SESSION['user_type'])) {
 				  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Chamber
 				  <span class="caret"></span></button>
 				  <ul class="dropdown-menu">
-	        <?php   	while($rows = mysql_fetch_array($result)) {
+	        <?php   	while($rows = mysqli_fetch_array($result)) {
 	          		echo "<li><a href='select_doctor.php?chamber_name=".$rows['chamber_id']."'>". $rows['chamber_name']."</a></li>";
 	          	} ?>
 	          	 </ul>
@@ -80,7 +80,7 @@ if(isset($_SESSION['user_type'])) {
 				  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Chamber
 				  <span class="caret"></span></button>
 				  <ul class="dropdown-menu">
-		          <?php while($rows = mysql_fetch_array($result)) {
+		          <?php while($rows = mysqli_fetch_array($result)) {
 		          	echo "<li><a href='select_doctor.php?chamber_name=".$rows['chamber_id']."'>". $rows['chamber_name']."</a></li>";  
 		          } ?>
 		          </ul>

@@ -53,18 +53,8 @@ if( isset($_SESSION['user_type']) && (isset($_GET['chamber_name']) ||   isset($_
             <tbody id="visit_list_body">
 <?php 
 
-/* $result = mysql_query("SELECT a.visit_id, b.patient_id, a.visited, b.patient_first_name,
-                        b.patient_last_name, b.patient_name, b.patient_cell_num, a.VISIT_DATE
-                        FROM visit a, patient b
-                        WHERE a.patient_id = b.patient_id
-                        AND a.visited =  'no' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' AND a.visit_id
-                        in ( SELECT max( visit_id )
-                            FROM visit c
-                            WHERE c.visited = 'no' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'
-                            GROUP BY patient_id)
-                            order by VISIT_DATE desc") or die(mysql_error()); */
 
-$result = mysql_query("SELECT a.visit_id, b.patient_id, a.visited, b.patient_first_name,
+$result = mysqli_query($conn,("SELECT a.visit_id, b.patient_id, a.visited, b.patient_first_name,
                         b.patient_last_name, b.patient_name, b.patient_cell_num, a.VISIT_DATE
                         FROM visit a, patient b
                         WHERE a.patient_id = b.patient_id and a.doc_id=b.doc_id and a.chamber_id=b.chamber_id 
@@ -73,9 +63,9 @@ $result = mysql_query("SELECT a.visit_id, b.patient_id, a.visited, b.patient_fir
                             FROM visit c
                             WHERE c.visited = 'no' AND c.chamber_id='$chamber_name' AND c.doc_id='$doc_name'
                             GROUP BY c.patient_id)
-                            order by VISIT_DATE desc") or die(mysql_error());
+                            order by VISIT_DATE desc"));
 $count=1;
-while ($row = mysql_fetch_array($result)) {
+while ($row = mysqli_fetch_array($result)) {
 
 	?>
                 <tr >

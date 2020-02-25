@@ -178,7 +178,7 @@ class admin{
     function getHealthDetailsbyName($name,$chamber_name,$doc_name){
         $_QUERY = "select * from patient_health_details_master a where a.NAME = '".$name."' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'";
         //echo $_QUERY;
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -238,14 +238,14 @@ class admin{
     }
     function getPatientDetailsPatientId($patientId,$chamber_name,$doc_name){
         $_QUERY = "select * from patient a where a.patient_id = '".$patientId."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         return $obj;
     }
     function getInvestigationFromId($investigation_id,$chamber_name,$doc_name){
         $_QUERY = "select * from investigation_master a where a.ID = '".$investigation_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -253,7 +253,7 @@ class admin{
     function getClinicalImpressionfromName($ci_name,$chamber_name,$doc_name){
         $_QUERY = "select * from clinical_impression where TYPE = '".$ci_name."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         //echo $_QUERY;
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -346,7 +346,7 @@ class admin{
     }
     function getMaxpatient_health_details_master_id($chamber_name,$doc_name){
     	$_QUERY = "SELECT MAX( ID ) +1 as max_id FROM patient_health_details_master WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name'  ";
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	$max_id = $obj->max_id;
     	if($max_id == NULL){
@@ -405,7 +405,7 @@ class admin{
     	where prescription_id = '$prescription_id'
     	and clinical_impression_id  ='$ci_id' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
     	//echo $_QUERY;
-    	mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	mysqli_query($conn,$_QUERY) ;
         
         
     }
@@ -436,7 +436,7 @@ class admin{
     function getPrescriptionFromVisitId($visitid,$chamber_name,$doc_name){
         $_QUERY="select * from prescription a where a.VISIT_ID = '".$visitid."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -444,7 +444,7 @@ class admin{
     function getClinicalImpressionFromId($ci_id,$chamber_name,$doc_name){
         $_QUERY="select * from clinical_impression a where a.ID = '".$ci_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -452,7 +452,7 @@ class admin{
     function getVisitFromId($visit_id,$chamber_name,$doc_name){
         $_QUERY="select * from visit a where a.VISIT_ID  = '".$visit_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -460,16 +460,16 @@ class admin{
     function getChamberDetails($chamber_id){
         $_QUERY="select * from chamber_master where chamber_id  = '".$chamber_id."'";
         
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         return $obj;
     }
     function getUserDetails($user_id){
         $_QUERY="select * from user where user_id  = '".$user_id."'";
-        echo $_QUERY;
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
-        $obj = mysqli_fetch_object($result);
+        if ($result = mysqli_query($conn,$_QUERY)){
+            $obj = mysqli_fetch_object($result);
+        }
         
         return $obj;
     }
@@ -477,7 +477,7 @@ class admin{
     function getDoctorDetails($user_id){
         $_QUERY="select * from doctor_master where user_id  = '".$user_id."'";
         
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -493,7 +493,7 @@ class admin{
     	AND a.patient_id = '$patient_id'
     	AND b.visited = 'no'";
     			
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	return $obj;
@@ -508,7 +508,7 @@ class admin{
                         and b.patient_id=c.patient_id and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id and 
 						b.chamber_id=c.chamber_id and b.doc_id = c.doc_id
                         and a.prescription_id = '".$prescription_id."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."'";
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	return $obj;
@@ -520,7 +520,7 @@ class admin{
 					a.chamber_id, a.created_by_user_id, a.create_date, a.isSync 
 				    from patient a, visit b where a.patient_id = b.PATIENT_ID and b.VISIT_ID = '".$visit_id."' 
 					and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id";
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	return $obj;
@@ -528,7 +528,7 @@ class admin{
     
     function getMaxVisitId($chamber_name, $doc_name){
         $_QUERY = "SELECT MAX( visit_id ) +1 as max_id FROM visit WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name' ";
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         $max_id = $obj->max_id;
@@ -540,7 +540,7 @@ class admin{
     
     function getMaxPrescriptionId($chamber_name, $doc_name){
         $_QUERY = "SELECT MAX( PRESCRIPTION_ID ) +1 as max_id FROM prescription WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name' ";
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         $max_id = $obj->max_id;
         if($max_id == NULL){
@@ -552,7 +552,7 @@ class admin{
     function getMaxClinicalImpression($chamber_name, $doc_name){
     	$_QUERY = "select max(id)+1 as max_id from clinical_impression where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -566,7 +566,7 @@ class admin{
     function getMaxInvestigationID($chamber_name, $doc_name){
     	$_QUERY = "select max(ID)+1 as max_id from investigation_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -580,7 +580,7 @@ class admin{
     function getMaxPatientInvestigationID($chamber_name, $doc_name){
     	$_QUERY = "select max(investigation_id)+1 as max_id from patient_investigation where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -593,7 +593,7 @@ class admin{
     function getMaxInvestigationIdfromMaster($chamber_name, $doc_name){
     	$_QUERY = "select max(ID)+1 as max_id from investigation_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -607,7 +607,7 @@ class admin{
     function getMaxDoseDetailsMasterID($chamber_name, $doc_name){
     	$_QUERY = "select max(DOSE_DETAILS_MASTER_ID)+1 as max_id from dose_details_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -643,7 +643,7 @@ class admin{
     function getMaxMedicineID($chamber_name, $doc_name){
     	$_QUERY = "select max(MEDICINE_ID)+1 as max_id from medicine_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -659,7 +659,7 @@ class admin{
     	$_QUERY = "select max(patient_id)+1 as max_id from patient where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
     	
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -674,7 +674,7 @@ class admin{
     	$_QUERY = "select max(PRESCRIBED_INVESTIGATION_ID)+1 as max_id from prescribed_investigation where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
     	
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -688,7 +688,7 @@ class admin{
     function getTestID($chamber_name, $doc_name){
     	$_QUERY = "select max(ID)+1 as max_id from test ";
     	
-    	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+    	$result = mysqli_query($conn,$_QUERY) ;
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -765,7 +765,7 @@ class admin{
         $_QUERY = "select max(ID)+1 as max_id from past_medical_history_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
         
         
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         //echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -802,7 +802,7 @@ class admin{
         $_QUERY = "select max(ID)+1 as max_id from social_history_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
         
         
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         //echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -836,7 +836,7 @@ class admin{
         $_QUERY = "select max(ALLERGY_ID)+1 as max_id from allergy_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
         
         
-        $result = mysqli_query($conn,$_QUERY) or die(mysqli_error());
+        $result = mysqli_query($conn,$_QUERY) ;
         $obj = mysqli_fetch_object($result);
         
         //echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
