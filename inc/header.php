@@ -12,15 +12,16 @@
 
     <title>Online Prescription, Prescription, ePrescription, Online doctor appointment, Health Management Software, Digital Prescription</title>
 
-    <!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-    <!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-	
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="jquery/themes/base/jquery-ui.css" rel="stylesheet">
     
-    
+    <!--  <link href="jquery/themes/base/jquery.ui.autocomplete.css" rel="stylesheet">
+    <link href="jquery/themes/base/jquery.ui.datepicker.css" rel="stylesheet">
+	<link href="jquery/themes/base/jquery.ui.accordion.css" rel="stylesheet">
+	<link href="jquery/themes/base/jquery.ui.dialog.css" rel="stylesheet">-->
     <!-- Custom styles for this template -->
     <link href="css/theme.css" rel="stylesheet">
 	
