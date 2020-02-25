@@ -1,71 +1,67 @@
 <?php
 
-include_once "../inc/datacon.php";
-
-if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
-	$chamber_name = $_SESSION['chamber_name'];
-	$doc_name= $_SESSION['doc_name'];
+require_once "../datacon.php";
 $patient_id = $_GET["patient_id"];
 $strPatientName = $_GET["patient_name"];
 
-    
-    
 $where = "";
 if($patient_id != ""){
         
-        $where .= "and patient_id = '$patient_id' ";
+        $where .= "and patient_id = '$patient_id'";
 } 
 if($strPatientName != ""){
         
-        $where .= "and patient_first_name like '$strPatientName%'  ";
+        $where .= "and patient_first_name like '$strPatientName%' OR patient_name like '$strPatientName%' ";
 } 
 
-$where .= "and chamber_id = '$chamber_name' and doc_id = '$doc_name' ";
-$sql1 = "select patient_id, GENDER	,patient_first_name, patient_last_name, age, TIMESTAMPDIFF( YEAR, patient_dob, NOW( ) ) AS age1, patient_cell_num, patient_address from patient where patient_id != ''".$where. "order by patient_id asc";
-//echo $sql1;
-$result1 = mysql_query($sql1)or die(mysql_error());
-$no = mysql_num_rows($result1);
- 
+
+$sql1 = "select * from patient where patient_id != ''".$where;
+$result1 = mysqli_query($con,$sql1)or die(mysqli_error());
+$no = mysqli_num_rows($result1);
+echo "<table width='888' border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+        <td class='bg_tble'>                    
+            <table width='100%' border='0' cellspacing='1' cellpadding='0'>";    
 if($no > 0){
         
-	echo "<table class='table table-hover'>
-	<thead>
-	<tr>
-        <th>Sex</th>
-		<th>Patient ID</th>
-		<th>First Name</th>
-		<th>Last Name</th>
-		<th>Age</th>
-		<th>Mobile No</th>
-		
-		<th>City / Town</th>
-		<th>ACTION</th>
-     </tr></thead>
-	  <tbody>";
+        echo "<tr>
+        <td class='head_tbl'>Sex</td>
+        <td class='head_tbl'>Patient ID</td>
+        <td class='head_tbl'>First Name</td>
+        <td class='head_tbl'>Last Name</td>
+        <td class='head_tbl'>Date of Birth</td>
+        <td class='head_tbl'>Mobile No</td>
+        
+        <td class='head_tbl'>Street Address</td>
+        
+        <td class='head_tbl'>City / Town</td>
+        <td class='head_tbl'>Email Address</td>
+        <td class='head_tbl'>ACTION</td>
+        </tr>";
         
         
-        while($d1 = mysql_fetch_array($result1)){
+        while($d1 = mysqli_fetch_array($result1)){
            echo "<tr>
-                <td>".$d1['GENDER']."</td>
-                <td><a href='processData.php?patient_id=".$d1['patient_id']."' class='btn btn-warning' role='button'>CREATE VISIT(".$d1['patient_id'].")</a></td>
-                <td>".$d1['patient_first_name']."</td>
-                <td>".$d1['patient_last_name']."</td>
-                 <td>";
-                if($d1['age']==0){echo $d1['age1'];}else{echo $d1['age'];}
-                 echo "</td> 
-                <td>".$d1['patient_cell_num']."</td>
-                <td>".$d1['patient_address']."</td>
+                <td class='odd'>".$d1['GENDER']."</td>
+                <td class='odd'><a href='processData.php?patient_id=".$d1['patient_id']."' class='vlink'>".$d1['patient_id']."</a></td>
+                <td class='odd'>".$d1['patient_first_name']."</td>
+                <td class='odd'>".$d1['patient_last_name']."</td>
+                <td class='odd'>".date('d / m / Y', strtotime($d1['patient_dob']))."</td>
+                <td class='odd'>".$d1['patient_cell_num']."</td>
+                <td class='odd'>".$d1['patient_address']."</td>
                 
-                
-                <td><a href='editPatient.php?patient_id=".$d1['patient_id']."' class='btn btn-primary' role='button' >EDIT</a></td>
+                <td class='odd'>".$d1['patient_city']."</td>
+                <td class='odd'>".$d1['patient_email']."</td>
+                <td class='odd'><a href='editPatient.php?patient_id=".$d1['patient_id']."' class='vlink'>EDIT</a></td>
             </tr>";
             
         }
-        echo "</tbody></table>";
     }else{
-            echo "<div class='alert alert-warning' role='alert'> There is no record with specified query. !!</div>";
+            echo "<tr><td colspan='10' align='center' style='color:red'> No Result found.</td></tr>";
     }
-} else {
-    echo "You are not allowed to perform this operation";
-}
+    echo "</table>
+       </td>
+    </tr>
+</table>";
+
 ?>

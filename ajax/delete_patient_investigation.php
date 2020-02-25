@@ -1,22 +1,19 @@
 <?php
-include_once"../inc/datacon.php";
+include "../datacon.php";
 include '../classes/admin_class.php';
 $admin = new admin();
-if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
-	$chamber_name = $_SESSION['chamber_name'];
-	$doc_name= $_SESSION['doc_name'];
 $INVESTIGATION_ID = $_GET['INVESTIGATION_ID'];
 $VISIT_ID = $_GET['VISIT_ID'];
 //$PATIENT_ID = $_GET['PATIENT_ID'];
 
-$admin->deletePatientInvestigation($INVESTIGATION_ID,$VISIT_ID,$chamber_name,$doc_name);
+$admin->deletePatientInvestigation($INVESTIGATION_ID,$VISIT_ID );
 
-$result = mysql_query("select b.investigation_name, a.investigation_id,  b.unit, a.value, b.investigation_type
+$result = mysqli_query($con,"select b.investigation_name, a.investigation_id,  b.unit, a.value, b.investigation_type
                             from patient_investigation a, investigation_master b
-                            where a.investigation_id = b.ID and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id
-                            and a.visit_id = '$VISIT_ID' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'" );
+                            where a.investigation_id = b.ID 
+                            and a.visit_id = '$VISIT_ID'" );
 
-while($d = mysql_fetch_object($result)){
+while($d = mysqli_fetch_object($result)){
     echo "<table width='100%'>";
         echo "<tr>";
             echo "<td  width='120' >".$d->investigation_name."</td>";
@@ -54,9 +51,9 @@ $result=$result. '<table>';
                         FROM prescribed_cf a, clinical_impression b
                         WHERE a.clinical_impression_id = b.id
                         AND a.prescription_id = '$PRESCRIPTION_ID'";
-        $rsd1 = mysql_query($q15) or die(mysql_error());
+        $rsd1 = mysqli_query($con,$q15) or die(mysqli_error());
 
-        while($rs = mysql_fetch_array($rsd1)) {
+        while($rs = mysqli_fetch_array($rsd1)) {
             $type = $rs['type'];
             $cf_d = $rs['ID'];
             $result=$result. "<tr><td style='width: 180px;'>".$type."<a id='minus7' href='#' ></a></td>".
@@ -81,18 +78,18 @@ $result=$result."</td>
 //CLINICAL IMPRESSION ENDS
 
 //INVESTIGATION DONE - STARTED
-$result0 = mysql_query("select b.investigation_name, a.investigation_id,  b.unit, a.value, b.investigation_type
+$result0 = mysqli_query($con,"select b.investigation_name, a.investigation_id,  b.unit, a.value, b.investigation_type
                             from patient_investigation a, investigation_master b
                             where a.investigation_id = b.ID 
-                            and a.visit_id = '$VISIT_ID'" ) or die(mysql_error());
+                            and a.visit_id = '$VISIT_ID'" ) or die(mysqli_error());
 $result="<div class='block1' style='margin-right:12px; margin-left:12px;'>
     <div class='headings'><img src='images/Briefcase-Medical.png' />&nbsp;Investigation Done</div>
     <div class='inner1'>
     <table>    
 
         <tr><td id='INV' width='100%' colspan='3'>";
-if(mysql_num_rows($result0) > 0 ){
-    while($d = mysql_fetch_object($result0)){
+if(mysqli_num_rows($result0) > 0 ){
+    while($d = mysqli_fetch_object($result0)){
         $result=$result. "<table width='100%'>";
             $result=$result. "<tr>";
                 $result=$result. "<td  width='120' >".$d->investigation_name."</td>";
@@ -141,8 +138,8 @@ $q15 = "select a.VALUE, b.NAME, a.ID from
                                 where
                                 a.ID = b.ID
                                 and a.VISIT_ID = '$VISIT_ID'";
-$rsd1 = mysql_query($q15) or die(mysql_error());
-while($rs = mysql_fetch_array($rsd1)) {
+$rsd1 = mysqli_query($con,$q15) or die(mysqli_error());
+while($rs = mysqli_fetch_array($rsd1)) {
     $name = $rs['NAME'];
     $value = $rs['VALUE'];
     $id = $rs['ID'];
@@ -191,5 +188,4 @@ $result=$result."</td>
 //CF ENDS
 
 echo $result; */
-}
 ?>

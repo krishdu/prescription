@@ -1,47 +1,45 @@
 <?php
 
-include_once "../inc/datacon.php";
-if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
-	$chamber_name = $_SESSION['chamber_name'];
-	$doc_name= $_SESSION['doc_name'];
+require_once "../datacon.php";
 
 $invest_name = $_GET["invest_name"];
 
 
 
 
-$sql1 = "select * from investigation_master a where a.investigation_name like '".$invest_name."%' 
-        and a.STATUS = 'ACTIVE' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
-$result1 = mysql_query($sql1)or die(mysql_error());
-$no = mysql_num_rows($result1);
-
+$sql1 = "select * from investigation_master where investigation_name like '".$invest_name."%' 
+        and STATUS = 'ACTIVE' ";
+$result1 = mysqli_query($con,$sql1)or die(mysqli_error());
+$no = mysqli_num_rows($result1);
+echo "<table width='888' border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+        <td class='bg_tble'>                    
+            <table width='100%' border='1' cellspacing='1' cellpadding='0'>";    
 if($no > 0){
         
-        echo "<table class='table'><thead><tr>
-		<th class='head_tbl'>ID</td>
-        <th class='head_tbl'>Investigation Name</td>
-       
-        <th class='head_tbl'>ACTION</td>
-        </tr></thead><tbody>";
+        echo "<tr>
+        <td class='head_tbl'>Investigation Name</td>
+		<td class='head_tbl'>Type</td>
+        <td class='head_tbl'>ACTION</td>
+        </tr>";
         
         
-        while($d1 = mysql_fetch_array($result1)){
+        while($d1 = mysqli_fetch_array($result1)){
            echo "<tr>
-				<td>".$d1['ID']."</td>
-                <td>".$d1['investigation_name']."</td>
-                
-                <td><button class='btn btn-info' onclick='editInvest(".$d1['ID'].") ' class='vlink'>EDIT</button>
-                    <button class='btn btn-warning' onclick='deleteInvest(".$d1['ID'].") ' class='vlink'>DELETE</button>
+                <td class='odd'>".$d1['investigation_name']."</td>
+                <td class='odd'>".$d1['investigation_type']."</td>
+                <td class='odd'><a href='#' onclick='editInvest(".$d1['ID'].") ' class='vlink'>EDIT</a>
+                    <a href='#' onclick='deleteInvest(".$d1['ID'].") ' class='vlink'>DELETE</a>
                 </td>
             </tr>";
             
         }
-        echo "</tbody></table>";
     }else{
-            echo "No Result found.";
+            echo "<tr><td colspan='2' align='center' style='color:red'> No Result found.</td></tr>";
     }
-    
-}else {
-	echo "Session expired";
-}
+    echo "</table>
+       </td>
+    </tr>
+</table>";
+
 ?>

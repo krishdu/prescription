@@ -1,43 +1,45 @@
 <?php
 
-include_once "../inc/datacon.php";
-if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset($_SESSION['doc_name'])  ){
-	$chamber_name = $_SESSION['chamber_name'];
-	$doc_name= $_SESSION['doc_name'];
+require_once "../datacon.php";
+
 $strMedicineName = $_GET["medicine_name"];
 
 
 
 
-$sql1 = "select * from medicine_master a where a.medicine_name like '".$strMedicineName."%' 
-        and a.MEDICINE_STATUS = 'ACTIVE' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
-$result1 = mysql_query($sql1)or die(mysql_error());
-$no = mysql_num_rows($result1);
-
+$sql1 = "select * from medicine_master where medicine_name like '".$strMedicineName."%' 
+        and MEDICINE_STATUS = 'ACTIVE' ";
+$result1 = mysqli_query($con,$sql1)or die(mysqli_error());
+$no = mysqli_num_rows($result1);
+echo "<table width='888' border='0' cellspacing='0' cellpadding='0'>
+        <tr>
+        <td class='bg_tble'>                    
+            <table width='100%' border='0' cellspacing='1' cellpadding='0'>";    
 if($no > 0){
         
-        echo "<table class='table table-striped'><thead>
-        <th>Medicine Name</td>
+        echo "<tr>
+        <td class='head_tbl'>Medicine Name</td>
        
-        <th>ACTION</td>
-        </thead><tbody>";
+        <td class='head_tbl'>ACTION</td>
+        </tr>";
         
         
-        while($d1 = mysql_fetch_array($result1)){
+        while($d1 = mysqli_fetch_array($result1)){
            echo "<tr>
-                <td>".$d1['MEDICINE_NAME']."</td>
+                <td class='odd'>".$d1['MEDICINE_NAME']."</td>
                 
-                <td><button class='btn btn-info' onclick='editMedicine(".$d1['MEDICINE_ID'].");' >EDIT</button>
-                    <button class='btn btn-warning' onclick='deleteMedicine(".$d1['MEDICINE_ID'].");' >DELETE</button>
+                <td class='odd'><a href='#' onclick='editMedicine(".$d1['MEDICINE_ID'].") ' class='vlink'>EDIT</a>
+                    <a href='#' onclick='deleteMedicine(".$d1['MEDICINE_ID'].") ' class='vlink'>DELETE</a>
                 </td>
             </tr>";
             
         }
-        echo "</tbody></table>";
-    } else {
-    	
+    }else{
+            echo "<tr><td colspan='2' align='center' style='color:red'> No Result found.</td></tr>";
     }
-}else {
-	echo "Session expired";
-}
+    echo "</table>
+       </td>
+    </tr>
+</table>";
+
 ?>
