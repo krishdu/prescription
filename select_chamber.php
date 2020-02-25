@@ -29,7 +29,7 @@ if(isset($_SESSION['user_type'])) {
           	
               $_QUERY= "select * from chamber_master where related_doc_name='".$user_id."'";
              // echo $_QUERY;
-          	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error()); 
+          	$result = mysqli_query($conn,$_QUERY)  or die(mysqli_error()); 
 	          	if(mysqli_num_rows($result)>0){ ?>
 	          	<div class="page-header">
 			        <h1>Select Chamber Name</h1>
