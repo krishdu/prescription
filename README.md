@@ -1,7 +1,9 @@
 # Prescription Management System (Using GCP)
 
 1. Go to your console git clone https://github.com/biswarup81/prescription.git
-2. For update go to cd prescription. then run git pull
+2. For update go to cd prescription. then run either of the following
+git clone url --branch remote_branch_name
+git pull origin your_branch_name
 
 # Connecting MYSQL from GCP
 
