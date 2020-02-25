@@ -1,38 +1,46 @@
-<div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Investigation Done</div>
-<div class="inner">
+<div class="block1" style="margin-right:12px; margin-left:12px;">
+    <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Examinations</div>
+    <div class="inner1">
+    <table>    
 
-    <div id="INV">
+        <tr><td id="INV" width="100%" colspan="3">
 
             <?php
-            $query = "SELECT b.investigation_name, a.value, b.unit, investigation_id
-            FROM patient_investigation a, investigation_master b
-            WHERE a.patient_id = '$patient_id'
-            AND a.visit_id = '$visit_id'
-            AND a.investigation_id = b.ID and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id and
-            a.chamber_id='".$chamber_name."' AND a.doc_id='".$doc_name."'";
-            //echo $query;
-            $result = mysql_query( $query) or die(mysql_error());
-                //$rsd1 = mysql_query($q15);
+                $result = mysqli_query($con,"SELECT b.investigation_name, a.value, b.unit, investigation_id
+                    FROM patient_investigation a, investigation_master b
+                    WHERE a.patient_id = '$patient_id'
+                    AND a.visit_id = '$visit_id'
+                    AND a.investigation_id = b.ID");
+                //$rsd1 = mysqli_query($con,$q15);
 
-                while($rows = mysql_fetch_array($result) ){
+                while($rows = mysqli_fetch_array($result) ){
                     
             ?>
-                <div class="row">
+                <table>      
+                    <tr>
                     
-					<div class="col-md-7"><?php echo $rows['investigation_name']; ?></div>
-                    <div class="col-md-3"><?php echo $rows['value']; ?>&nbsp;<?php echo $rows['unit']; ?></div>
-                    <div class="col-md-2" ><a  href='#' onclick="deletePatientInvestigation('<?php echo $visit_id ; ?>',
-                                '<?php echo $rows['investigation_id'] ; ?>')">[-]</a></div>
-                </div> 
+					<td width='120'><?php echo $rows['investigation_name']; ?></td>
+                    <td width='60'><?php echo $rows['value']; ?>&nbsp;<?php echo $rows['unit']; ?></td>   
+                     <td><a  href='#' onclick="deletePatientInvestigation('<?php echo $visit_id ; ?>',
+                                '<?php echo $rows['investigation_id'] ; ?>')">[-]</a>
+                    </td>
+                    </tr> 
+                </table> 
             <?php    } ?>
-            
-      </div>
-        <div class="row">
-            <div class="col-md-7"><input type='text' class="form-control" id='investigation' placeholder="Investigation name"/></div>
-                <div class="col-md-3"><input type='text' class="form-control" id='txtPatientInvval' placeholder="Value"/></div>
-                <div class="col-md-2" ><a href='#' onclick="addPatientInvestigation('<?php echo $patient_id ; ?>','<?php echo $visit_id ; ?>')">[+]</a></div> 
+            </td>
+        </tr> 
+      
+        <tr>
+            <td width="100%"><input class="input_box_small" type='text' id='investigation'/>
+                <td width="100%"><input class="input_box_very_small" type='text' id='txtPatientInvval'/>
+                
+                <td>
+                    <a id='plus7' href='#' onclick="addPatientInvestigation('<?php echo $patient_id ; ?>','<?php echo $visit_id ; ?>')">[+]</a>
+                </td> 
+       </tr>
 
-    	</div>   
- </div>
+    </table>
 
-   
+    </div>   
+
+</div>

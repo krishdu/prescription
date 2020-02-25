@@ -1,34 +1,41 @@
-<div class="others">
-<div class="other_headings"><!--<img src="images/Briefcase-Medical.png" />-->Others </div>
+<div class="block_addiction" id="others" title="Others"
+        style="margin-left: 11px;">
+    <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->Others </div>
     <div class="inner_addiction">
 
     <!-- Get In Touch Starts -->
     
+    <table >
+        <tr>
+            <td><strong>Addictions</strong></td> 
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="addictions" value="Nicotine">&nbsp;Nicotine</td> 
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="addictions" value="Alcohol">&nbsp;Alcohol</td> 
+        </tr
+        <tr>
+            <td>&nbsp;</td> 
+        </tr>
+        <tr>
+            <td><strong>Diabetic history</strong></td> 
+        </tr>
+        
+        <tr>
+            <td><input type="checkbox" name="family" value="Father">&nbsp;Father</td> 
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="family" value="Mother">&nbsp;Mother</td> 
+        </tr>
+
+    </table>
     
-<div class="form-group"> 
-	<label for="exampleInputEmail1">Addictions</label>  
-	<div class="checkbox">
-	    <label><input type="checkbox" name="addictions" value="Nicotine"> Nicotine</label><label><input type="checkbox" name="addictions" value="Alcohol"> Alcohol</label>
-	 </div> 
-	<label for="exampleInputEmail1">Diabetic history</label>  
-	<div class="checkbox">
-	    <label><input type="checkbox" name="family" value="Father"> Father</label><label><input type="checkbox" name="family" value="Mother"> Mother</label>
-	    <label><input type="checkbox" name="family" value="Sibling"> Sibling</label>
-	 </div>
-</div>
-
-<!-- Get In Touch Ends -->					
-    </div>
-</div>
-<div class="others">
-    <div class="other_headings"><!--<img src="images/Briefcase-Medical.png" />-->History </div>
-    <div class="inner_history">
-
-    <?php include_once 'pre_prescriptions.php';?>
 
 
 
 <!-- Get In Touch Ends -->					
     </div>
+
 
 </div>
