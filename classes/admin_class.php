@@ -90,20 +90,20 @@ class admin{
         
         $query_getinvestigation_details_from_master = "select * from investigation_master a where  a.investigation_name  = '".$investigation_name."' and a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' and a.STATUS='ACTIVE'" ;
 
-        $result = mysqli_query($query_getinvestigation_details_from_master) or die(mysql_error());
+        $result = mysqli_query($query_getinvestigation_details_from_master) or die(mysqli_error());
         if (mysqli_num_rows($result) > 0){
             //Investigation exists in Master. Only insert into patient_investigation table
-            $rowresult = mysqli_fetch_object($result) or die(mysql_error());
+            $rowresult = mysqli_fetch_object($result) or die(mysqli_error());
             //Get the investigation Id
             $inv_id = $rowresult->ID;
             
             //update investigation master
-            mysqli_query("update investigation_master a set  a.unit = '$unit' where a.ID ='$inv_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'" ) or die(mysql_error());
+            mysqli_query("update investigation_master a set  a.unit = '$unit' where a.ID ='$inv_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'" ) or die(mysqli_error());
 
         //INsert into patient_investigation
             $query_insert_into_patient_investigation = "insert into patient_investigation (patient_id, visit_id, investigation_id, value, chamber_id, doc_id) 
                                                     values ('".$patient_id."','".$visit_id."','".$inv_id."','".$value."','".$chamber_name."','".$doc_name."')";
-            mysqli_query($query_insert_into_patient_investigation) or die(mysql_error());
+            mysqli_query($query_insert_into_patient_investigation) or die(mysqli_error());
         } else {
         	$inv_id = $admin->getMaxInvestigationID($chamber_name, $doc_name);
             //Investigation does not exists in database
@@ -111,16 +111,16 @@ class admin{
             $query_insert_into_investigation_master = "insert into investigation_master (ID	, investigation_name , investigation_type, unit, chamber_id, doc_id)
                                                         values('".$inv_id."','".$investigation_name."','".$type."','".$unit."','".$chamber_name."','".$doc_name."')";
             echo $query_insert_into_investigation_master;
-            mysqli_query($query_insert_into_investigation_master) or die(mysql_error());
+            mysqli_query($query_insert_into_investigation_master) or die(mysqli_error());
             //Get the investigation Id
-            //$inv_id = mysql_insert_id() or die(mysql_error());
+            //$inv_id = mysql_insert_id() or die(mysqli_error());
 
             //INsert into patient_investigation
             
             $query_insert_into_patient_investigation = "insert into patient_investigation (patient_id, visit_id, investigation_id, value, chamber_id, doc_id) 
                                                     values ('".$patient_id."','".$visit_id."','".$inv_id."','".$value."','".$chamber_name."','".$doc_name."')";
             echo $query_insert_into_patient_investigation;
-            mysqli_query($query_insert_into_patient_investigation) or die(mysql_error());
+            mysqli_query($query_insert_into_patient_investigation) or die(mysqli_error());
 
         }
     }
@@ -131,7 +131,7 @@ class admin{
     	where investigation_id = '$investigation_id'
     	and visit_id ='$visit_id' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
     	//echo $deletQuery;
-    	mysqli_query($deletQuery) or die(mysql_error());
+    	mysqli_query($deletQuery) or die(mysqli_error());
         
         
         $admin = new admin();
@@ -154,7 +154,7 @@ class admin{
 						a.clinical_impression_id = b.ID and
 						a.prescription_id = '$prescription_id' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'";
             
-            $result12 = mysqli_query($_QUERY12)or die(mysql_error());
+            $result12 = mysqli_query($_QUERY12)or die(mysqli_error());
             $ci_id = "";
             if(mysqli_num_rows($result12) > 0){
                 while($rs12 = mysql_fetch_array($result12)){
@@ -177,7 +177,7 @@ class admin{
     function getHealthDetailsbyName($name,$chamber_name,$doc_name){
         $_QUERY = "select * from patient_health_details_master a where a.NAME = '".$name."' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'";
         //echo $_QUERY;
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -189,7 +189,7 @@ class admin{
     
             mysqli_query("update patient_health_details a
                         set a.VALUE = '$cfvalue' where a.VISIT_ID = '$visit_id' 
-                        and a.ID  ='$cf_id' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'") or die(mysql_error());
+                        and a.ID  ='$cf_id' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'") or die(mysqli_error());
                 if (mysql_affected_rows() > 0){
                     $result =  "<tr><td colspan='3'>". mysql_affected_rows() ." item(s) updated</td></tr>";
                 }
@@ -197,7 +197,7 @@ class admin{
             } else if($mode == 'DELETE'){
                 mysqli_query("delete from patient_health_details 
                         where VISIT_ID = '$visit_id' 
-                        and ID  ='$cf_id' and chamber_id='$chamber_name' and doc_id='$doc_name'") or die(mysql_error());
+                        and ID  ='$cf_id' and chamber_id='$chamber_name' and doc_id='$doc_name'") or die(mysqli_error());
                 if (mysql_affected_rows() > 0){
                     $result =  "<tr><td colspan='3'>". mysql_affected_rows() ." item(s) deleted</td></tr>";
                 }
@@ -206,14 +206,14 @@ class admin{
         if($cf_id == '1' || $cf_id = '2'){
             //Modify BMI
             $result1 = mysqli_query("select a.VALUE from patient_health_details a 
-                    where a.ID = '1' and a.VISIT_ID = '$visit_id' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'") or die(mysql_error());
+                    where a.ID = '1' and a.VISIT_ID = '$visit_id' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'") or die(mysqli_error());
 
             if(mysqli_num_rows($result1) > 0){
                 $obj = mysqli_fetch_object($result1);
                 $height = $obj->VALUE;
             }
             $result2 = mysqli_query("select a.VALUE from patient_health_details a 
-                    where a.ID = '2' and a.VISIT_ID = '$visit_id' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'") or die(mysql_error());
+                    where a.ID = '2' and a.VISIT_ID = '$visit_id' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'") or die(mysqli_error());
 
             if(mysqli_num_rows($result2) > 0){
                 $obj = mysqli_fetch_object($result2);
@@ -223,28 +223,28 @@ class admin{
             if($height != "" && $weight != ""){
                 $bmi = $admin->calcBMI($weight, $height);
 
-                $result_id_f = mysqli_query("select * from patient_health_details a where a.ID = '3' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
+                $result_id_f = mysqli_query("select * from patient_health_details a where a.ID = '3' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysqli_error());
                 if(mysqli_num_rows($result_id_f) > 0 ){
                     $query_b = "update patient_health_details a set a.VALUE = '$bmi' where a.ID ='3' and VISIT_ID = '".$visit_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
                 } else {
                 $query_b = "insert into patient_health_details(ID, VALUE, VISIT_ID, chamber_id, doc_id) 
                 values('3' , '$bmi', '$visit_id', '$chamber_name', '$doc_name')";
                 }
-                mysqli_query($query_b) or die(mysql_error());
+                mysqli_query($query_b) or die(mysqli_error());
             }
         }
         return $result;
     }
     function getPatientDetailsPatientId($patientId,$chamber_name,$doc_name){
         $_QUERY = "select * from patient a where a.patient_id = '".$patientId."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         return $obj;
     }
     function getInvestigationFromId($investigation_id,$chamber_name,$doc_name){
         $_QUERY = "select * from investigation_master a where a.ID = '".$investigation_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -252,7 +252,7 @@ class admin{
     function getClinicalImpressionfromName($ci_name,$chamber_name,$doc_name){
         $_QUERY = "select * from clinical_impression where TYPE = '".$ci_name."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         //echo $_QUERY;
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -280,23 +280,23 @@ class admin{
             //Insert into master and then add
             $query = "insert into patient_health_details_master (ID, NAME, create_date, chamber_id, doc_id) values('$id', '$cfname', NOW(), '$chamber_name', '$doc_name')";
             echo $query;
-            mysqli_query($query) or die(mysql_error());
+            mysqli_query($query) or die(mysqli_error());
             
         }
         $query = "insert into patient_health_details(ID, VALUE, VISIT_ID, create_date, chamber_id, doc_id) 
                     values('$id' , '$cfvalue', '$visit_id', NOW(), '$chamber_name', '$doc_name')";
         //echo $query;
-        mysqli_query($query) or die(mysql_error());
+        mysqli_query($query) or die(mysqli_error());
 
         $result1 = mysqli_query("select a.VALUE from patient_health_details a 
-                where a.ID = '1' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
+                where a.ID = '1' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysqli_error());
         
         if(mysqli_num_rows($result1) > 0){
             $obj = mysqli_fetch_object($result1);
             $height = $obj->VALUE;
         }
         $result2 = mysqli_query("select a.VALUE from patient_health_details a 
-                where a.ID = '2' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
+                where a.ID = '2' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysqli_error());
 
         if(mysqli_num_rows($result2) > 0){
             $obj = mysqli_fetch_object($result2);
@@ -306,7 +306,7 @@ class admin{
         if($height != "" && $weight != ""){
             $bmi = $admin->calcBMI($weight, $height);
             $result_id_f = mysqli_query("select * from patient_health_details a where 
-                a.ID = '3' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
+                a.ID = '3' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysqli_error());
             if(mysqli_num_rows($result_id_f) > 0 ){
                 $query_b = "update patient_health_details a set VALUE = '$bmi' where 
                 a.ID ='3' and a.VISIT_ID = '".$visit_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
@@ -314,7 +314,7 @@ class admin{
             $query_b = "insert into patient_health_details(ID, VALUE, VISIT_ID, create_date, chamber_id, doc_id) 
                     values('3' , '$bmi', '$visit_id', NOW(), '$chamber_name', '$doc_name')";
             }
-            mysqli_query($query_b) or die(mysql_error());
+            mysqli_query($query_b) or die(mysqli_error());
             
             //Insert BMI as master in master table
             //$admin->insertIntoCFMaster($name,$chamber_name,$doc_name);
@@ -327,7 +327,7 @@ class admin{
             $result_ideal_body_weight = mysqli_query("select * from patient_health_details a,  patient_health_details_master b where
 														a.ID = b.ID and a.chamber_id = b.chamber_id and a.doc_id = b.doc_id 
 														and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'
-														and a.VISIT_ID = '$visit_id' and b.NAME = 'Ideal Body Weight (KG)'") or die(mysql_error());
+														and a.VISIT_ID = '$visit_id' and b.NAME = 'Ideal Body Weight (KG)'") or die(mysqli_error());
             
             if(mysqli_num_rows($result_ideal_body_weight) > 0 ){
             	$query_ideal_body_weight= "update patient_health_details b set b.VALUE = '$ideal_body_weight' where
@@ -339,13 +339,13 @@ class admin{
             	//echo $query_ideal_body_weight;
             }
             //echo $query_ideal_body_weight;
-            mysqli_query($query_ideal_body_weight) or die(mysql_error());
+            mysqli_query($query_ideal_body_weight) or die(mysqli_error());
         }
         
     }
     function getMaxpatient_health_details_master_id($chamber_name,$doc_name){
     	$_QUERY = "SELECT MAX( ID ) +1 as max_id FROM patient_health_details_master WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name'  ";
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	$max_id = $obj->max_id;
     	if($max_id == NULL){
@@ -374,7 +374,7 @@ class admin{
         $admin = new admin();
         $query = "select  ID from clinical_impression a where a.TYPE = '$type' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         //echo $query;
-        $result = mysqli_query($query) or die(mysql_error());
+        $result = mysqli_query($query) or die(mysqli_error());
         $rows = mysqli_num_rows($result);
         $id = $admin->getMaxClinicalImpression($chamber_name, $doc_name);
         //echo "MAX =".$id;
@@ -391,20 +391,20 @@ class admin{
             //Insert into master and then add
         	$query = "insert into clinical_impression (ID, TYPE, DESCRIPTION,create_date,chamber_id,doc_id ) values('$id','$type','$type', NOW(), '$chamber_name', '$doc_name')";
             //echo $query;
-            mysqli_query($query) or die(mysql_error());
+            mysqli_query($query) or die(mysqli_error());
             //$id = mysql_insert_id();
         }
         $query = "insert into prescribed_cf(clinical_impression_id, prescription_id,create_date,chamber_id,doc_id) 
         values('$id' , '$prescription_id', NOW(), '$chamber_name', '$doc_name')";
         //echo $query;
-        mysqli_query($query) or die(mysql_error());
+        mysqli_query($query) or die(mysqli_error());
     }
     function deleteClinicalImpression($prescription_id,$ci_id, $chamber_name, $doc_name){
     	$_QUERY = "delete from prescribed_cf 
     	where prescription_id = '$prescription_id'
     	and clinical_impression_id  ='$ci_id' AND chamber_id='$chamber_name' AND doc_id='$doc_name'";
     	//echo $_QUERY;
-    	mysqli_query($_QUERY) or die(mysql_error());
+    	mysqli_query($_QUERY) or die(mysqli_error());
         
         
     }
@@ -414,28 +414,28 @@ class admin{
         
         mysqli_query("delete from prescribed_social_history
              where prescription_id = '$prescription_id'
-             and social_history_id  ='$ci_id' and chamber_id='$chamber_name' AND doc_id='$doc_name'") or die(mysql_error());
+             and social_history_id  ='$ci_id' and chamber_id='$chamber_name' AND doc_id='$doc_name'") or die(mysqli_error());
         
     }
     function deleteAllergy($prescription_id,$allergy_id, $chamber_name, $doc_name){
         //$message = "";
         mysqli_query("delete from prescribed_allergy
              where prescription_id = '$prescription_id'
-             and ALLERGY_ID  ='$allergy_id' and chamber_id='$chamber_name' AND doc_id='$doc_name'") or die(mysql_error());
+             and ALLERGY_ID  ='$allergy_id' and chamber_id='$chamber_name' AND doc_id='$doc_name'") or die(mysqli_error());
     }
     
     function deletePastMedicalHistory($prescription_id,$ci_id, $chamber_name, $doc_name){
         //$message = "";
         mysqli_query("delete from prescribed_past_med_history
              where prescription_id = '$prescription_id'
-             and clinical_impression_id  ='$ci_id' and chamber_id='$chamber_name' AND doc_id='$doc_name'") or die(mysql_error());
+             and clinical_impression_id  ='$ci_id' and chamber_id='$chamber_name' AND doc_id='$doc_name'") or die(mysqli_error());
         
         
     }
     function getPrescriptionFromVisitId($visitid,$chamber_name,$doc_name){
         $_QUERY="select * from prescription a where a.VISIT_ID = '".$visitid."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -443,7 +443,7 @@ class admin{
     function getClinicalImpressionFromId($ci_id,$chamber_name,$doc_name){
         $_QUERY="select * from clinical_impression a where a.ID = '".$ci_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -451,7 +451,7 @@ class admin{
     function getVisitFromId($visit_id,$chamber_name,$doc_name){
         $_QUERY="select * from visit a where a.VISIT_ID  = '".$visit_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -459,7 +459,7 @@ class admin{
     function getChamberDetails($chamber_id){
         $_QUERY="select * from chamber_master where chamber_id  = '".$chamber_id."'";
         
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -467,7 +467,7 @@ class admin{
     function getUserDetails($user_id){
         $_QUERY="select * from user where user_id  = '".$user_id."'";
         
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -476,7 +476,7 @@ class admin{
     function getDoctorDetails($user_id){
         $_QUERY="select * from doctor_master where user_id  = '".$user_id."'";
         
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         return $obj;
@@ -492,7 +492,7 @@ class admin{
     	AND a.patient_id = '$patient_id'
     	AND b.visited = 'no'";
     			
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	return $obj;
@@ -507,7 +507,7 @@ class admin{
                         and b.patient_id=c.patient_id and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id and 
 						b.chamber_id=c.chamber_id and b.doc_id = c.doc_id
                         and a.prescription_id = '".$prescription_id."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."'";
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	return $obj;
@@ -519,7 +519,7 @@ class admin{
 					a.chamber_id, a.created_by_user_id, a.create_date, a.isSync 
 				    from patient a, visit b where a.patient_id = b.PATIENT_ID and b.VISIT_ID = '".$visit_id."' 
 					and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id";
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	return $obj;
@@ -527,7 +527,7 @@ class admin{
     
     function getMaxVisitId($chamber_name, $doc_name){
         $_QUERY = "SELECT MAX( visit_id ) +1 as max_id FROM visit WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name' ";
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         $max_id = $obj->max_id;
@@ -539,7 +539,7 @@ class admin{
     
     function getMaxPrescriptionId($chamber_name, $doc_name){
         $_QUERY = "SELECT MAX( PRESCRIPTION_ID ) +1 as max_id FROM prescription WHERE doc_id =  '$doc_name' and chamber_id = '$chamber_name' ";
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         $max_id = $obj->max_id;
         if($max_id == NULL){
@@ -551,7 +551,7 @@ class admin{
     function getMaxClinicalImpression($chamber_name, $doc_name){
     	$_QUERY = "select max(id)+1 as max_id from clinical_impression where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -565,7 +565,7 @@ class admin{
     function getMaxInvestigationID($chamber_name, $doc_name){
     	$_QUERY = "select max(ID)+1 as max_id from investigation_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -579,7 +579,7 @@ class admin{
     function getMaxPatientInvestigationID($chamber_name, $doc_name){
     	$_QUERY = "select max(investigation_id)+1 as max_id from patient_investigation where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -592,7 +592,7 @@ class admin{
     function getMaxInvestigationIdfromMaster($chamber_name, $doc_name){
     	$_QUERY = "select max(ID)+1 as max_id from investigation_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -606,7 +606,7 @@ class admin{
     function getMaxDoseDetailsMasterID($chamber_name, $doc_name){
     	$_QUERY = "select max(DOSE_DETAILS_MASTER_ID)+1 as max_id from dose_details_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -628,13 +628,13 @@ class admin{
     	//echo "Id ==>>".$id;
     	$query_insert = "insert into dose_details_master(DOSE_DETAILS_MASTER_ID, DOSE_DETAILS, chamber_id, doc_id) values ('".$id."','".$dose."','".$chamber_name."','".$doc_name."')";
     	//echo $query_insert;
-    	$result = mysqli_query($query_search) or die(mysql_error());
+    	$result = mysqli_query($query_search) or die(mysqli_error());
     	$num_res = mysqli_num_rows($result);
     	//echo "num_res=".$num_res;
     	 if ($num_res<= 0){
     		//Insert into dose_details_master
     		//echo "Exceuted the query";
-    		mysqli_query($query_insert) or die(mysql_error());
+    		mysqli_query($query_insert) or die(mysqli_error());
     	} 
     	
     }
@@ -642,7 +642,7 @@ class admin{
     function getMaxMedicineID($chamber_name, $doc_name){
     	$_QUERY = "select max(MEDICINE_ID)+1 as max_id from medicine_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -658,7 +658,7 @@ class admin{
     	$_QUERY = "select max(patient_id)+1 as max_id from patient where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
     	
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -673,7 +673,7 @@ class admin{
     	$_QUERY = "select max(PRESCRIBED_INVESTIGATION_ID)+1 as max_id from prescribed_investigation where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
     	
     	
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -687,7 +687,7 @@ class admin{
     function getTestID($chamber_name, $doc_name){
     	$_QUERY = "select max(ID)+1 as max_id from test ";
     	
-    	$result = mysqli_query($_QUERY) or die(mysql_error());
+    	$result = mysqli_query($_QUERY) or die(mysqli_error());
     	$obj = mysqli_fetch_object($result);
     	
     	//echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -717,7 +717,7 @@ class admin{
     function getListOfChambersbyOwners($doc_name){
     	$query = "select a.chamber_id, b.chamber_name, b.chamber_address from chamber_owner a, chamber_master b where a.owner_id= '$doc_name' and a.chamber_id=b.chamber_id";
     	//echo $query;
-    	$result = mysqli_query($query)or die(mysql_error());
+    	$result = mysqli_query($query)or die(mysqli_error());
     	
     	/* $result_array = array();
     	
@@ -740,7 +740,7 @@ class admin{
     function insertUpdatepastMedicalHistory($prescription_id, $type, $chamber_name, $doc_name){
         $admin = new admin();
         $query = "select a.ID from past_medical_history_master a where a.TYPE = '$type' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
-        $result = mysqli_query($query) or die(mysql_error());
+        $result = mysqli_query($query) or die(mysqli_error());
         $id = "";
         if(mysqli_num_rows($result) > 0){
             //Clinical Impression Type exists in the Database. Get the ID
@@ -751,12 +751,12 @@ class admin{
             //Insert into master and then add. Get maximum master id
             $max_id = $admin->getmaxPastMedicalHistory($chamber_name, $doc_name);
             $query = "insert into past_medical_history_master (ID, TYPE, DESCRIPTION, chamber_id, doc_id) values('$max_id','$type','$type','$chamber_name','$doc_name')";
-            mysqli_query($query) or die(mysql_error());
+            mysqli_query($query) or die(mysqli_error());
             $id = $max_id;
         }
         $query = "insert into prescribed_past_med_history(clinical_impression_id, prescription_id,chamber_id, doc_id)
                     values('$id' , '$prescription_id','$chamber_name','$doc_name' )";
-        mysqli_query($query) or die(mysql_error());
+        mysqli_query($query) or die(mysqli_error());
         
     }
     
@@ -764,7 +764,7 @@ class admin{
         $_QUERY = "select max(ID)+1 as max_id from past_medical_history_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
         
         
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         //echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -779,7 +779,7 @@ class admin{
         
         $query = "select ID from social_history_master where TYPE = '$type' and chamber_id = '$chamber_name' and doc_id='$doc_name'";
         $admin = new admin();
-        $result = mysqli_query($query) or die(mysql_error());
+        $result = mysqli_query($query) or die(mysqli_error());
         $id = "";
         if(mysqli_num_rows($result) > 0){
             //Clinical Impression Type exists in the Database. Get the ID
@@ -790,18 +790,18 @@ class admin{
             //Insert into master and then add
             $max_id = $admin->getMaxSocialHistoryID($chamber_name, $doc_name);
             $query = "insert into social_history_master (ID, TYPE, DESCRIPTION,chamber_id,doc_id) values('$max_id','$type','$type','$chamber_name','$doc_name')";
-            mysqli_query($query) or die(mysql_error());
+            mysqli_query($query) or die(mysqli_error());
             $id = $max_id;
         }
         $query = "insert into prescribed_social_history(social_history_id, prescription_id, chamber_id,doc_id)
                     values('$id' , '$prescription_id','$chamber_name','$doc_name')";
-        mysqli_query($query) or die(mysql_error());
+        mysqli_query($query) or die(mysqli_error());
     }
     function getMaxSocialHistoryID($chamber_name, $doc_name){
         $_QUERY = "select max(ID)+1 as max_id from social_history_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
         
         
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         //echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
@@ -824,18 +824,18 @@ class admin{
             //Insert into master and then add
             $max_id = $admin->getMaxAllergyId($chamber_name,$doc_name);
             $query = "insert into allergy_master (ALLERGY_ID, ALLERGY_NAME, chamber_id, doc_id) values('$max_id','$allergy','$chamber_name','$doc_name')";
-            mysqli_query($query) or die(mysql_error());
+            mysqli_query($query) or die(mysqli_error());
             $id = $max_id;
         }
         $query1 = "insert into prescribed_allergy(allergy_id, prescription_id,chamber_id, doc_id)
                     values('$id' , '$PRESCRIPTION_ID','$chamber_name','$doc_name')";
-        mysqli_query($query1) or die(mysql_error());
+        mysqli_query($query1) or die(mysqli_error());
     }
     function getMaxAllergyId($chamber_name, $doc_name){
         $_QUERY = "select max(ALLERGY_ID)+1 as max_id from allergy_master where chamber_id = '$chamber_name' and doc_id='$doc_name' ";
         
         
-        $result = mysqli_query($_QUERY) or die(mysql_error());
+        $result = mysqli_query($_QUERY) or die(mysqli_error());
         $obj = mysqli_fetch_object($result);
         
         //echo "End: getMaxClinicalImpression($chamber_name, $doc_name) :".$obj->max_id;
