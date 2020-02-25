@@ -20,7 +20,6 @@ if(isset($_SESSION['user_type'])) {
 	    $adminObj = new admin();
 	    $resultObj = $adminObj->getUserDetails($user_id);
     	
-          
         
         ?>  
     

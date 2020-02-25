@@ -16,7 +16,7 @@ if(isset($_REQUEST['action'])){
         $d = mysqli_fetch_object($r) ;
 
         
-        if(mysql_num_rows($r) > 0){
+        if(mysqli_num_rows($r) > 0){
             $user_role = $d->role;
             $user_name = $d->user_name;
             $user_id = $d->user_id;

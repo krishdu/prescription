@@ -91,7 +91,7 @@ class admin{
         $query_getinvestigation_details_from_master = "select * from investigation_master a where  a.investigation_name  = '".$investigation_name."' and a.chamber_id='$chamber_name' AND a.doc_id='$doc_name' and a.STATUS='ACTIVE'" ;
 
         $result = mysqli_query($query_getinvestigation_details_from_master) or die(mysql_error());
-        if (mysql_num_rows($result) > 0){
+        if (mysqli_num_rows($result) > 0){
             //Investigation exists in Master. Only insert into patient_investigation table
             $rowresult = mysqli_fetch_object($result) or die(mysql_error());
             //Get the investigation Id
@@ -156,7 +156,7 @@ class admin{
             
             $result12 = mysqli_query($_QUERY12)or die(mysql_error());
             $ci_id = "";
-            if(mysql_num_rows($result12) > 0){
+            if(mysqli_num_rows($result12) > 0){
                 while($rs12 = mysql_fetch_array($result12)){
                     $ci_id = $rs12['clinical_impression_id'];
                 }
@@ -208,14 +208,14 @@ class admin{
             $result1 = mysqli_query("select a.VALUE from patient_health_details a 
                     where a.ID = '1' and a.VISIT_ID = '$visit_id' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'") or die(mysql_error());
 
-            if(mysql_num_rows($result1) > 0){
+            if(mysqli_num_rows($result1) > 0){
                 $obj = mysqli_fetch_object($result1);
                 $height = $obj->VALUE;
             }
             $result2 = mysqli_query("select a.VALUE from patient_health_details a 
                     where a.ID = '2' and a.VISIT_ID = '$visit_id' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'") or die(mysql_error());
 
-            if(mysql_num_rows($result2) > 0){
+            if(mysqli_num_rows($result2) > 0){
                 $obj = mysqli_fetch_object($result2);
                 $weight = $obj->VALUE;
             }
@@ -224,7 +224,7 @@ class admin{
                 $bmi = $admin->calcBMI($weight, $height);
 
                 $result_id_f = mysqli_query("select * from patient_health_details a where a.ID = '3' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
-                if(mysql_num_rows($result_id_f) > 0 ){
+                if(mysqli_num_rows($result_id_f) > 0 ){
                     $query_b = "update patient_health_details a set a.VALUE = '$bmi' where a.ID ='3' and VISIT_ID = '".$visit_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
                 } else {
                 $query_b = "insert into patient_health_details(ID, VALUE, VISIT_ID, chamber_id, doc_id) 
@@ -269,7 +269,7 @@ class admin{
         $weight = "";
         $bmi = "";
         $ideal_body_weight = "";
-        if(mysql_num_rows($result) > 0){
+        if(mysqli_num_rows($result) > 0){
             //Clinical Impression Type exists in the Database. Get the ID
             while($rs = mysql_fetch_array($result)){
                 $id = $rs['ID'];
@@ -291,14 +291,14 @@ class admin{
         $result1 = mysqli_query("select a.VALUE from patient_health_details a 
                 where a.ID = '1' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
         
-        if(mysql_num_rows($result1) > 0){
+        if(mysqli_num_rows($result1) > 0){
             $obj = mysqli_fetch_object($result1);
             $height = $obj->VALUE;
         }
         $result2 = mysqli_query("select a.VALUE from patient_health_details a 
                 where a.ID = '2' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
 
-        if(mysql_num_rows($result2) > 0){
+        if(mysqli_num_rows($result2) > 0){
             $obj = mysqli_fetch_object($result2);
             $weight = $obj->VALUE;
         }
@@ -307,7 +307,7 @@ class admin{
             $bmi = $admin->calcBMI($weight, $height);
             $result_id_f = mysqli_query("select * from patient_health_details a where 
                 a.ID = '3' and a.VISIT_ID = '$visit_id' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'") or die(mysql_error());
-            if(mysql_num_rows($result_id_f) > 0 ){
+            if(mysqli_num_rows($result_id_f) > 0 ){
                 $query_b = "update patient_health_details a set VALUE = '$bmi' where 
                 a.ID ='3' and a.VISIT_ID = '".$visit_id."' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
             } else {
@@ -329,7 +329,7 @@ class admin{
 														and a.chamber_id='$chamber_name' and a.doc_id='$doc_name'
 														and a.VISIT_ID = '$visit_id' and b.NAME = 'Ideal Body Weight (KG)'") or die(mysql_error());
             
-            if(mysql_num_rows($result_ideal_body_weight) > 0 ){
+            if(mysqli_num_rows($result_ideal_body_weight) > 0 ){
             	$query_ideal_body_weight= "update patient_health_details b set b.VALUE = '$ideal_body_weight' where
             	b.ID = (select ID from patient_health_details_master a where a.name='Ideal Body Weight (KG)' and status='ACTIVE' and a.chamber_id='$chamber_name' and a.doc_id='$doc_name') and b.VISIT_ID = '".$visit_id."'";
             	//echo "UPDATE ->".$query_ideal_body_weight;
@@ -375,7 +375,7 @@ class admin{
         $query = "select  ID from clinical_impression a where a.TYPE = '$type' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         //echo $query;
         $result = mysqli_query($query) or die(mysql_error());
-        $rows = mysql_num_rows($result);
+        $rows = mysqli_num_rows($result);
         $id = $admin->getMaxClinicalImpression($chamber_name, $doc_name);
         //echo "MAX =".$id;
         //echo $rows;
@@ -629,7 +629,7 @@ class admin{
     	$query_insert = "insert into dose_details_master(DOSE_DETAILS_MASTER_ID, DOSE_DETAILS, chamber_id, doc_id) values ('".$id."','".$dose."','".$chamber_name."','".$doc_name."')";
     	//echo $query_insert;
     	$result = mysqli_query($query_search) or die(mysql_error());
-    	$num_res = mysql_num_rows($result);
+    	$num_res = mysqli_num_rows($result);
     	//echo "num_res=".$num_res;
     	 if ($num_res<= 0){
     		//Insert into dose_details_master
@@ -742,7 +742,7 @@ class admin{
         $query = "select a.ID from past_medical_history_master a where a.TYPE = '$type' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
         $result = mysqli_query($query) or die(mysql_error());
         $id = "";
-        if(mysql_num_rows($result) > 0){
+        if(mysqli_num_rows($result) > 0){
             //Clinical Impression Type exists in the Database. Get the ID
             while($rs = mysql_fetch_array($result)){
                 $id = $rs['ID'];
@@ -781,7 +781,7 @@ class admin{
         $admin = new admin();
         $result = mysqli_query($query) or die(mysql_error());
         $id = "";
-        if(mysql_num_rows($result) > 0){
+        if(mysqli_num_rows($result) > 0){
             //Clinical Impression Type exists in the Database. Get the ID
             while($rs = mysql_fetch_array($result)){
                 $id = $rs['ID'];
@@ -815,7 +815,7 @@ class admin{
         $query = "select ALLERGY_ID from allergy_master where allergy_name = '$ALLERGY' and chamber_id = '$chamber_name' and doc_id='$doc_name'";
         $result = mysqli_query($query);
         $id = "";
-        if(mysql_num_rows($result) > 0){
+        if(mysqli_num_rows($result) > 0){
             //Clinical Impression Type exists in the Database. Get the ID
             while($rs = mysql_fetch_array($result)){
                 $id = $rs['ALLERGY_ID'];
