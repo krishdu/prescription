@@ -12,7 +12,7 @@ if(isset($_REQUEST['action'])){
         $pass=stripslashes($_POST['password']);
 
         $sql = "select * from user where user_name = '$uname' and user_password = '".md5($pass)."'";
-        $r = mysqli_query($sql) or die(mysqli_error());
+        $r = mysqli_query($conn, $sql) or die(mysqli_error());
         $d = mysqli_fetch_object($r) ;
 
         

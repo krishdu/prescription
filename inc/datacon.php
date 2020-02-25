@@ -9,5 +9,4 @@ if (!$conn) {
     exit;
 }
 
-
 ?>
