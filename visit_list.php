@@ -19,8 +19,13 @@ if( isset($_SESSION['user_type']) && (isset($_GET['chamber_name']) ||   isset($_
 	$chamber = $_SESSION['chamber_name'];
 	
 	/* For doctor specific information */
+	
+	/* $_SESSION['chamber_name'] = 1;
+	$_SESSION['doc_name'] = 1; */
+	
+	
 	$chamber_name = $_SESSION['chamber_name'];
-	$doc_name= $_SESSION['doc_name'];
+	$doc_name= $_SESSION['user_id'];
 	$user_name= $_SESSION['user_name'];
 	//echo $chamber_name ." ". $doc_name ." ". $user_name
 ?>

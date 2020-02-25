@@ -8,6 +8,8 @@ if(isset($_SESSION['user_type'])) {
     $user_name = $_SESSION['user_name']  ;
     $user_type = $_SESSION['user_type']  ;
     $user_id = $_SESSION['user_id'];
+    
+    
 
 ?>
 
@@ -26,7 +28,8 @@ if(isset($_SESSION['user_type'])) {
 	     <?php 
           if($user_type == 'DOCTOR' ){ 
           	
-          	$_QUERY= "select * from chamber_master where related_doc_name='".$user_name."'";
+              $_QUERY= "select * from chamber_master where related_doc_name='".$user_id."'";
+             // echo $_QUERY;
           	$result = mysql_query($_QUERY) or die(mysql_error()); 
 	          	if(mysql_num_rows($result)>0){ ?>
 	          	<div class="page-header">
@@ -48,6 +51,7 @@ if(isset($_SESSION['user_type'])) {
 	          	
           <?php } else if ($user_type == 'RECEPTIONIST'){
           	$_QUERY= "select * from chamber_master where related_rec_name='".$user_name."'";
+          	//echo $_QUERY;
           	$result = mysql_query($_QUERY) or die(mysql_error()); 
           	if(mysql_num_rows($result)>0){ ?>
           	<div class="page-header">

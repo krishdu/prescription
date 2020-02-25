@@ -5,8 +5,14 @@ if(isset($_SESSION['user_type']) &&   isset($_SESSION['chamber_name']) && isset(
 	$doc_name= $_SESSION['doc_name'];
 $q = strtolower($_GET["term"]);
 if (!$q) return;
-
-$sql = "select * from medicine_master a where a.MEDICINE_NAME LIKE '$q%' and a.MEDICINE_STATUS = 'ACTIVE' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
+if(isset($_GET["MODE"])){
+    $mode = ($_GET["MODE"]);
+    if($mode == "ALL")
+        $sql = "select * from medicine_master a where a.MEDICINE_NAME LIKE '$q%' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
+}else {
+    $sql = "select * from medicine_master a where a.MEDICINE_NAME LIKE '$q%' and a.MEDICINE_STATUS = 'ACTIVE' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
+}
+//$sql = "select * from medicine_master a where a.MEDICINE_NAME LIKE '$q%' and a.MEDICINE_STATUS = 'ACTIVE' AND a.chamber_id='$chamber_name' AND a.doc_id='$doc_name'";
 /* $rsd = mysql_query($sql);
 while($rs = mysql_fetch_array($rsd)) {
 	$cname = $rs['MEDICINE_NAME'];

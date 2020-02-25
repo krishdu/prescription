@@ -3,7 +3,7 @@
 class Header {
 	function Header($doc_username, $chmaber_id) {
 		
-		$_QUERY= "select * from doctor_master where user_name ='".$doc_username."'";
+		$_QUERY= "select * from doctor_master where doctor_id ='".$doc_username."'";
 		//echo $_QUERY;
 		$result = mysql_query($_QUERY) or die(mysql_error());
 		$obj = mysql_fetch_object($result);

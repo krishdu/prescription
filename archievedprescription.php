@@ -10,8 +10,10 @@ if(isset($_GET['PRESCRIPTION_ID'])){
 
  
 <?php 
-if($_SESSION['doc_name'] == 'dsanyal'){
-    include_once ("./inc/header_print_dsanyal.php") ;
+
+if($_SESSION['doc_name'] == '2'){
+    //include_once ("./inc/header_print_dsanyal.php") ;
+    include_once "./inc/header_print_sroy.php";
 } else if ($_SESSION['doc_name'] == 'sroy'){
 include_once "./inc/header_print_sroy.php";
 } else if ($_SESSION['doc_name'] == 'hindol'){
@@ -45,17 +47,23 @@ include_once "./inc/header_print_sroy.php";
             
             <div class="content">
             <!-- IF DSANYAL -->
-            <?php if($doc_name == 'dsanyal'){?>
+            <?php if($doc_name == '2'){?>
             	 <div class="col-md-8-print"> 
                     <div id='prescription_doc_name'><?php echo $header->doctor_full_name;?></div>
                         <?php echo $header->doctor_degree;?></div>
                     <div class="col-md-4-print">
-                    <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
-                        <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/><br/>
-                        <?php echo $header->chamber_address;?><br/>
-                        Phone : <?php echo $header->primary_phone_number;?> / <?php echo $header->secondary_phone_number;?><br/>
-                        <b>Residence</b><br/>
-                        <?php echo $header->doctor_address;?>
+                    <!--BEGIN info-->
+		 <div class="black_logo_r"><b>Membership & Affiliations</b>:<br> <?php echo $header->doctor_affiliation;?>
+            </div>        
+        	<div>
+            <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
+			<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>033-40704046 (Chamber)</b><br/>
+            <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/>
+            
+            </div>
+        
+        <!--END of info-->
+                    
                     
                   </div>
             <?php } else if($doc_name == 'hindol') { ?><!-- ELSE -->
@@ -99,19 +107,20 @@ include_once "./inc/header_print_sroy.php";
                 <div class="block"> 
                     <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Clinical Impressions</div>
                     <div class="inner">
+                    <table>
                         <?php
                             $q15 = "SELECT b.type
                                     FROM prescribed_cf a, clinical_impression b
                                     WHERE a.clinical_impression_id = b.id
                                     AND a.prescription_id = '".$_GET['PRESCRIPTION_ID']."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' and a.chamber_id=b.chamber_id and a.doc_id=b.doc_id";
                             $rsd1 = mysql_query($q15)  or die(mysql_error()); 
-                            while($rs = mysql_fetch_array($rsd1) ) {
-                                $result = $rs['type'];
-                                
-                                echo $result ;
-                                echo " , ";
+                            while($rs = mysql_fetch_array($rsd1) ) { ?>
+                                <tr> <td ><?php echo $rs['type']; ?></td> </tr>
+                               <?php 
+                               
                             }
                         ?>
+                    </table>
                     </div>        
                 </div>
                 
@@ -190,59 +199,7 @@ include_once "./inc/header_print_sroy.php";
             
             </div>
             <!--END of content-->
-            
-            
-            <!--BEGIN rx section-->
-            
-            <div class="invest_rx"><div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Rx (Prescription)</div>    
-                <div class="col-xs-12 .col-sm-6 .col-lg-8">      
-                
-                    <?php
-                        $q11 = "SELECT * FROM precribed_medicine a WHERE a.PRESCRIPTION_ID = '".$_GET['PRESCRIPTION_ID']."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' ";
-                            //echo $q5;
-                
-                            $result = mysql_query($q11) or die(mysql_error()); 
-                    ?>
-                    
-                    <table class="table table-striped">
-                          <thead>
-				              <tr>
-				                <th>#</th>
-				                <th>Medicine's Names</th>
-				                
-				                <th>Direction</th>
-				                
-				              </tr>
-				            </thead>
-                          	<tbody>
-                          	
-                          	
-                            <?php $count=1;
-                            while($rs = mysql_fetch_array($result)) { 
-                            ?>
-                          <tr>
-                          <td><?php echo $count; ?></td>
-                            <td><?php echo $rs['MEDICINE_NAME'] ?></td>
-                            
-                            <td><?php echo $rs['MEDICINE_DOSE'] ?></td>
-                           
-                          <td>
-                           
-                            
-                          </tr>
-                            <?php $count = $count+1; } ?>
-                          	</tbody>
-                          
-                        </table> 
-                    
-                </div>
-            
-            </div>
-            <!--END of rx section-->
-            
-            <!--BEGIN doctor comment section-->
-            <div class="diet">    
-                <?php 
+            <?php 
                     $prescriptionid = $_GET['PRESCRIPTION_ID'] ;
                     
                     $query = "select * from prescription a where a.PRESCRIPTION_ID = 
@@ -256,6 +213,53 @@ include_once "./inc/header_print_sroy.php";
                         $other_comment = $rs['ANY_OTHER_DETAILS'];
                     }
                 ?>
+            <!--BEGIN diet section-->
+           
+            <div class="diet">    
+                <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Diet & Lifestyle Recommendation</div>
+                <div class="invest_inner">        
+                <?php echo $diet1; ?>
+                </div>
+            
+            </div>
+            <!-- END DIATE -->
+            <!--BEGIN rx section-->
+            
+            <div class="invest_rx"><div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Rx (Prescription)</div>    
+                <div class="col-xs-12 .col-sm-6 .col-lg-8">      
+                
+                    <?php
+                        $q11 = "SELECT * FROM precribed_medicine a WHERE a.PRESCRIPTION_ID = '".$_GET['PRESCRIPTION_ID']."' and a.chamber_id='".$chamber_name."' and a.doc_id='".$doc_name."' ";
+                            //echo $q5;
+                
+                            $result = mysql_query($q11) or die(mysql_error()); 
+                    ?>
+                    
+                    
+                        <table id="table-3" class="table"> 
+                        <?php while($rs = mysql_fetch_array($result)) { ?>
+
+                            <tr>
+                                <td class='medicine_desc'>
+                                    <img src="images/stock_list_bullet.png"/>&nbsp<strong><?php echo $rs['MEDICINE_NAME'] ?></strong>
+                                    
+                                    <img src="images/arrow-right.png" />
+                                        <i><?php echo $admin_obj->getFormattedDosage($rs['MEDICINE_DOSE']); ?></i></td>
+                               
+
+                            </tr>
+
+                        <?php } ?>
+                        </table>
+                    
+                </div>
+            
+            </div>
+            <!--END of rx section-->
+            
+            <!--BEGIN doctor comment section-->
+            <div class="diet">    
+                
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Other Advice (if any)</div>
                 <div class="invest_inner"> <?php echo $other_comment; ?>  </textarea>
                 </div>
@@ -295,15 +299,7 @@ include_once "./inc/header_print_sroy.php";
             <!--BEGIN diet section-->
             
             
-            <!--BEGIN diet section-->
-           
-            <div class="diet">    
-                <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Diet & Lifestyle Recommendation</div>
-                <div class="invest_inner">        
-                <?php echo $diet1; ?>
-                </div>
             
-            </div>
             
             <div class="diet">    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Patient's Next Visit</div>

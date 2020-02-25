@@ -24,12 +24,16 @@ if(isset($_REQUEST['action'])){
             $_SESSION['user_type'] = $user_role;
             $_SESSION['user_id'] = $user_id;
             
-            $_SESSION['user_name'] = $user_name;
-            $_SESSION['logged_in_user_id'] = $user_name;
+            //$_SESSION['user_name'] = $user_name;
+           
             
             if($user_role== 'DOCTOR'){
+                $_SESSION['user_name'] = $user_id;
+                $_SESSION['logged_in_user_id'] = $user_id;
                     echo "<script>location.href='select_chamber.php'</script>";
             } else if ($user_role== 'RECEPTIONIST' || $user_role== 'CHEMIST'){
+                $_SESSION['user_name'] = $user_id;
+                $_SESSION['logged_in_user_id'] = $user_id;
                     echo "<script>location.href='select_chamber.php'</script>";
             } else {
             	$msg = "You are not authorize to perform any operation !!";

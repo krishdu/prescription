@@ -203,26 +203,34 @@ include_once "classes/admin_class.php";
 
 
 
+
                                             <!--BEGIN search-->
                                             <div id="tab114" class="check_fields">
                                                 <!--    
                                                 <span><p>Patient ID</p><input id="s_p_id" name="patient_id" type="text" class="input_box_add" value="" /></span>                
                                                 -->
-                                                <span><p>By Medicine Name</p><input id="course" name="course" type="text" class="form-control" placeholder="Enter Medicine name" /></span>               
+                                                <span><p>By Medicine Name</p><input id="course1" name="course" type="text" class="form-control" placeholder="Enter Medicine name" /></span>               
                                                 <span><p>&nbsp;</p><input type="submit" value="Search" name="search" class="btn" onclick="searchReportByMedicine();" /></span>
 												<input id='hidden_prescribed_medicine_id' type='hidden'>
 
                                             </div>
                                             <!--END of search-->
+											 <!--BEGIN search results-->
+                                            <div class="row">
+                                            
 
-                                            <!--BEGIN search results-->
-                                            <div  id="searchMedicineDiv">
+                                                <div class='loading' hidden='true' id='wait_search_medicine'>Please Wait.. untill system finds the result for you. Thank you......</div>
+
+
+                                            <div class="col-xs-12 .col-sm-6 .col-lg-8" id="searchMedicineDiv">
 
                                                 <!--RESULT OF SEARCH -->
 
 
                                             </div>
+                                            </div>
                                             <!--END of results-->
+                                           
 
                                         </div>
                                         <!--END of tab4-->

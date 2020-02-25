@@ -299,6 +299,16 @@ $(document).ready(function(){
 	        $("#hidden_prescribed_medicine_id").val(ui.item.id);
 	      }
 	    });
+	$( "#course1" ).autocomplete({
+	      source: "./ajax/get_course_list.php?MODE=ALL",
+	      minLength: 2,
+	      select: function( event, ui ) {
+	    	  
+	        console.log( "Selected: " + ui.item.label + " aka " + ui.item.value );
+	       
+	        $("#hidden_prescribed_medicine_id").val(ui.item.id);
+	      }
+	    });
     
 	$( "#dose1" ).autocomplete({
 	      source: "./ajax/get_dose_list.php",
@@ -1218,6 +1228,43 @@ function search1(){
         $.ajax({url: url, success: function(result){
         	$("#wait").hide();
         	$("#searchDiv").html(result);
+        }});
+        
+        
+       /* xmlhttp.open("GET",url,true);
+        xmlhttp.send();*/
+    }
+
+}
+
+function searchReportByMedicine(){
+    //alert(document.getElementById("s_p_id").value);
+    //alert(document.getElementById("s_p_name").value);
+    if(document.getElementById("course1").value == ""){
+        alert("Please Give some Input");
+        return false;
+    } else {
+        
+        var p_medicine_name = document.getElementById("course1").value;
+
+        /*if (window.XMLHttpRequest){
+            xmlhttp=new XMLHttpRequest();
+        }else{
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange=function(){
+            if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                document.getElementById("searchDiv").innerHTML=xmlhttp.responseText;
+            }
+        }*/
+        //str = "delete_precribed_medicine.php?MEDICINE_ID="+k+"&PRES_ID="+pid;
+        var url = "ajax/searchPatientByMedicineName.php?MEDICINE_NAME="+p_medicine_name;   
+        $("#wait_search_medicine").show();
+        
+        $.ajax({url: url, success: function(result){
+        	$("#wait_search_medicine").hide();
+        	$("#searchMedicineDiv").html(result);
         }});
         
         

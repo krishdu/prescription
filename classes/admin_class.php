@@ -845,5 +845,17 @@ class admin{
         }
         return $max_id;
     }
+
+    function getFormattedDosage($input){
+        //Output should be clean
+        // returns true if $needle is a substring of $haystack
+        $result = $input;
+        if ( strpos($input, ". for  Days") !== false){
+			//echo ("inside");
+            $result = str_replace(". for  Days",".",$input);
+        } 
+        return $result;
+
+    }
 }
 ?>
