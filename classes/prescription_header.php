@@ -18,6 +18,7 @@ class Header {
 		$this->doctor_address = $obj->doctor_address;
 		$this->doctor_secondery_contact = $obj->doctor_secondery_contact;
 		
+		
 		$_QUERY= "select * from chamber_master where chamber_id ='".$chmaber_id."'";
 		//echo $_QUERY;
 		$result1 = mysqli_query($conn,($_QUERY)) ;
