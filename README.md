@@ -28,15 +28,5 @@ run http://<HOST>/prescription/setup/testconnection.php
 use prescription
 source /var/html/prescription/setup/prescription.sql
 
-# Changing to mysqli
-Find mysql_query, then replace with mysqli_query($conn
-Find mysql_fetch_array, then replace with mysqli_fetch_array
-Find mysql_num_rows, then replace with mysql_num_rows
-Find mysql_error, then replace with mysqli_error
-Find mysql_insert_id, then replace with mysqli_insert_id
-Find mysql_fetch_object, then replace with mysql_fetch_object
-
-Any mysql_fetch_object($result) or die(mysql_error()) to be replaced by mysqli_fetch_object($result)
-
 
 
