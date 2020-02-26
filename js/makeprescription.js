@@ -413,13 +413,14 @@ $(document).ready(function(){
 		  
 		});
 	  
-	  $("#search").click(function(){     
+	  $("#searchPatientForBilling").click(function(){   
+		 // alert("searchPatientForBilling");
 		  if(!$("#s_p_id").val() && !$("#s_p_name").val() ){
 			  
 			  $("#search_alert").html("Enter either Patient name or Patient ID");
 			  $("#search_alert").show();
 		  } else {
-          var url = "./ajax/searchPatient.php?mode=SEARCH_PATIENT&patient_id="+$("#s_p_id").val()+"&patient_name="+$("#s_p_name").val();
+          var url = "./ajax/searchPatientForBilling.php?mode=SEARCH_PATIENT&patient_id="+$("#s_p_id").val()+"&patient_name="+$("#s_p_name").val();
 		  $.ajax({url: url, success: function(result){
 		        $("#searchDiv").html(result);
 		        $("#search_alert").hide();
@@ -478,6 +479,66 @@ $(document).ready(function(){
 				        $('#create_rec_form').hide();
 		        	   
 		               
+		           }
+		         });
+		    }
+	  	});
+	  	
+	  	
+	  	$("#rec_pay").click(function(){
+			  //alert("Rec Pay");
+		    var url = "./ajax/add_bill.php"; // the script where you handle the form input.
+		    if(empty($("#payment_mode").val()) || empty($("#amount").val()) || empty($("#pay_dt").val()) ){
+		    	$("#search_alert_2").html("Payment Mode, Amount and Date is mandatory");
+		    	$("#search_alert_2").show();
+		    	$("#create_r_result").hide();
+		    	
+		    } else {
+		    	var url = "./ajax/rec_pay.php"; // the script where you handle the form input.
+
+			    
+		    	alert("Submitting the form");
+			    $.ajax({
+		           type: "POST",
+		           url: url,
+		           data: $("#rec_pay_form").serialize(), // serializes the form's elements.
+		           success: function(data)
+		           {
+		        	   $("#create_r_result").show();
+			    		
+			    		$("#create_r_result").html(data);
+				        $("#search_alert_2").hide();
+				        $("#rec_pay_form").hide();
+				       
+		        	   
+		               
+		           }
+		         });
+		    }
+	  	});
+	  	
+	  	$("#add_bill").click(function(){
+			//  alert("add bill");
+		    var url = "./ajax/add_bill.php"; // the script where you handle the form input.
+		    if(empty($("#proc_name").val()) || empty($("#Charge").val()) ){
+		    	$("#search_alert_2").html("Procedure Name and Charge is mandatory");
+		    	$("#search_alert_2").show();
+		    	$("#create_r_result").hide();
+		    	
+		    } else {
+		    	var url = "./ajax/add_bill.php"; // the script where you handle the form input.
+		    	//alert("Submitting the form");
+			    $.ajax({
+		           type: "POST",
+		           url: url,
+		           data: $("#bill_create_form").serialize(), // serializes the form's elements.
+		           success: function(data)
+		           {
+		        	   $("#create_r_result").show();
+			    		
+			    		$("#create_r_result").html(data);
+				        $("#search_alert_2").hide();
+				        $("#bill_create_form").hide();
 		           }
 		         });
 		    }
@@ -559,8 +620,12 @@ $(document).ready(function(){
 	  	  
 	  	  var dose4 = document.getElementById("dose4").value;
 	  	  var dose4dir = getCheckedRadio("bdradio");
-	  	  
-	  	var duration = document.getElementById("duration_count").value + " "+document.getElementById("duration_type").value
+	  	var duration = "";
+	  	if (document.getElementById("duration_count").value != "")  {
+	  		duration = "for "+document.getElementById("duration_count").value + " "+document.getElementById("duration_type").value
+	  	} else {
+	  		duration = "To Continue";
+	  	}
 	  	  var dosage = "";
 	  	  
 	  	  if(dose1dir != ""){
@@ -576,7 +641,7 @@ $(document).ready(function(){
 	  	      dosage = dosage +dose4+ " "+ dose4dir+" bedtime. ";
 	  	  }
 	  	  if(dosage != ""){
-	  		  dosage = dosage + "for "+duration;
+	  		  dosage = dosage + duration;
 	  	  }
 	  	  alert(dosage);
 	  	  var patient_id = document.getElementById("patient_id").value;
@@ -1200,6 +1265,23 @@ function searchPatient(){
 
 }
 
+function search5(){
+    if(document.getElementById("txtCI").value == ""){
+        alert("Please Input Date");
+        return false;
+    } else {
+        var p_cl_imprssn = document.getElementById("txtCI").value;
+        var url = "ajax/searchDayBilling.php?mode=SEARCH_CI&CI="+p_cl_imprssn;   
+        $("#wait").show();
+        
+        $.ajax({url: url, success: function(result){
+        	$("#wait").hide();
+        	$("#searchDiv").html(result);
+        }});
+    }
+
+}
+
 function search1(){
     //alert(document.getElementById("s_p_id").value);
     //alert(document.getElementById("s_p_name").value);
@@ -1274,7 +1356,7 @@ function searchReportByMedicine(){
 
 }
 
-function searchInvestigation(){
+function searchInvestigationforPatient(){
     //alert(document.getElementById("s_p_id").value);
     //alert(document.getElementById("patient_id").value);
     if(document.getElementById("invest_name").value == ""){
@@ -1295,6 +1377,8 @@ function searchInvestigation(){
 		
     	$('#report_by_patient_inv').DataTable( {
 			"ajax": url,
+			paging: false,
+		    searching: false,
 			dom: 'Bfrtip',
 	        buttons: [
 	            'copy', 'csv', 'excel', 'pdf', 'print'

@@ -24,8 +24,10 @@ if(isset($_SESSION['user_type']) && isset($_SESSION['user_id']) && (isset($_GET[
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li class="active"><a href="visit_list.php">Visit List</a></li>
+			  <li><a href="CreateBill.php">Billing</a></li>
               <li><a href="master.php">Master Data Management</a></li>
               <li><a href="reports.php">Reports</a></li>
+              <li><a href="sync_table.php">Cloud Sync</a></li>
               <?php if($user_type == "DOCTOR"){ ?>
     	<li><a href="dashboard_doctor.php">My dashboard</a></li>
 	    <?php } else if($user_type == "RECEPTIONIST"){ ?>

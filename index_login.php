@@ -12,11 +12,11 @@ if(isset($_REQUEST['action'])){
         $pass=stripslashes($_POST['password']);
 
         $sql = "select * from user where user_name = '$uname' and user_password = '".md5($pass)."'";
-        $r = mysqli_query($conn, $sql) or die(mysqli_error());
-        $d = mysqli_fetch_object($r) ;
+        $r = mysql_query($sql) or die(mysql_error());
+        $d = mysql_fetch_object($r) ;
 
         
-        if(mysqli_num_rows($r) > 0){
+        if(mysql_num_rows($r) > 0){
             $user_role = $d->role;
             $user_name = $d->user_name;
             $user_id = $d->user_id;
@@ -28,12 +28,12 @@ if(isset($_REQUEST['action'])){
            
             
             if($user_role== 'DOCTOR'){
-                $_SESSION['user_name'] = $user_id;
-                $_SESSION['logged_in_user_id'] = $user_id;
+                $_SESSION['user_name'] = 1;
+                $_SESSION['logged_in_user_id'] = 1;
                     echo "<script>location.href='select_chamber.php'</script>";
             } else if ($user_role== 'RECEPTIONIST' || $user_role== 'CHEMIST'){
-                $_SESSION['user_name'] = $user_id;
-                $_SESSION['logged_in_user_id'] = $user_id;
+                $_SESSION['user_name'] = 'mayukh';
+                $_SESSION['logged_in_user_id'] = 1;
                     echo "<script>location.href='select_chamber.php'</script>";
             } else {
             	$msg = "You are not authorize to perform any operation !!";

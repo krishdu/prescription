@@ -10,10 +10,8 @@ if(isset($_GET['PRESCRIPTION_ID'])){
 
  
 <?php 
-
-if($_SESSION['doc_name'] == '2'){
-    //include_once ("./inc/header_print_dsanyal.php") ;
-    include_once "./inc/header_print_sroy.php";
+if($_SESSION['doc_name'] == '1'){
+    include_once ("./inc/header_print_dsanyal.php") ;
 } else if ($_SESSION['doc_name'] == 'sroy'){
 include_once "./inc/header_print_sroy.php";
 } else if ($_SESSION['doc_name'] == 'hindol'){
@@ -47,23 +45,18 @@ include_once "./inc/header_print_sroy.php";
             
             <div class="content">
             <!-- IF DSANYAL -->
-            <?php if($doc_name == '2'){?>
+            <?php if($doc_name == '1'){?>
             	 <div class="col-md-8-print"> 
-                    <div id='prescription_doc_name'><?php echo $header->doctor_full_name;?></div>
+                    <div id='prescription_doc_name'><?php echo "<i><b>".$header->doctor_full_name."</b></i>"; ?></div>
                         <?php echo $header->doctor_degree;?></div>
                     <div class="col-md-4-print">
-                    <!--BEGIN info-->
-		 <div class="black_logo_r"><b>Membership & Affiliations</b>:<br> <?php echo $header->doctor_affiliation;?>
-            </div>        
-        	<div>
-            <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
-			<img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b>033-40704046 (Chamber)</b><br/>
-            <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/>
-            
-            </div>
-        
-        <!--END of info-->
-                    
+                    <img src="images/phone.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_mobile;?> (M)</b><br/>
+                        <img src="images/email.png" align="absmiddle"/>&nbsp;&nbsp;&nbsp;<b><?php echo $header->doctor_email;?></b><br/><br/>
+                        <u><b>Ananda Clinic</b></u><br/>
+                        <?php echo $header->chamber_address;?><br/>
+                        Phone : <?php echo $header->primary_phone_number;?> / <?php echo $header->secondary_phone_number;?><br/>
+                        <u><b>Chamber(By Appointment)</b></u><br/>
+                        <?php echo $header->doctor_address;?>
                     
                   </div>
             <?php } else if($doc_name == 'hindol') { ?><!-- ELSE -->
@@ -244,7 +237,7 @@ include_once "./inc/header_print_sroy.php";
                                     <img src="images/stock_list_bullet.png"/>&nbsp<strong><?php echo $rs['MEDICINE_NAME'] ?></strong>
                                     
                                     <img src="images/arrow-right.png" />
-                                        <i><?php echo $admin_obj->getFormattedDosage($rs['MEDICINE_DOSE']); ?></i></td>
+                                        <i><?php echo $rs['MEDICINE_DOSE'] ?></i></td>
                                
 
                             </tr>

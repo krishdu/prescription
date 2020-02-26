@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL);
-include('inc/datacon_sync_sroy.php');
+include('inc/datacon_sync_dsanyal.php');
 
 $data  = $_POST['data'];
 $table = $_POST['table'];

@@ -158,7 +158,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id, $chamber_name, 
             <!--BEGIN diet section-->
             <div class="diet" >    
                 <div class="headings"><!--<img src="images/Briefcase-Medical.png" />-->&nbsp;Diet & Lifestyle Recommendation</div>
-                <textarea class="form-control" name="diet" rows="3">Diet   Kcal/day, Cholesterol < 200 gm /day , Saturated Fat < 7%, Walking at recommended speed for atleast 30 mins/day, Alerted to hypoglycaemia (CBG < 70 mg/dl/SMBG)</textarea>       
+                <textarea class="form-control" name="diet" rows="3">Diet   Kcal/day, Cholesterol < 200 gm /day , Saturated Fat < 7%, Walking at recommended speed for atleast 30 mins/day, Alerted to hypoglycaemia (CBG < 70 mg/dl). Self Monitoring of Blood glucose.</textarea>       
                 
             </div>
             
@@ -190,8 +190,7 @@ $d1 = $update->getPatientInformationForPrescription($patient_id, $chamber_name, 
                                     <img src="images/stock_list_bullet.png"/>&nbsp<strong><?php echo $rs['MEDICINE_NAME'] ?></strong>
                                     <input type="hidden" class="input_box" name="medicine_name" value="<?php echo $rs['MEDICINE_NAME'];?>"/>
                                     <img src="images/arrow-right.png" />
-									
-                                        <i><?php echo $update->getFormattedDosage($rs['MEDICINE_DOSE']); ?></i><input type="hidden" class="input_box_small" name="dose" value="<?php echo $update->getFormattedDosage($rs['MEDICINE_DOSE']);?>" /></td>
+                                        <i><?php echo $rs['MEDICINE_DOSE'] ?></i><input type="hidden" class="input_box_small" name="dose" value="<?php echo $rs['MEDICINE_DOSE'];?>" /></td>
                                 <td  align="center" width="90"    >
 									<input id="remove_<?php echo $rs['MEDICINE_ID'] ?>" class="btn btn-warning" type="button" value="Remove" onclick="del('<?php echo $rs['MEDICINE_ID'] ?>','<?php echo $PRESCRIPTION_ID ?>');">
                                     

@@ -27,5 +27,4 @@ New Feature added
 Slowness Bug fixed by improving the query strings.
 Export to excel utility provided.
 
-Release Date - 2-17-18
 

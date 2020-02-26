@@ -66,6 +66,7 @@ include_once "classes/admin_class.php";
 										  <li><a data-toggle="tab" href="#tab2">By Patient Id</a></li>
 										  <li><a data-toggle="tab" href="#tab3">By Investigation name</a></li>
 										  <li><a data-toggle="tab" href="#tab4">By Medicine name</a></li>
+										  <li><a data-toggle="tab" href="#tab5">Day Billing</a></li>
 										</ul>
 
                                         <!--BEGIN tab1-->
@@ -163,7 +164,7 @@ include_once "classes/admin_class.php";
                                              
                                     
                                             </div>
-                                            <input type="button" value="Search" name="search" class="btn btn-default" onclick="searchInvestigation();" >
+                                            <input type="button" value="Search" name="search" class="btn btn-default" onclick="searchInvestigationforPatient();" >
                                             <!--END of search-->
 
                                             <!--BEGIN search results-->
@@ -234,6 +235,43 @@ include_once "classes/admin_class.php";
 
                                         </div>
                                         <!--END of tab4-->
+                                        
+                                        <!--BEGIN tab5-->
+                                        <div id="tab5" class="tab-pane fade in active">
+
+
+
+                                            <!--BEGIN search-->
+                                            <div id="tab555" class="check_fields">
+
+                                                <span><p>Input Date</p>
+                                                   
+                                                <input id="txtCI" name="patient_cl_imprssn" type="date" class="input_box_big" value="" /></span>                
+                                                           
+                                                <span><p>&nbsp;</p><input type="submit" value="Search Report" name="search" class="btn" onclick="search5();" /></span>
+
+
+                                            </div>
+                                            <!--END of search-->
+
+                                            <!--BEGIN search results-->
+                                            <div class="row">
+                                            
+
+                                                <div class='loading' hidden='true' id='wait'>Please Wait.. untill system finds the result for you. Thank you......</div>
+
+
+                                            <div class="col-xs-12 .col-sm-6 .col-lg-8" id="searchbillDiv">
+
+                                                <!--RESULT OF SEARCH -->
+
+
+                                            </div>
+                                            </div>
+                                            <!--END of results-->
+
+                                        </div>
+                                        <!--END of tab5-->
                                         
                                         </div>
 

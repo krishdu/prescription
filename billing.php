@@ -103,16 +103,16 @@ while ($row = mysql_fetch_array($result)) {
     <?php if( $_SESSION['user_type'] == "DOCTOR"){ ?>
            <div class="btn_wrap2">
             <!--<form id="form2" action="doc_add_patient.php" method="POST"> -->
-            <form id="form2" action="create_visit.php" method="POST">
-            <input type="submit" id="ADD" value="Add Patient"  class="btn btn-success"/>
+            <form id="form2" action="CreateBill.php" method="POST">
+            <input type="submit" id="ADD" value="AddPatient"  class="btn btn-success"/>
             </form>
                  
     </div>
      <?php  } else { ?>
            <div class="btn_wrap2">
                
-            <form id="form2" action="create_visit.php" method="POST">
-            <input type="submit" id="ADD" value="Add Patient"  class="btn btn-success"/>
+            <form id="form2" action="CreateBill.php" method="POST">
+            <input type="submit" id="ADD" value="AddPatient"  class="btn btn-success"/>
             </form>
             </div>
       <?php } ?> 

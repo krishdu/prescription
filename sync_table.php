@@ -3,11 +3,9 @@
 include_once "./inc/datacon.php"; 
 
 // server url.
-$url = "http://myeprescription.in/synchronized.sroy.php";
+$url = "http://myeprescription.in/synchronized.php";
 
-$table_array = array('allergy_master','clinical_impression','dose_details_master','dose_direction','dose_timing_master','investigation_master','lmp','medicine_master','past_medical_history_master','patient','patient_health_details','patient_health_details_by_receptionist','patient_health_details_master','patient_investigation','precribed_medicine','prescribed_allergy','prescribed_cf','prescribed_investigation','prescribed_past_med_history','prescribed_social_history','prescription','reception_master','social_history_master','visit','user','user_master','chamber_master');
-
-$table_array = array('medicine_master');
+$table_array = array('allergy_master','clinical_impression','dose_details_master','dose_direction','dose_timing_master','investigation_master','lmp','medicine_master','past_medical_history_master','patient','patient_health_details','patient_health_details_by_receptionist','patient_health_details_master','patient_investigation','precribed_medicine','prescribed_allergy','prescribed_cf','prescribed_investigation','prescribed_past_med_history','prescribed_social_history','prescription','reception_master','social_history_master','visit');
 
 foreach($table_array as $table){
     

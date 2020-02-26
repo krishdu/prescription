@@ -1,10 +1,9 @@
-ALTER TABLE  `prescribed_cf` ADD INDEX (  `clinical_impression_id` )
-
-ALTER TABLE  `prescribed_investigation` ADD INDEX (  `PRESCRIBED_INVESTIGATION_ID` )
-ALTER TABLE  `prescribed_investigation` ADD INDEX (  `PRESCRIPTION_ID` )
-ALTER TABLE  `prescribed_investigation` ADD INDEX (  `INVESTIGATION_ID` )
-ALTER TABLE  `patient_health_details_master` ADD INDEX (  `ID` )
-ALTER TABLE  `patient_health_details` ADD INDEX (  `ID` )
+ALTER TABLE  `prescribed_cf` ADD INDEX (  `clinical_impression_id` );
+ALTER TABLE  `prescribed_investigation` ADD INDEX (  `PRESCRIBED_INVESTIGATION_ID` );
+ALTER TABLE  `prescribed_investigation` ADD INDEX (  `PRESCRIPTION_ID` );
+ALTER TABLE  `prescribed_investigation` ADD INDEX (  `INVESTIGATION_ID` );
+ALTER TABLE  `patient_health_details_master` ADD INDEX (  `ID` );
+ALTER TABLE  `patient_health_details` ADD INDEX (  `ID` );
 ALTER TABLE  	allergy_master	ADD INDEX (  `chamber_id`  ) ;
 ALTER TABLE  	clinical_impression	ADD INDEX (  `chamber_id`  ) ;
 ALTER TABLE  	dose_details_master	ADD INDEX (  `chamber_id`  ) ;
@@ -28,7 +27,6 @@ ALTER TABLE  	prescribed_social_history	ADD INDEX (  `chamber_id`  ) ;
 ALTER TABLE  	prescription	ADD INDEX (  `chamber_id`  ) ;
 ALTER TABLE  	social_history_master	ADD INDEX (  `chamber_id`  ) ;
 ALTER TABLE  	visit	ADD INDEX (  `chamber_id`  ) ;
-
 ALTER TABLE  	allergy_master	ADD INDEX (   `doc_id` ) ;
 ALTER TABLE  	clinical_impression	ADD INDEX (   `doc_id` ) ;
 ALTER TABLE  	dose_details_master	ADD INDEX (   `doc_id` ) ;
@@ -52,7 +50,5 @@ ALTER TABLE  	prescribed_social_history	ADD INDEX (   `doc_id` ) ;
 ALTER TABLE  	prescription	ADD INDEX (   `doc_id` ) ;
 ALTER TABLE  	social_history_master	ADD INDEX (   `doc_id` ) ;
 ALTER TABLE  	visit	ADD INDEX (   `doc_id` ) ;
-ALTER TABLE  `medicine_master` ADD INDEX (  `MEDICINE_ID` )
-
-
-ALTER TABLE  `patient_investigation` ADD INDEX (  `investigation_id` )
+ALTER TABLE  `medicine_master` ADD INDEX (  `MEDICINE_ID` );
+ALTER TABLE  `patient_investigation` ADD INDEX (  `investigation_id` );

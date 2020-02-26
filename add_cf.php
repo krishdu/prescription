@@ -8,7 +8,7 @@ $visit_id = $_GET['visit_id'];
 $query = "select ID from patient_health_details_master where NAME = '$cfname'";
 
 
-$result = mysqli_query($conn,$query);
+$result = mysql_query($query);
 $id = "";
 if(mysql_num_rows($result) > 0){
     //Clinical Impression Type exists in the Database. Get the ID
@@ -18,19 +18,19 @@ if(mysql_num_rows($result) > 0){
 } else {
     //Insert into master and then add
     $query = "insert into patient_health_details_master (NAME) values('$cfname')";
-    mysqli_query($conn,$query);
+    mysql_query($query);
     $id = mysql_insert_id();
 }
 $query = "insert into patient_health_details(ID, VALUE, VISIT_ID) 
             values('$id' , '$cfvalue', '$visit_id')";
-mysqli_query($conn,$query);
+mysql_query($query);
 
 $q15 = "select a.VALUE, b.NAME, a.ID from
                             patient_health_details a ,patient_health_details_master b
                             where
                             a.ID = b.ID
                             and a.VISIT_ID = '$visit_id'";
-$rsd1 = mysqli_query($conn,$q15);
+$rsd1 = mysql_query($q15);
 
 
 /*while($rs = mysql_fetch_array($rsd1)) {

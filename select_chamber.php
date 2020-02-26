@@ -20,6 +20,7 @@ if(isset($_SESSION['user_type'])) {
 	    $adminObj = new admin();
 	    $resultObj = $adminObj->getUserDetails($user_id);
     	
+          
         
         ?>  
     
@@ -28,9 +29,8 @@ if(isset($_SESSION['user_type'])) {
           if($user_type == 'DOCTOR' ){ 
           	
               $_QUERY= "select * from chamber_master where related_doc_name='".$user_id."'";
-             // echo $_QUERY;
-          	$result = mysqli_query($conn,$_QUERY)  ; 
-	          	if(mysqli_num_rows($result)>0){ ?>
+          	$result = mysql_query($_QUERY) or die(mysql_error()); 
+	          	if(mysql_num_rows($result)>0){ ?>
 	          	<div class="page-header">
 			        <h1>Select Chamber Name</h1>
 			    </div>
@@ -38,7 +38,7 @@ if(isset($_SESSION['user_type'])) {
 				  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Chamber
 				  <span class="caret"></span></button>
 				  <ul class="dropdown-menu">
-		          <?php while($rows = mysqli_fetch_array($result)) {
+		          <?php while($rows = mysql_fetch_array($result)) {
 		          	echo "<li><a href='visit_list.php?chamber_name=".$rows['chamber_id']."&doc_name=".$user_name."'>". $rows['chamber_name']."</a></li>";  
 		          } ?>
 		          </ul>
@@ -50,9 +50,8 @@ if(isset($_SESSION['user_type'])) {
 	          	
           <?php } else if ($user_type == 'RECEPTIONIST'){
           	$_QUERY= "select * from chamber_master where related_rec_name='".$user_name."'";
-          	//echo $_QUERY;
-          	$result = mysqli_query($conn,$_QUERY) or die(mysqli_error()); 
-          	if(mysqli_num_rows($result)>0){ ?>
+          	$result = mysql_query($_QUERY) or die(mysql_error()); 
+          	if(mysql_num_rows($result)>0){ ?>
           	<div class="page-header">
 			        <h1>Select Chamber Name</h1>
 			    </div>
@@ -60,7 +59,7 @@ if(isset($_SESSION['user_type'])) {
 				  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Chamber
 				  <span class="caret"></span></button>
 				  <ul class="dropdown-menu">
-	        <?php   	while($rows = mysqli_fetch_array($result)) {
+	        <?php   	while($rows = mysql_fetch_array($result)) {
 	          		echo "<li><a href='select_doctor.php?chamber_name=".$rows['chamber_id']."'>". $rows['chamber_name']."</a></li>";
 	          	} ?>
 	          	 </ul>
@@ -71,8 +70,8 @@ if(isset($_SESSION['user_type'])) {
           } else if($user_type == 'CHEMIST' ){
           	
           	$_QUERY= "select a.chamber_id, a.chamber_name from chamber_master a, chamber_owner b where b.owner_id='".$user_name."' and a.chamber_id=b.chamber_id";
-          	$result = mysqli_query($conn, $_QUERY) or die(mysqli_error());
-	          	if(mysqli_num_rows($result)>0){ ?>
+          	$result = mysql_query($_QUERY) or die(mysql_error());
+	          	if(mysql_num_rows($result)>0){ ?>
 	          	<div class="page-header">
 			        <h1>Select Chamber Name</h1>
 			    </div>
@@ -80,7 +79,7 @@ if(isset($_SESSION['user_type'])) {
 				  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Chamber
 				  <span class="caret"></span></button>
 				  <ul class="dropdown-menu">
-		          <?php while($rows = mysqli_fetch_array($result)) {
+		          <?php while($rows = mysql_fetch_array($result)) {
 		          	echo "<li><a href='select_doctor.php?chamber_name=".$rows['chamber_id']."'>". $rows['chamber_name']."</a></li>";  
 		          } ?>
 		          </ul>

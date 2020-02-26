@@ -5,8 +5,8 @@ class Header {
 		
 		$_QUERY= "select * from doctor_master where doctor_id ='".$doc_username."'";
 		//echo $_QUERY;
-		$result = mysqli_query($conn,($_QUERY) );
-		$obj = mysqli_fetch_object($result);
+		$result = mysql_query($_QUERY) or die(mysql_error());
+		$obj = mysql_fetch_object($result);
 		$this->salutation=$obj->salutation;
 		$this->doctor_full_name=$obj->doctor_full_name;
 		$this->user_name = $obj->user_name;
@@ -18,11 +18,10 @@ class Header {
 		$this->doctor_address = $obj->doctor_address;
 		$this->doctor_secondery_contact = $obj->doctor_secondery_contact;
 		
-		
 		$_QUERY= "select * from chamber_master where chamber_id ='".$chmaber_id."'";
 		//echo $_QUERY;
-		$result1 = mysqli_query($conn,($_QUERY)) ;
-		$obj1 = mysqli_fetch_object($result1);
+		$result1 = mysql_query($_QUERY) or die(mysql_error());
+		$obj1 = mysql_fetch_object($result1);
 		$this->primary_phone_number=$obj1->primary_phone_number;
 		$this->chamber_footer=$obj1->chamber_footer;
 		$this->chamber_name = $obj1->chamber_name;
